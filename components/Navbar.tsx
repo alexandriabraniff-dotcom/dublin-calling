@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { LocationSlug } from "@/lib/locations";
@@ -63,16 +64,17 @@ export default function Navbar({ location }: NavbarProps) {
           {/* Logo */}
           <Link
             href={base}
-            className="flex items-center gap-3 shrink-0"
+            className="flex items-center shrink-0"
             aria-label="Dublin Calling home"
           >
-            <span
-              className="text-2xl font-bold text-[#F4EFE6] leading-none"
-              style={{ fontFamily: "'Lobster Two', cursive" }}
-            >
-              Dublin{" "}
-              <span className="text-[#169B62]">Calling</span>
-            </span>
+            <Image
+              src="/logo.png"
+              alt="Dublin Calling — Party Pub & Kitchen"
+              width={56}
+              height={56}
+              className="h-12 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Nav */}

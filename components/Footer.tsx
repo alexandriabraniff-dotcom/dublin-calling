@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Location } from "@/lib/locations";
 
 interface FooterProps {
@@ -14,17 +15,14 @@ export default function Footer({ location }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
-            <span
-              className="text-3xl font-bold text-[#F4EFE6] leading-none block mb-2"
-              style={{ fontFamily: "'Lobster Two', cursive" }}
-            >
-              Dublin{" "}
-              <span className="text-[#169B62]">Calling</span>
-            </span>
-            <p className="text-[#F4EFE6] opacity-60 text-sm mt-2">
-              Party Pub &amp; Kitchen
-            </p>
-            <p className="text-[#F4EFE6] opacity-50 text-xs mt-4">
+            <Image
+              src="/logo.png"
+              alt="Dublin Calling — Party Pub & Kitchen"
+              width={100}
+              height={100}
+              className="w-24 h-auto mb-3"
+            />
+            <p className="text-[#F4EFE6] opacity-50 text-xs mt-2">
               {location.name} — {location.city}, {location.province}
             </p>
             <div className="flex gap-4 mt-5">
