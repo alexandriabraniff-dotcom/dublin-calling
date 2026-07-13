@@ -283,17 +283,11 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     ],
     events: [
       {
-        date: "Jul 10, 17, 31 & Aug 7",
+        date: "Jul 17, 31 & Aug 7",
         title: "Ladies Night",
         description: "An unforgettable night out. Tickets via AdmitOne.",
         tag: "Ticketed",
         ticketUrl: "https://admitone.com",
-      },
-      {
-        date: "Jul 11",
-        title: "UFC 329 — McGregor vs Holloway 2",
-        description: "The biggest fight of the year. Every round on the big screens.",
-        tag: "UFC",
       },
       {
         date: "Aug 15",

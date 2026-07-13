@@ -31,10 +31,10 @@ export default async function LocationHome({
       { day: "Sun – Fri",     name: "Happy Hour",        detail: "4:00 PM – 6:00 PM · Drink specials",        tag: "Daily",  tagColor: "green",   emoji: "🍺" },
     ],
     vancouver: [
-      { day: "Jul 11",           name: "UFC 329 — McGregor vs Holloway 2", detail: "The biggest fight of the year",                tag: "UFC",    tagColor: "red",  emoji: "🥊" },
-      { day: "Jul 10, 17, 31",   name: "Ladies Night",                    detail: "Recurring event — tickets via AdmitOne",       tag: "Event",  tagColor: "gold", emoji: "👑" },
+      { day: "Jul 17 + Jul 31",  name: "Ladies Night",                    detail: "Recurring event — tickets via AdmitOne",       tag: "Event",  tagColor: "gold", emoji: "👑" },
       { day: "Biweekly Tuesdays",name: "Trivia Night",                    detail: "TriviaTO — main floor, 7:00 PM",               tag: "Weekly", tagColor: "default", emoji: "🧠" },
       { day: "Sun – Fri",        name: "Happy Hour",                      detail: "4:00 PM – 6:00 PM · 12+ taps on special",      tag: "Daily",  tagColor: "green", emoji: "🍺" },
+      { day: "Fight Nights",     name: "UFC Live",                        detail: "Every card live on our big screens",            tag: "UFC",    tagColor: "red",  emoji: "🥊" },
     ],
   } as Record<string, { day: string; name: string; detail: string; tag: string; tagColor: TagColor; emoji: string; }[]>)[loc.slug] ?? [];
 
