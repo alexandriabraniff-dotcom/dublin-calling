@@ -184,11 +184,23 @@ export default function Footer({ location }: FooterProps) {
               )}
             </div>
 
-            {/* MRG Group note */}
-            <div className="mt-6 pt-5 border-t border-white/10">
-              <p className="text-[#F4EFE6]/20 text-[10px] md:text-right leading-relaxed">
-                A MRG Group venue
-              </p>
+            {/* MRG Group logo */}
+            <div className="mt-6 pt-5 border-t border-white/10 flex md:justify-end">
+              <a
+                href="https://www.themrggroup.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="The MRG Group"
+                className="opacity-30 hover:opacity-50 transition-opacity"
+              >
+                <Image
+                  src="/mrg-logo.png"
+                  alt="The MRG Group"
+                  width={80}
+                  height={32}
+                  className="object-contain h-7 w-auto invert"
+                />
+              </a>
             </div>
           </div>
 
