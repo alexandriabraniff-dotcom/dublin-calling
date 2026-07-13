@@ -13,123 +13,137 @@ export default async function LocationHome({
 
   const base = `/${loc.slug}`;
 
+  // Location-specific weekly schedule
+  const weeklySchedule: Record<string, { day: string; event: string; detail: string; tag?: string; tagColor?: string }[]> = {
+    adelaide: [
+      { day: "Mon", event: "Trivia Night", detail: "TriviaTO — 7:00 PM", tag: "Weekly" },
+      { day: "Wed", event: "UFC / Fight Night", detail: "All cards live on the big screens", tag: "Sports", tagColor: "red" },
+      { day: "Thu–Fri", event: "Happy Hour", detail: "4:00 PM – 6:00 PM · Drink specials", tag: "Daily", tagColor: "green" },
+      { day: "Sun", event: "Bills Backers Watch Party", detail: "Official chapter · Every game day", tag: "NFL", tagColor: "gold" },
+      { day: "Every Day", event: "Happy Hour", detail: "Sun–Fri · 4:00 PM – 6:00 PM", tagColor: "green" },
+    ],
+    danforth: [
+      { day: "Mon", event: "Pool Tournament", detail: "Sign in by 7:00 PM to compete", tag: "Weekly" },
+      { day: "Tue", event: "Trivia Night", detail: "TriviaTO — 7:00 PM · Main floor", tag: "Weekly" },
+      { day: "Thu", event: "UFC / Fight Night", detail: "All cards live on screen", tag: "Sports", tagColor: "red" },
+      { day: "Sun", event: "Bills Backers Watch Party", detail: "Official chapter · Every game day", tag: "NFL", tagColor: "gold" },
+      { day: "Every Day", event: "Happy Hour", detail: "Sun–Fri · 4:00 PM – 6:00 PM", tagColor: "green" },
+    ],
+    vancouver: [
+      { day: "Tue", event: "Trivia Night", detail: "TriviaTO — biweekly · Main floor", tag: "Weekly" },
+      { day: "Jul 11", event: "UFC 329 — McGregor vs Holloway 2", detail: "The biggest fight of the year", tag: "UFC", tagColor: "red" },
+      { day: "Jul 10, 17, 31", event: "Ladies Night", detail: "Tickets via AdmitOne", tag: "Ticketed", tagColor: "gold" },
+      { day: "Aug 15", event: "UFC 330", detail: "Next major card — come early", tag: "UFC", tagColor: "red" },
+      { day: "Every Day", event: "Happy Hour", detail: "Sun–Fri · 4:00 PM – 6:00 PM", tagColor: "green" },
+    ],
+  };
+
+  const schedule = weeklySchedule[loc.slug] ?? [];
+
   return (
     <>
       {/* ── HERO ── */}
-      <section
-        className="relative min-h-[92vh] flex flex-col justify-end"
-        style={{
-          background:
-            "radial-gradient(ellipse at 60% 40%, rgba(22,155,98,0.18) 0%, rgba(15,81,50,0.25) 40%, #101010 80%)",
-        }}
-      >
-        {/* Atmospheric pub grid overlay */}
+      <section className="relative bg-[#101010] min-h-[90vh] flex flex-col justify-between py-16 sm:py-20 overflow-hidden">
+        {/* Oversized background letter — pure typographic atmosphere */}
         <div
-          className="absolute inset-0 opacity-[0.04]"
+          className="absolute -right-8 top-1/2 -translate-y-1/2 select-none pointer-events-none leading-none opacity-[0.03] text-[#F4EFE6]"
+          aria-hidden="true"
           style={{
-            backgroundImage:
-              "linear-gradient(#f4efe6 1px, transparent 1px), linear-gradient(to right, #f4efe6 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
+            fontFamily: "'Lobster Two', cursive",
+            fontSize: "clamp(280px, 50vw, 600px)",
           }}
-        />
-
-        {/* Corner shamrock accent */}
-        <div className="absolute top-12 right-12 opacity-10 hidden lg:block">
-          <svg width="120" height="120" viewBox="0 0 100 100" fill="#169B62">
-            <text
-              x="50"
-              y="80"
-              textAnchor="middle"
-              style={{ fontSize: "80px" }}
-            >
-              ☘
-            </text>
-          </svg>
+        >
+          DC
         </div>
 
-        {/* Location badge */}
+        {/* Age / location note */}
         {loc.ageNote && (
-          <div className="absolute top-8 left-6 bg-[#C8102E] text-white text-xs font-bold px-3 py-1.5 rounded uppercase tracking-widest">
-            {loc.ageNote}
+          <div className="absolute top-4 right-6">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C8102E] border border-[#C8102E] px-2 py-1">
+              {loc.ageNote}
+            </span>
           </div>
         )}
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pb-20 pt-32 w-full">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col flex-1 justify-center gap-10">
           {/* Eyebrow */}
-          <p className="text-[#F2B035] text-sm font-semibold uppercase tracking-[0.25em] mb-4">
-            {loc.city} &mdash; {loc.name}
+          <p className="text-[#F2B035] text-[10px] sm:text-xs font-bold uppercase tracking-[0.35em]">
+            {loc.city} &nbsp;·&nbsp; {loc.name} &nbsp;·&nbsp; Party Pub &amp; Kitchen
           </p>
 
           {/* Main heading */}
-          <h1
-            className="text-[clamp(3.5rem,10vw,8rem)] text-[#F4EFE6] leading-[1.05] mb-6"
-            style={{ fontFamily: "'Lobster Two', cursive" }}
-          >
-            Dublin{" "}
-            <span className="text-[#169B62]">Calling</span>
-          </h1>
+          <div>
+            <h1
+              className="text-[#F4EFE6] leading-[0.92] mb-6"
+              style={{
+                fontFamily: "'Lobster Two', cursive",
+                fontSize: "clamp(4rem, 14vw, 12rem)",
+              }}
+            >
+              {loc.name === "Vancouver" ? (
+                <>
+                  Open<br />
+                  <span className="text-[#169B62]">Until 3AM</span>
+                </>
+              ) : loc.name === "Danforth" ? (
+                <>
+                  East<br />
+                  <span className="text-[#169B62]">Toronto&apos;s</span><br />
+                  Pub
+                </>
+              ) : (
+                <>
+                  Downtown<br />
+                  <span className="text-[#169B62]">Toronto&apos;s</span><br />
+                  Party Pub
+                </>
+              )}
+            </h1>
+            <p className="text-[#F4EFE6]/50 text-base sm:text-lg max-w-md font-light">
+              {loc.heroTagline}
+            </p>
+          </div>
 
-          {/* Sub */}
-          <p className="text-[#F4EFE6] text-xl sm:text-2xl font-light max-w-xl mb-3 opacity-90">
-            Party Pub &amp; Kitchen
-          </p>
-          <p className="text-[#F4EFE6] text-base sm:text-lg opacity-60 max-w-lg mb-10">
-            {loc.heroTagline}
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-4">
+          {/* CTA row */}
+          <div className="flex flex-wrap gap-3">
             <a
               href={loc.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#F2B035] text-[#101010] font-bold text-sm rounded hover:bg-[#e0a020] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#F2B035] text-[#101010] text-xs font-bold uppercase tracking-widest hover:bg-[#e0a020] transition-colors"
             >
               Book a Table
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <line x1="7" y1="17" x2="17" y2="7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
             </a>
             <Link
               href={`${base}/events`}
-              className="inline-flex items-center gap-2 px-7 py-3.5 border border-[#169B62] text-[#F4EFE6] font-semibold text-sm rounded hover:bg-[#0F5132] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-[#F4EFE6]/20 text-[#F4EFE6]/70 text-xs font-bold uppercase tracking-widest hover:border-[#F4EFE6]/50 hover:text-[#F4EFE6] transition-colors"
             >
               See Events
             </Link>
             <Link
               href={`${base}/menu`}
-              className="inline-flex items-center gap-2 px-7 py-3.5 border border-[#F4EFE6]/20 text-[#F4EFE6]/70 font-semibold text-sm rounded hover:border-[#F4EFE6]/50 hover:text-[#F4EFE6] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-[#F4EFE6]/20 text-[#F4EFE6]/70 text-xs font-bold uppercase tracking-widest hover:border-[#F4EFE6]/50 hover:text-[#F4EFE6] transition-colors"
             >
               View Menu
             </Link>
           </div>
         </div>
 
-        {/* Bottom fade */}
-        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#101010] to-transparent pointer-events-none" />
-      </section>
-
-      {/* ── STATS BAR ── */}
-      <section className="bg-[#0F5132] py-10 border-y border-[#169B62]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-3 divide-x divide-[#169B62]/30">
+        {/* Stats anchored to bottom */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full mt-16">
+          <div className="border-t border-white/10 pt-8 grid grid-cols-3 gap-8">
             {loc.stats.map((stat) => (
-              <div key={stat.label} className="text-center px-4">
+              <div key={stat.label}>
                 <p
-                  className="text-[#F2B035] text-4xl sm:text-5xl mb-1"
-                  style={{ fontFamily: "'Lobster Two', cursive" }}
+                  className="text-[#F4EFE6] leading-none mb-1"
+                  style={{
+                    fontFamily: "'Lobster Two', cursive",
+                    fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                  }}
                 >
                   {stat.value}
                 </p>
-                <p className="text-[#F4EFE6] text-xs sm:text-sm uppercase tracking-wider opacity-80">
+                <p className="text-[#F4EFE6]/40 text-[10px] sm:text-xs uppercase tracking-widest font-medium">
                   {stat.label}
                 </p>
               </div>
@@ -138,148 +152,80 @@ export default async function LocationHome({
         </div>
       </section>
 
-      {/* ── HAPPY HOUR BANNER ── */}
-      <section className="bg-[#101010] border-b border-[#0F5132] py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <span className="text-4xl">🍺</span>
-            <div>
-              <p
-                className="text-[#F2B035] text-2xl"
-                style={{ fontFamily: "'Lobster Two', cursive" }}
-              >
-                Happy Hour
-              </p>
-              <p className="text-[#F4EFE6] text-sm opacity-70">
-                {loc.happyHour}
-              </p>
-            </div>
-          </div>
-          <Link
-            href={`${base}/menu`}
-            className="px-6 py-2.5 border border-[#F2B035] text-[#F2B035] text-sm font-semibold rounded hover:bg-[#F2B035] hover:text-[#101010] transition-colors"
-          >
-            View Menu
-          </Link>
-        </div>
-      </section>
-
-      {/* ── FEATURES GRID ── */}
-      <section className="py-20 bg-[#101010]">
+      {/* ── THIS WEEK ── */}
+      <section className="bg-[#0F5132] py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="mb-12 text-center">
-            <p className="text-[#169B62] text-sm font-semibold uppercase tracking-[0.2em] mb-3">
-              What&apos;s On
-            </p>
-            <h2
-              className="text-[#F4EFE6] text-5xl sm:text-6xl"
-              style={{ fontFamily: "'Lobster Two', cursive" }}
-            >
-              Your Pub, Your Way
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {loc.features.map((feature) => (
-              <div
-                key={feature.title}
-                className="bg-[#0F5132] rounded-lg p-6 border border-[#169B62]/20 hover:border-[#169B62]/60 transition-colors group"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3
-                  className="text-[#F4EFE6] text-xl mb-2"
-                  style={{ fontFamily: "'Lobster Two', cursive" }}
-                >
-                  {feature.title}
-                </h3>
-                <p className="text-[#F4EFE6] text-sm opacity-65 leading-relaxed">
-                  {feature.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── UPCOMING EVENTS ── */}
-      <section className="py-20 bg-[#0F5132]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-4">
+          <div className="flex items-end justify-between mb-10 gap-4">
             <div>
-              <p className="text-[#F2B035] text-sm font-semibold uppercase tracking-[0.2em] mb-3">
-                What&apos;s Coming
+              <p className="text-[#F2B035] text-[10px] font-bold uppercase tracking-[0.35em] mb-3">
+                {loc.name} Schedule
               </p>
               <h2
-                className="text-[#F4EFE6] text-5xl sm:text-6xl"
-                style={{ fontFamily: "'Lobster Two', cursive" }}
+                className="text-[#F4EFE6] leading-none"
+                style={{
+                  fontFamily: "'Lobster Two', cursive",
+                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                }}
               >
-                Upcoming Events
+                This Week
               </h2>
             </div>
             <Link
               href={`${base}/events`}
-              className="text-[#169B62] text-sm font-semibold hover:text-[#F2B035] transition-colors flex items-center gap-2"
+              className="text-[#F4EFE6]/40 text-xs font-bold uppercase tracking-widest hover:text-[#F2B035] transition-colors flex items-center gap-2 shrink-0 pb-1"
             >
               All Events
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
               </svg>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {loc.events.slice(0, 4).map((event) => (
+          {/* Schedule rows — editorial table style */}
+          <div className="divide-y divide-white/10">
+            {schedule.map((item, i) => (
               <div
-                key={event.title}
-                className="bg-[#101010] rounded-lg p-6 border border-[#0F5132] hover:border-[#169B62] transition-colors"
+                key={i}
+                className="flex items-center gap-6 py-5 group hover:bg-white/5 -mx-4 sm:-mx-6 px-4 sm:px-6 transition-colors"
               >
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <span className="text-xs text-[#F4EFE6] opacity-50 font-medium uppercase tracking-wider mt-0.5">
-                    {event.date}
-                  </span>
-                  {event.tag && (
-                    <span className="shrink-0 text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#F2B035] text-[#101010] uppercase tracking-wide">
-                      {event.tag}
-                    </span>
-                  )}
+                {/* Day */}
+                <div className="w-20 sm:w-28 shrink-0">
+                  <p className="text-[#F4EFE6]/30 text-xs font-bold uppercase tracking-widest">
+                    {item.day}
+                  </p>
                 </div>
-                <h3
-                  className="text-[#F4EFE6] text-xl mb-2"
-                  style={{ fontFamily: "'Lobster Two', cursive" }}
-                >
-                  {event.title}
-                </h3>
-                <p className="text-[#F4EFE6] text-sm opacity-60 leading-relaxed">
-                  {event.description}
-                </p>
-                {event.ticketUrl && (
-                  <a
-                    href={event.ticketUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 mt-4 text-[#F2B035] text-xs font-semibold hover:underline"
+
+                {/* Event name */}
+                <div className="flex-1 min-w-0">
+                  <p
+                    className="text-[#F4EFE6] truncate"
+                    style={{
+                      fontFamily: "'Lobster Two', cursive",
+                      fontSize: "clamp(1.1rem, 3vw, 1.6rem)",
+                    }}
                   >
-                    Get Tickets
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
+                    {item.event}
+                  </p>
+                  <p className="text-[#F4EFE6]/40 text-xs mt-0.5">{item.detail}</p>
+                </div>
+
+                {/* Tag */}
+                {item.tag && (
+                  <div className="shrink-0">
+                    <span
+                      className={`text-[10px] font-bold uppercase tracking-[0.15em] px-2.5 py-1 ${
+                        item.tagColor === "red"
+                          ? "bg-[#C8102E] text-white"
+                          : item.tagColor === "gold"
+                            ? "bg-[#F2B035] text-[#101010]"
+                            : item.tagColor === "green"
+                              ? "border border-[#169B62] text-[#169B62]"
+                              : "border border-white/20 text-[#F4EFE6]/50"
+                      }`}
                     >
-                      <line x1="7" y1="17" x2="17" y2="7" />
-                      <polyline points="7 7 17 7 17 17" />
-                    </svg>
-                  </a>
+                      {item.tag}
+                    </span>
+                  </div>
                 )}
               </div>
             ))}
@@ -287,268 +233,243 @@ export default async function LocationHome({
         </div>
       </section>
 
-      {/* ── SPORTS SECTION ── */}
-      <section className="py-20 bg-[#101010]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="text-[#169B62] text-sm font-semibold uppercase tracking-[0.2em] mb-3">
-                Never Miss a Game
-              </p>
-              <h2
-                className="text-[#F4EFE6] text-5xl sm:text-6xl mb-6"
-                style={{ fontFamily: "'Lobster Two', cursive" }}
-              >
-                Every Sport. Every Game.
-              </h2>
-              <p className="text-[#F4EFE6] opacity-65 text-base leading-relaxed mb-8">
-                We broadcast every major game across our big screens. Whether
-                you&apos;re here for the NFL, Premier League, UFC, or the
-                playoffs, you&apos;ve got the best seat in the house.
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  "NFL",
-                  "MLB",
-                  "NBA",
-                  "NHL",
-                  "UFC / MMA",
-                  "Premier League",
-                  "MLS",
-                  "Rugby",
-                ].map((sport) => (
-                  <div
-                    key={sport}
-                    className="flex items-center gap-2.5 text-sm text-[#F4EFE6] opacity-80"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#169B62] shrink-0" />
-                    {sport}
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* ── MENU + BOOK — split section ── */}
+      <section className="grid grid-cols-1 sm:grid-cols-2">
+        {/* Menu */}
+        <Link
+          href={`${base}/menu`}
+          className="group bg-[#101010] border-r border-white/5 px-10 sm:px-16 py-20 flex flex-col justify-between gap-10 hover:bg-[#0a0a0a] transition-colors"
+        >
+          <div>
+            <p className="text-[#F2B035] text-[10px] font-bold uppercase tracking-[0.35em] mb-6">
+              Food &amp; Drinks
+            </p>
+            <h2
+              className="text-[#F4EFE6] leading-none"
+              style={{
+                fontFamily: "'Lobster Two', cursive",
+                fontSize: "clamp(3rem, 6vw, 5.5rem)",
+              }}
+            >
+              The Menu
+            </h2>
+            <p className="text-[#F4EFE6]/40 text-sm mt-4 max-w-xs">
+              Pub classics, sharables, mains, and a drinks list built for long
+              nights.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-[#F2B035] text-xs font-bold uppercase tracking-widest">
+            View Menu
+            <svg
+              className="group-hover:translate-x-1 transition-transform"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </div>
+        </Link>
 
-            {/* Atmospheric score card */}
-            <div className="relative">
-              <div className="bg-[#0F5132] rounded-2xl p-8 border border-[#169B62]/30">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-xs text-[#F2B035] font-bold uppercase tracking-widest">
-                    Live on Screen
-                  </span>
-                  <span className="flex items-center gap-1.5 text-xs text-[#C8102E] font-bold uppercase">
-                    <span className="w-2 h-2 rounded-full bg-[#C8102E] animate-pulse" />
-                    Live
-                  </span>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    { sport: "NFL", game: "Bills vs. Dolphins", time: "Sun 1PM" },
-                    { sport: "UFC", game: "Main Card", time: "Sat 10PM" },
-                    { sport: "EPL", game: "Man City vs. Arsenal", time: "Sat 7AM" },
-                    { sport: "MLB", game: "Blue Jays vs. Yankees", time: "Daily" },
-                  ].map((item) => (
-                    <div
-                      key={item.game}
-                      className="flex items-center justify-between py-3 border-b border-[#169B62]/20 last:border-0"
-                    >
-                      <div>
-                        <span className="text-xs text-[#F2B035] font-bold uppercase">
-                          {item.sport}
-                        </span>
-                        <p className="text-[#F4EFE6] text-sm font-medium mt-0.5">
-                          {item.game}
-                        </p>
-                      </div>
-                      <span className="text-[#F4EFE6] opacity-50 text-xs">
-                        {item.time}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+        {/* Book */}
+        <a
+          href={loc.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group bg-[#0F5132] px-10 sm:px-16 py-20 flex flex-col justify-between gap-10 hover:bg-[#169B62]/20 transition-colors"
+        >
+          <div>
+            <p className="text-[#F2B035] text-[10px] font-bold uppercase tracking-[0.35em] mb-6">
+              Private Events
+            </p>
+            <h2
+              className="text-[#F4EFE6] leading-none"
+              style={{
+                fontFamily: "'Lobster Two', cursive",
+                fontSize: "clamp(3rem, 6vw, 5.5rem)",
+              }}
+            >
+              Book Your Table
+            </h2>
+            <p className="text-[#F4EFE6]/40 text-sm mt-4 max-w-xs">
+              Groups of any size. Online booking for up to 20. Larger parties,
+              contact us directly.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-[#F2B035] text-xs font-bold uppercase tracking-widest">
+            Reserve Now
+            <svg
+              className="group-hover:translate-x-1 transition-transform"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </div>
+        </a>
+      </section>
+
+      {/* ── SPORTS ── */}
+      <section className="bg-[#101010] border-t border-white/5 py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <p className="text-[#F2B035] text-[10px] font-bold uppercase tracking-[0.35em] mb-6">
+            Live on Screen
+          </p>
+          <h2
+            className="text-[#F4EFE6] leading-none mb-10"
+            style={{
+              fontFamily: "'Lobster Two', cursive",
+              fontSize: "clamp(2.5rem, 8vw, 7rem)",
+            }}
+          >
+            Every Game.<br />
+            <span className="text-[#169B62]">Every Screen.</span>
+          </h2>
+
+          <div className="flex flex-wrap gap-2">
+            {[
+              "NFL", "CFL", "MLB", "NBA", "NHL",
+              "UFC / MMA", "Premier League", "Champions League",
+              "MLS", "Rugby", "Tennis", "Golf",
+            ].map((sport) => (
+              <span
+                key={sport}
+                className="border border-white/10 text-[#F4EFE6]/50 text-xs font-semibold uppercase tracking-widest px-4 py-2 hover:border-[#169B62] hover:text-[#169B62] transition-colors cursor-default"
+              >
+                {sport}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-12 pt-10 border-t border-white/5 grid grid-cols-1 sm:grid-cols-3 gap-8">
+            <div>
+              <p
+                className="text-[#F4EFE6] mb-1"
+                style={{
+                  fontFamily: "'Lobster Two', cursive",
+                  fontSize: "3rem",
+                }}
+              >
+                {loc.stats[0].value}
+              </p>
+              <p className="text-[#F4EFE6]/30 text-xs uppercase tracking-widest">{loc.stats[0].label}</p>
+            </div>
+            {loc.slug === "vancouver" && (
+              <div>
+                <p
+                  className="text-[#F4EFE6] mb-1"
+                  style={{
+                    fontFamily: "'Lobster Two', cursive",
+                    fontSize: "3rem",
+                  }}
+                >
+                  12+
+                </p>
+                <p className="text-[#F4EFE6]/30 text-xs uppercase tracking-widest">Beers on Tap</p>
               </div>
+            )}
+            <div>
+              <p
+                className="text-[#F2B035] mb-1"
+                style={{
+                  fontFamily: "'Lobster Two', cursive",
+                  fontSize: "3rem",
+                }}
+              >
+                4–6PM
+              </p>
+              <p className="text-[#F4EFE6]/30 text-xs uppercase tracking-widest">Happy Hour · Sun–Fri</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── LOCATION INFO ── */}
-      <section className="py-20 bg-[#0F5132]">
+      <section className="bg-[#0F5132] border-t border-white/5 py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <p className="text-[#F2B035] text-[10px] font-bold uppercase tracking-[0.35em] mb-10">
+            Find Us
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-16">
             {/* Address */}
-            <div className="bg-[#101010] rounded-xl p-8 border border-[#169B62]/20">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-full bg-[#0F5132] flex items-center justify-center">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#169B62"
-                    strokeWidth="2"
-                  >
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                </div>
-                <h3
-                  className="text-[#F4EFE6] text-xl"
-                  style={{ fontFamily: "'Lobster Two', cursive" }}
-                >
-                  Find Us
-                </h3>
-              </div>
-              <p className="text-[#F4EFE6] opacity-70 text-sm leading-relaxed mb-4">
-                {loc.address}
-              </p>
+            <div>
+              <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.25em] mb-3">Address</p>
+              <address className="not-italic">
+                <p className="text-[#F4EFE6] text-base font-medium leading-relaxed">
+                  {loc.address}
+                </p>
+              </address>
               <a
                 href={`https://maps.google.com/?q=${encodeURIComponent(loc.address)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#169B62] text-sm font-semibold hover:text-[#F2B035] transition-colors flex items-center gap-1.5"
+                className="inline-flex items-center gap-1.5 mt-4 text-[#169B62] text-xs font-bold uppercase tracking-widest hover:text-[#F2B035] transition-colors"
               >
-                Get Directions
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <line x1="7" y1="17" x2="17" y2="7" />
-                  <polyline points="7 7 17 7 17 17" />
+                Directions
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
                 </svg>
               </a>
             </div>
 
             {/* Hours */}
-            <div className="bg-[#101010] rounded-xl p-8 border border-[#169B62]/20">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-full bg-[#0F5132] flex items-center justify-center">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#169B62"
-                    strokeWidth="2"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </div>
-                <h3
-                  className="text-[#F4EFE6] text-xl"
-                  style={{ fontFamily: "'Lobster Two', cursive" }}
-                >
-                  Hours
-                </h3>
-              </div>
-              <ul className="space-y-2.5">
+            <div>
+              <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.25em] mb-3">Hours</p>
+              <ul className="space-y-2">
                 {loc.hours.map((h) => (
-                  <li
-                    key={h.days}
-                    className="flex justify-between text-sm text-[#F4EFE6]"
-                  >
-                    <span className="opacity-60">{h.days}</span>
-                    <span className="font-medium">{h.time}</span>
+                  <li key={h.days} className="flex justify-between gap-4 text-sm">
+                    <span className="text-[#F4EFE6]/50">{h.days}</span>
+                    <span className="text-[#F4EFE6] font-medium tabular-nums">{h.time}</span>
                   </li>
                 ))}
               </ul>
               {loc.ageNote && (
-                <p className="mt-4 text-xs text-[#C8102E] font-semibold">
-                  * {loc.ageNote}
-                </p>
+                <p className="mt-3 text-[#C8102E] text-xs font-semibold">* {loc.ageNote}</p>
               )}
             </div>
 
-            {/* Unique feature + contact */}
-            <div className="bg-[#101010] rounded-xl p-8 border border-[#169B62]/20">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-full bg-[#0F5132] flex items-center justify-center">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#169B62"
-                    strokeWidth="2"
-                  >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.26 12a19.79 19.79 0 0 1-3-8.57A2 2 0 0 1 3.18 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91A16 16 0 0 0 13 14.91l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z" />
-                  </svg>
-                </div>
-                <h3
-                  className="text-[#F4EFE6] text-xl"
-                  style={{ fontFamily: "'Lobster Two', cursive" }}
-                >
-                  Contact
-                </h3>
-              </div>
+            {/* Contact */}
+            <div>
+              <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.25em] mb-3">Contact</p>
               <div className="space-y-3">
-                <p className="text-[#F4EFE6] opacity-70 text-sm">
+                <p>
                   <a
                     href={`tel:${loc.phone}`}
-                    className="hover:text-[#169B62] hover:opacity-100 transition-colors"
+                    className="text-[#F4EFE6] text-base font-medium hover:text-[#169B62] transition-colors"
                   >
                     {loc.phone}
                   </a>
                 </p>
-                <p className="text-[#F4EFE6] opacity-70 text-sm">
+                <p>
                   <a
                     href={`mailto:${loc.email}`}
-                    className="hover:text-[#169B62] hover:opacity-100 transition-colors break-all"
+                    className="text-[#F4EFE6]/60 text-sm hover:text-[#169B62] transition-colors break-all"
                   >
                     {loc.email}
                   </a>
                 </p>
-              </div>
-              {loc.uniqueFeature && (
-                <div className="mt-6 pt-5 border-t border-[#0F5132]">
-                  <p className="text-xs text-[#F2B035] font-bold uppercase tracking-widest mb-1">
-                    Signature Feature
-                  </p>
-                  <p className="text-[#F4EFE6] text-sm opacity-80">
-                    {loc.uniqueFeature}
-                  </p>
+                <div className="flex gap-4 pt-2">
+                  <a href={loc.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-[#F4EFE6]/30 hover:text-[#F4EFE6] transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+                    </svg>
+                  </a>
+                  <a href={loc.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-[#F4EFE6]/30 hover:text-[#F4EFE6] transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                    </svg>
+                  </a>
                 </div>
-              )}
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── GROUP BOOKINGS CTA ── */}
-      <section className="py-20 bg-[#101010]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <p className="text-[#169B62] text-sm font-semibold uppercase tracking-[0.2em] mb-3">
-            Private Events
-          </p>
-          <h2
-            className="text-[#F4EFE6] text-5xl sm:text-6xl mb-6"
-            style={{ fontFamily: "'Lobster Two', cursive" }}
-          >
-            Hosting a Group?
-          </h2>
-          <p className="text-[#F4EFE6] opacity-65 text-lg max-w-xl mx-auto mb-10">
-            Team outings, birthdays, corporate events, post-game parties. We
-            handle groups of any size. Online booking for up to 20 people.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href={loc.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#F2B035] text-[#101010] font-bold text-sm rounded hover:bg-[#e0a020] transition-colors"
-            >
-              Book Your Group
-            </a>
-            <Link
-              href={`${base}/group-bookings`}
-              className="inline-flex items-center gap-2 px-8 py-4 border border-[#F4EFE6]/20 text-[#F4EFE6]/70 font-semibold text-sm rounded hover:border-[#F4EFE6]/50 hover:text-[#F4EFE6] transition-colors"
-            >
-              Learn More
-            </Link>
           </div>
         </div>
       </section>
