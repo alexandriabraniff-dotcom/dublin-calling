@@ -15,46 +15,49 @@ export default async function GroupBookingsPage({
       name: "Social Outing",
       size: "Up to 20 guests",
       desc: "Perfect for friend groups, birthday celebrations, and casual get-togethers. Book online in minutes.",
-      features: ["Reserved table or booth", "Personalized drinks package", "Sport of choice on screen", "Happy Hour eligible"],
-      cta: "Book Online",
+      features: ["Reserved table or booth", "Personalised drinks package", "Sport of choice on screen", "Happy Hour eligible"],
+      cta: "BOOK ONLINE",
       url: loc.bookingUrl,
+      featured: false,
     },
     {
       name: "Team Event",
       size: "20–60 guests",
-      desc: "Work team outings, corporate gatherings, and end-of-season parties. Contact us directly to tailor your experience.",
-      features: ["Dedicated floor section", "Customised food & drink package", "Private screens for your game", "Staff dedicated to your group"],
-      cta: "Email Us",
+      desc: "Work team outings, corporate gatherings, and end-of-season parties. Contact us to tailor your night.",
+      features: ["Dedicated floor section", "Custom food & drink package", "Private screens for your game", "Dedicated staff"],
+      cta: "EMAIL US",
       url: `mailto:${loc.email}`,
+      featured: true,
     },
     {
       name: "Private Venue",
       size: "60+ guests",
-      desc: "Full or partial venue buyout for large private events. Speak with our events team to build your perfect night.",
+      desc: "Full or partial venue buyout for large events. Our events team will build your perfect night.",
       features: ["Full or partial venue hire", "Custom menu curation", "AV & screen setup", "Dedicated events coordinator"],
-      cta: "Contact Events Team",
+      cta: "CONTACT EVENTS",
       url: `mailto:${loc.email}`,
+      featured: false,
     },
   ];
 
   return (
     <>
-      {/* Header */}
-      <section className="bg-[#0F5132] py-20 border-b border-[#169B62]/30">
+      <section className="bg-[#0F5132] py-20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <p className="text-[#F2B035] text-sm font-semibold uppercase tracking-[0.2em] mb-3">
-            {loc.name} — {loc.city}
+          <p
+            className="text-[#F2B035] mb-4"
+            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.3em" }}
+          >
+            {loc.name.toUpperCase()} &nbsp;·&nbsp; {loc.city.toUpperCase()}
           </p>
           <h1
-            className="text-[#F4EFE6] text-6xl sm:text-7xl mb-4"
-            style={{ fontFamily: "'Lobster Two', cursive" }}
+            className="text-[#F4EFE6] mb-4"
+            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(3rem, 10vw, 6.5rem)" }}
           >
             Group Bookings
           </h1>
-          <p className="text-[#F4EFE6] opacity-60 text-lg max-w-xl">
-            From birthday gatherings to full venue buyouts, Dublin Calling is
-            built for big nights. We&apos;ll make sure your group has the space,
-            the drinks, and the screens they need.
+          <p className="text-[#F4EFE6]/50 text-lg font-light max-w-xl">
+            From birthday gatherings to full venue buyouts. We&apos;ll make sure your group has the space, drinks, and screens they need.
           </p>
         </div>
       </section>
@@ -62,51 +65,43 @@ export default async function GroupBookingsPage({
       {/* Packages */}
       <section className="py-20 bg-[#101010]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {packages.map((pkg, i) => (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            {packages.map((pkg) => (
               <div
                 key={pkg.name}
-                className={`rounded-xl border flex flex-col ${
-                  i === 1
-                    ? "bg-[#0F5132] border-[#169B62]"
-                    : "bg-[#0F5132] border-[#169B62]/20"
-                }`}
+                className={`border flex flex-col ${
+                  pkg.featured ? "border-[#F2B035]" : "border-white/8"
+                } bg-[#0F5132]`}
               >
-                {i === 1 && (
-                  <div className="bg-[#F2B035] text-[#101010] text-xs font-bold uppercase tracking-widest text-center py-2 rounded-t-xl">
-                    Most Popular
+                {pkg.featured && (
+                  <div
+                    className="bg-[#F2B035] text-[#101010] text-center py-2"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em" }}
+                  >
+                    MOST POPULAR
                   </div>
                 )}
                 <div className="p-8 flex flex-col flex-1">
-                  <div className="mb-6">
-                    <h2
-                      className="text-[#F4EFE6] text-3xl mb-1"
-                      style={{ fontFamily: "'Lobster Two', cursive" }}
-                    >
-                      {pkg.name}
-                    </h2>
-                    <span className="inline-block text-xs font-bold text-[#F2B035] uppercase tracking-wider">
-                      {pkg.size}
-                    </span>
-                  </div>
-                  <p className="text-[#F4EFE6] opacity-65 text-sm leading-relaxed mb-6">
-                    {pkg.desc}
+                  <p
+                    className="text-[#F2B035] mb-2"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.2em" }}
+                  >
+                    {pkg.size.toUpperCase()}
                   </p>
-                  <ul className="space-y-2.5 mb-8 flex-1">
-                    {pkg.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-sm text-[#F4EFE6] opacity-80">
-                        <svg
-                          className="shrink-0 mt-0.5 text-[#169B62]"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                        >
+                  <h2
+                    className="text-[#F4EFE6] mb-4"
+                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(1.8rem, 3vw, 2.5rem)" }}
+                  >
+                    {pkg.name}
+                  </h2>
+                  <p className="text-[#F4EFE6]/50 text-sm leading-relaxed mb-6">{pkg.desc}</p>
+                  <ul className="space-y-2.5 flex-1 mb-8">
+                    {pkg.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm text-[#F4EFE6]/70">
+                        <svg className="shrink-0 mt-0.5 text-[#169B62]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                           <polyline points="20 6 9 17 4 12" />
                         </svg>
-                        {feature}
+                        {f}
                       </li>
                     ))}
                   </ul>
@@ -114,7 +109,8 @@ export default async function GroupBookingsPage({
                     href={pkg.url}
                     target={pkg.url.startsWith("http") ? "_blank" : "_self"}
                     rel={pkg.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="block w-full text-center px-5 py-3 bg-[#F2B035] text-[#101010] font-bold text-sm rounded hover:bg-[#e0a020] transition-colors"
+                    className="block w-full text-center py-3 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}
                   >
                     {pkg.cta}
                   </a>
@@ -126,51 +122,35 @@ export default async function GroupBookingsPage({
       </section>
 
       {/* How it works */}
-      <section className="py-20 bg-[#0F5132]">
+      <section className="py-16 bg-[#0F5132] border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2
-            className="text-[#F4EFE6] text-4xl sm:text-5xl mb-12"
-            style={{ fontFamily: "'Lobster Two', cursive" }}
+            className="text-[#F4EFE6] mb-12"
+            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
             How It Works
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
             {[
-              {
-                step: "1",
-                title: "Choose Your Date",
-                desc: "Book online for groups up to 20, or reach out directly for larger events.",
-              },
-              {
-                step: "2",
-                title: "We Get You Set Up",
-                desc: "We'll confirm your space, set your screens, and curate a food and drinks package for your group.",
-              },
-              {
-                step: "3",
-                title: "Show Up & Enjoy",
-                desc: "Walk in, your table is ready. Cold drinks, great food, and the game you came to watch.",
-              },
+              { step: "1", title: "Choose Your Date", desc: "Book online for up to 20. Reach out directly for larger events." },
+              { step: "2", title: "We Get You Set Up", desc: "We confirm your space, set your screens, and sort your food and drinks package." },
+              { step: "3", title: "Show Up & Enjoy", desc: "Walk in, your table is ready. Cold drinks, great food, and the game you came to watch." },
             ].map((item) => (
               <div key={item.step} className="flex gap-5">
-                <div className="shrink-0">
-                  <span
-                    className="w-12 h-12 rounded-full bg-[#F2B035] text-[#101010] flex items-center justify-center text-xl font-bold"
-                    style={{ fontFamily: "'Lobster Two', cursive" }}
-                  >
-                    {item.step}
-                  </span>
+                <div
+                  className="w-10 h-10 bg-[#F2B035] text-[#101010] flex items-center justify-center shrink-0"
+                  style={{ fontFamily: "'Pacifico', cursive", fontSize: "1.2rem" }}
+                >
+                  {item.step}
                 </div>
                 <div>
                   <h3
-                    className="text-[#F4EFE6] text-xl mb-2"
-                    style={{ fontFamily: "'Lobster Two', cursive" }}
+                    className="text-[#F4EFE6] mb-2"
+                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "1.4rem" }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-[#F4EFE6] opacity-65 text-sm leading-relaxed">
-                    {item.desc}
-                  </p>
+                  <p className="text-[#F4EFE6]/50 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -178,51 +158,31 @@ export default async function GroupBookingsPage({
         </div>
       </section>
 
-      {/* Contact section */}
-      <section className="py-20 bg-[#101010]">
+      {/* Contact */}
+      <section className="py-16 bg-[#101010] border-t border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <h2
-            className="text-[#F4EFE6] text-5xl sm:text-6xl mb-4"
-            style={{ fontFamily: "'Lobster Two', cursive" }}
+            className="text-[#F4EFE6] mb-4"
+            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
             Questions?
           </h2>
-          <p className="text-[#F4EFE6] opacity-60 text-lg max-w-lg mx-auto mb-10">
-            Reach our events team directly and we&apos;ll help you plan the
-            perfect group experience.
+          <p className="text-[#F4EFE6]/50 text-base max-w-sm mx-auto mb-8">
+            Reach our events team at {loc.name} directly.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href={`tel:${loc.phone}`}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#0F5132] border border-[#169B62] text-[#F4EFE6] font-semibold text-sm rounded hover:bg-[#169B62] transition-colors"
+              className="inline-flex items-center px-7 py-3 bg-[#0F5132] border border-[#169B62] text-[#F4EFE6] hover:border-[#F2B035] transition-colors"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.2em" }}
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.26 12a19.79 19.79 0 0 1-3-8.57A2 2 0 0 1 3.18 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91A16 16 0 0 0 13 14.91l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z" />
-              </svg>
               {loc.phone}
             </a>
             <a
               href={`mailto:${loc.email}`}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#F2B035] text-[#101010] font-bold text-sm rounded hover:bg-[#e0a020] transition-colors"
+              className="inline-flex items-center px-7 py-3 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
               {loc.email}
             </a>
           </div>

@@ -2,6 +2,33 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Location } from "@/lib/locations";
 
+const NAV_LINKS = [
+  { href: "", label: "Home" },
+  { href: "/menu", label: "Menu" },
+  { href: "/events", label: "Events" },
+  { href: "/world-cup", label: "World Cup" },
+  { href: "/group-bookings", label: "Group Bookings" },
+  { href: "/faq", label: "FAQ" },
+];
+
+function InstagramIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+
 interface FooterProps {
   location: Location;
 }
@@ -10,99 +37,172 @@ export default function Footer({ location }: FooterProps) {
   const base = `/${location.slug}`;
 
   return (
-    <footer className="bg-[#101010] border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
-          {/* Brand */}
-          <div className="col-span-2 sm:col-span-1">
-            <Image
-              src="/logo.png"
-              alt="Dublin Calling"
-              width={72}
-              height={72}
-              className="w-16 h-auto mb-5"
-            />
-            <p className="text-[#F4EFE6]/25 text-xs uppercase tracking-widest mb-1">
-              {location.name}
+    <footer className="bg-[#101010] border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-6 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-6 items-start">
+
+          {/* Col 1 — Navigate + Locations */}
+          <div className="flex flex-col gap-3">
+            <p
+              className="text-[#F4EFE6]/30 mb-1"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.25em" }}
+            >
+              NAVIGATE
             </p>
-            <p className="text-[#F4EFE6]/20 text-xs">{location.address}</p>
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href === "" ? base : `${base}${link.href}`}
+                className="text-[#F4EFE6]/50 text-xs hover:text-[#F4EFE6] transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <p
+              className="text-[#F4EFE6]/30 mt-5 mb-1"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.25em" }}
+            >
+              LOCATIONS
+            </p>
+            {[
+              { slug: "adelaide", label: "Toronto — Adelaide" },
+              { slug: "danforth", label: "Toronto — Danforth" },
+              { slug: "vancouver", label: "Vancouver" },
+            ].map((loc) => (
+              <Link
+                key={loc.slug}
+                href={`/${loc.slug}`}
+                className={`text-xs transition-colors ${
+                  loc.slug === location.slug
+                    ? "text-[#F2B035]"
+                    : "text-[#F4EFE6]/50 hover:text-[#F4EFE6]"
+                }`}
+              >
+                {loc.label}
+              </Link>
+            ))}
           </div>
 
-          {/* Navigate */}
-          <div>
-            <p className="text-[#F4EFE6]/25 text-[10px] font-bold uppercase tracking-[0.25em] mb-4">
-              Navigate
+          {/* Col 2 — Social + Logo + Legal */}
+          <div className="flex flex-col items-center gap-5 text-center">
+            {/* Social icons */}
+            <div className="flex items-center gap-5">
+              <a
+                href={location.social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="text-[#F4EFE6]/40 hover:text-[#F4EFE6] transition-colors"
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href={location.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="text-[#F4EFE6]/40 hover:text-[#F4EFE6] transition-colors"
+              >
+                <InstagramIcon />
+              </a>
+            </div>
+
+            {/* Logo — large, centred, same treatment as Yale */}
+            <Link href={base}>
+              <Image
+                src="/logo.png"
+                alt="Dublin Calling"
+                width={200}
+                height={200}
+                className="object-contain w-auto"
+                style={{ height: "clamp(7rem, 14vw, 11rem)" }}
+              />
+            </Link>
+
+            {/* Legal notice */}
+            <p className="text-[#F4EFE6]/25 text-[10px] leading-relaxed">
+              You must be of legal drinking age to purchase alcohol.<br />
+              Valid Photo ID required.
             </p>
-            <ul className="space-y-2.5">
-              {[
-                { href: "", label: "Home" },
-                { href: "/menu", label: "Menu" },
-                { href: "/events", label: "Events" },
-                { href: "/world-cup", label: "World Cup" },
-                { href: "/group-bookings", label: "Group Bookings" },
-                { href: "/faq", label: "FAQ" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href === "" ? base : `${base}${link.href}`}
-                    className="text-[#F4EFE6]/40 text-xs hover:text-[#F4EFE6] transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+
+            {/* Privacy */}
+            <a
+              href="https://www.themrggroup.com/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#F4EFE6]/25 hover:text-[#F4EFE6]/50 transition-colors uppercase tracking-widest"
+              style={{ fontSize: "0.6rem" }}
+            >
+              Privacy Policy
+            </a>
           </div>
 
-          {/* Locations */}
-          <div>
-            <p className="text-[#F4EFE6]/25 text-[10px] font-bold uppercase tracking-[0.25em] mb-4">
-              Locations
+          {/* Col 3 — Contact (right-aligned) */}
+          <div className="flex flex-col gap-3 md:items-end md:text-right">
+            <p
+              className="text-[#F4EFE6]/30 mb-1"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.25em" }}
+            >
+              CONTACT — {location.name.toUpperCase()}
             </p>
-            <ul className="space-y-2.5">
-              {[
-                { slug: "adelaide", label: "Toronto — Adelaide" },
-                { slug: "danforth", label: "Toronto — Danforth" },
-                { slug: "vancouver", label: "Vancouver" },
-              ].map((loc) => (
-                <li key={loc.slug}>
-                  <Link
-                    href={`/${loc.slug}`}
-                    className={`text-xs transition-colors ${
-                      loc.slug === location.slug
-                        ? "text-[#F2B035] font-semibold"
-                        : "text-[#F4EFE6]/40 hover:text-[#F4EFE6]"
-                    }`}
-                  >
-                    {loc.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <a
+              href={`tel:${location.phone}`}
+              className="text-[#F4EFE6]/50 text-xs hover:text-[#F4EFE6] transition-colors"
+            >
+              {location.phone}
+            </a>
+            <a
+              href={`mailto:${location.email}`}
+              className="text-[#F4EFE6]/50 text-xs hover:text-[#F4EFE6] transition-colors break-all"
+            >
+              {location.email}
+            </a>
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(location.address)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#F4EFE6]/50 text-xs hover:text-[#F4EFE6] transition-colors leading-relaxed"
+            >
+              {location.address}
+            </a>
 
-          {/* Hours */}
-          <div>
-            <p className="text-[#F4EFE6]/25 text-[10px] font-bold uppercase tracking-[0.25em] mb-4">
-              Hours
-            </p>
-            <ul className="space-y-2">
+            {/* Hours */}
+            <div className="mt-4 pt-4 border-t border-white/10 space-y-1.5 md:text-right">
               {location.hours.map((h) => (
-                <li key={h.days} className="text-xs">
-                  <span className="text-[#F4EFE6]/25 block">{h.days}</span>
-                  <span className="text-[#F4EFE6]/50">{h.time}</span>
-                </li>
+                <p key={h.days} className="text-xs text-[#F4EFE6]/35">
+                  <span className="text-[#F4EFE6]/25">{h.days} &mdash; </span>{h.time}
+                </p>
               ))}
-            </ul>
+              {location.ageNote && (
+                <p
+                  className="text-[#C8102E] mt-2"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.12em" }}
+                >
+                  * {location.ageNote.toUpperCase()}
+                </p>
+              )}
+            </div>
+
+            {/* MRG Group note */}
+            <div className="mt-6 pt-5 border-t border-white/10">
+              <p className="text-[#F4EFE6]/20 text-[10px] md:text-right leading-relaxed">
+                A MRG Group venue
+              </p>
+            </div>
           </div>
+
         </div>
 
-        {/* Bottom */}
-        <div className="mt-14 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[#F4EFE6]/20 text-xs">
-            &copy; {new Date().getFullYear()} Dublin Calling / MRG Group. All rights reserved.
+        {/* Bottom bar */}
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between gap-2">
+          <p
+            className="text-[#F4EFE6]/25 uppercase"
+            style={{ fontSize: "0.6rem", letterSpacing: "0.15em" }}
+          >
+            Dublin Calling &copy; {new Date().getFullYear()} &mdash; All rights reserved
           </p>
-          <p className="text-[#F4EFE6]/20 text-xs">
+          <p className="text-[#F4EFE6]/25" style={{ fontSize: "0.6rem" }}>
             Website designed by{" "}
             <a
               href="https://alexandriabraniff.com"

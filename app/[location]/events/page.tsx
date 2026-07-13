@@ -13,159 +13,146 @@ export default async function EventsPage({
   const tagColors: Record<string, string> = {
     UFC: "bg-[#C8102E] text-white",
     Ticketed: "bg-[#F2B035] text-[#101010]",
-    Weekly: "bg-[#0F5132] text-[#F4EFE6] border border-[#169B62]",
-    Daily: "bg-[#169B62] text-white",
-    NFL: "bg-[#0F5132] text-[#F4EFE6] border border-[#169B62]",
-    Sports: "bg-[#0F5132] text-[#F4EFE6] border border-[#169B62]",
+    Weekly: "border border-white/20 text-[#F4EFE6]/50",
+    Daily: "border border-[#169B62] text-[#169B62]",
+    NFL: "border border-[#F2B035] text-[#F2B035]",
+    Sports: "border border-white/20 text-[#F4EFE6]/50",
   };
 
   return (
     <>
       {/* Header */}
-      <section className="bg-[#101010] py-20 border-b border-[#0F5132]">
+      <section className="bg-[#0F5132] py-20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <p className="text-[#F2B035] text-sm font-semibold uppercase tracking-[0.2em] mb-3">
-            {loc.name} — {loc.city}
+          <p
+            className="text-[#F2B035] mb-4"
+            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.3em" }}
+          >
+            {loc.name.toUpperCase()} &nbsp;·&nbsp; {loc.city.toUpperCase()}
           </p>
           <h1
-            className="text-[#F4EFE6] text-6xl sm:text-7xl mb-4"
-            style={{ fontFamily: "'Lobster Two', cursive" }}
+            className="text-[#F4EFE6] mb-4"
+            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
           >
             Events
           </h1>
-          <p className="text-[#F4EFE6] opacity-60 text-lg max-w-xl">
-            Live sports, trivia nights, ticketed events, and more. Something on
-            every night of the week.
+          <p className="text-[#F4EFE6]/50 text-lg max-w-xl font-light">
+            Live sports, trivia nights, ticketed events, and more. Something on every night of the week.
           </p>
         </div>
       </section>
 
-      {/* Happy Hour callout */}
-      <section className="bg-[#0F5132] py-10 border-b border-[#169B62]/30">
+      {/* Happy Hour banner */}
+      <section className="bg-[#101010] border-b border-white/8 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-5">
-            <span className="text-5xl">🍺</span>
+            <span className="text-4xl">🍺</span>
             <div>
-              <p
-                className="text-[#F2B035] text-3xl"
-                style={{ fontFamily: "'Lobster Two', cursive" }}
+              <h2
+                className="text-[#F2B035]"
+                style={{ fontFamily: "'Pacifico', cursive", fontSize: "1.8rem" }}
               >
-                Happy Hour — Every Day
-              </p>
-              <p className="text-[#F4EFE6] opacity-70 text-sm mt-1">
-                {loc.happyHour}
-              </p>
+                Happy Hour Every Day
+              </h2>
+              <p className="text-[#F4EFE6]/50 text-sm mt-0.5">{loc.happyHour}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 bg-[#101010] rounded px-5 py-3">
-            <span className="w-2 h-2 rounded-full bg-[#169B62]" />
-            <span className="text-[#F4EFE6] text-sm font-medium">
-              Drink specials on draught, cocktails &amp; more
-            </span>
-          </div>
+          <span
+            className="border border-[#169B62] text-[#169B62] px-4 py-1.5"
+            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.2em" }}
+          >
+            DRINK SPECIALS
+          </span>
         </div>
       </section>
 
       {/* Events grid */}
-      <section className="py-16 bg-[#101010]">
+      <section className="py-16 bg-[#0F5132]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
             {loc.events.map((event) => (
               <article
                 key={event.title}
-                className="bg-[#0F5132] rounded-xl overflow-hidden border border-[#169B62]/20 hover:border-[#169B62]/60 transition-colors flex flex-col"
+                className="bg-[#101010] border border-white/8 hover:border-[#F2B035]/40 transition-colors flex flex-col"
               >
-                {/* Color top bar by tag */}
-                <div
-                  className={`h-1.5 w-full ${
-                    event.tag === "UFC"
-                      ? "bg-[#C8102E]"
-                      : event.tag === "Ticketed"
-                        ? "bg-[#F2B035]"
-                        : event.tag === "Daily"
-                          ? "bg-[#169B62]"
-                          : "bg-[#0F5132]"
-                  }`}
-                />
+                {/* Top colour strip */}
+                <div className={`h-1 w-full ${
+                  event.tag === "UFC" ? "bg-[#C8102E]"
+                  : event.tag === "Ticketed" ? "bg-[#F2B035]"
+                  : event.tag === "Daily" ? "bg-[#169B62]"
+                  : "bg-[#0F5132]"
+                }`} />
 
                 <div className="p-7 flex flex-col flex-1">
                   <div className="flex items-start justify-between gap-3 mb-4">
-                    <span className="text-xs text-[#F4EFE6] opacity-50 font-medium uppercase tracking-wider leading-5">
-                      {event.date}
+                    <span
+                      className="text-[#F4EFE6]/35 mt-0.5"
+                      style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.15em" }}
+                    >
+                      {event.date.toUpperCase()}
                     </span>
                     {event.tag && (
                       <span
-                        className={`shrink-0 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide ${
-                          tagColors[event.tag] ??
-                          "bg-[#0F5132] text-[#F4EFE6] border border-[#169B62]"
-                        }`}
+                        className={`shrink-0 px-2.5 py-0.5 ${tagColors[event.tag] ?? "border border-white/20 text-[#F4EFE6]/40"}`}
+                        style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.15em" }}
                       >
-                        {event.tag}
+                        {event.tag.toUpperCase()}
                       </span>
                     )}
                   </div>
 
                   <h2
-                    className="text-[#F4EFE6] text-2xl mb-3 flex-1"
-                    style={{ fontFamily: "'Lobster Two', cursive" }}
+                    className="text-[#F4EFE6] mb-3 flex-1"
+                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(1.3rem, 3vw, 1.8rem)" }}
                   >
                     {event.title}
                   </h2>
-                  <p className="text-[#F4EFE6] text-sm opacity-65 leading-relaxed">
-                    {event.description}
-                  </p>
+                  <p className="text-[#F4EFE6]/50 text-sm leading-relaxed">{event.description}</p>
 
                   {event.ticketUrl && (
                     <a
                       href={event.ticketUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-5 self-start inline-flex items-center gap-2 px-5 py-2.5 bg-[#F2B035] text-[#101010] text-sm font-bold rounded hover:bg-[#e0a020] transition-colors"
+                      className="mt-5 self-start inline-flex items-center gap-2 px-5 py-2.5 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
+                      style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.18em" }}
                     >
-                      Get Tickets
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
-                        <line x1="7" y1="17" x2="17" y2="7" />
-                        <polyline points="7 7 17 7 17 17" />
-                      </svg>
+                      GET TICKETS
                     </a>
                   )}
                 </div>
               </article>
             ))}
 
-            {/* Standing card: Book for events */}
-            <article className="bg-[#101010] rounded-xl overflow-hidden border border-[#F2B035]/30 hover:border-[#F2B035]/60 transition-colors flex flex-col">
-              <div className="h-1.5 w-full bg-[#F2B035]" />
+            {/* Book your own night */}
+            <article className="bg-[#0F5132] border border-[#F2B035]/25 hover:border-[#F2B035]/60 transition-colors flex flex-col">
+              <div className="h-1 w-full bg-[#F2B035]" />
               <div className="p-7 flex flex-col flex-1 justify-between">
                 <div>
-                  <p className="text-[#F2B035] text-xs font-bold uppercase tracking-widest mb-3">
-                    Private Event
+                  <p
+                    className="text-[#F2B035] mb-4"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em" }}
+                  >
+                    PRIVATE EVENT
                   </p>
                   <h2
-                    className="text-[#F4EFE6] text-2xl mb-3"
-                    style={{ fontFamily: "'Lobster Two', cursive" }}
+                    className="text-[#F4EFE6] mb-3"
+                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(1.3rem, 3vw, 1.8rem)" }}
                   >
                     Host Your Own Night
                   </h2>
-                  <p className="text-[#F4EFE6] text-sm opacity-60 leading-relaxed">
-                    Birthday? Work event? Post-game celebration? Book the space
-                    and let us handle the rest.
+                  <p className="text-[#F4EFE6]/50 text-sm leading-relaxed">
+                    Birthday? Work event? Post-game celebration? Book the space and let us handle the rest.
                   </p>
                 </div>
                 <a
                   href={loc.bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 self-start inline-flex items-center gap-2 px-5 py-2.5 bg-[#F2B035] text-[#101010] text-sm font-bold rounded hover:bg-[#e0a020] transition-colors"
+                  className="mt-5 self-start inline-flex items-center px-5 py-2.5 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.18em" }}
                 >
-                  Book Now
+                  BOOK NOW
                 </a>
               </div>
             </article>
@@ -173,33 +160,21 @@ export default async function EventsPage({
         </div>
       </section>
 
-      {/* Sports schedule strip */}
-      <section className="py-12 bg-[#0F5132] border-t border-[#169B62]/30">
+      {/* Sports strip */}
+      <section className="py-12 bg-[#101010] border-t border-white/8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2
-            className="text-[#F4EFE6] text-3xl mb-8"
-            style={{ fontFamily: "'Lobster Two', cursive" }}
+            className="text-[#F4EFE6] mb-6"
+            style={{ fontFamily: "'Pacifico', cursive", fontSize: "2rem" }}
           >
             Every Major Sport, Every Night
           </h2>
-          <div className="flex flex-wrap gap-3">
-            {[
-              "NFL",
-              "CFL",
-              "MLB",
-              "NBA",
-              "NHL",
-              "UFC",
-              "Premier League",
-              "MLS",
-              "Champions League",
-              "Rugby",
-              "Tennis",
-              "Golf",
-            ].map((sport) => (
+          <div className="flex flex-wrap gap-2">
+            {["NFL","CFL","MLB","NBA","NHL","UFC","Premier League","MLS","Champions League","Rugby","Tennis","Golf"].map((sport) => (
               <span
                 key={sport}
-                className="px-4 py-2 border border-[#169B62]/40 text-[#F4EFE6] opacity-80 text-sm rounded-full hover:border-[#F2B035] hover:text-[#F2B035] hover:opacity-100 transition-colors cursor-default"
+                className="border border-white/10 text-[#F4EFE6]/40 hover:border-[#F2B035] hover:text-[#F2B035] transition-colors cursor-default px-4 py-2"
+                style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 500, letterSpacing: "0.12em" }}
               >
                 {sport}
               </span>

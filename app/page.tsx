@@ -4,35 +4,32 @@ import Image from "next/image";
 const LOCATIONS = [
   {
     slug: "adelaide",
-    name: "Adelaide",
     label: "Toronto",
+    sublabel: "Adelaide St",
     address: "250 Adelaide St. W",
-    hours: "Mon–Fri from 3PM · Sat–Sun from 12PM",
-    highlight: "20+ Big Screens · Bills Backers Club",
+    detail: "20+ Big Screens · Bills Backers Club · Trivia",
   },
   {
     slug: "danforth",
-    name: "Danforth",
     label: "Toronto",
+    sublabel: "Danforth Ave",
     address: "526 Danforth Ave",
-    hours: "Mon–Fri from 3PM · Sat–Sun from 12PM",
-    highlight: "Pool Tournaments · Trivia Nights",
+    detail: "Pool Tournaments · Trivia Nights · 10+ Screens",
   },
   {
     slug: "vancouver",
-    name: "Vancouver",
-    label: "Granville St",
+    label: "Vancouver",
+    sublabel: "Granville St",
     address: "900 Granville St",
-    hours: "Daily from 12PM · Open until 3AM Fri–Sat",
-    highlight: "12+ Taps · Open Until 3AM",
+    detail: "12+ Taps · Ladies Night · Open Until 3AM",
   },
 ];
 
 export default function RootPage() {
   return (
-    <div className="min-h-dvh bg-[#101010] flex flex-col">
-      {/* Top strip */}
-      <div className="w-full bg-[#0F5132] text-[#F4EFE6] text-xs text-center py-1.5 px-4">
+    <div className="min-h-dvh bg-[#0F5132] flex flex-col">
+      {/* DESIGNER CREDIT BANNER - remove only after client payment */}
+      <div className="w-full bg-[#101010] text-[#F4EFE6] text-xs text-center py-1.5 px-4">
         Website designed by{" "}
         <a
           href="https://alexandriabraniff.com"
@@ -52,74 +49,63 @@ export default function RootPage() {
       </div>
 
       {/* Hero */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-16 pb-10">
+      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-20 pb-12">
         <Image
           src="/logo.png"
           alt="Dublin Calling"
-          width={140}
-          height={140}
-          className="w-28 sm:w-36 h-auto mb-8"
+          width={160}
+          height={160}
+          className="w-32 sm:w-40 h-auto mb-8"
           priority
         />
-        <p className="text-[#F4EFE6] text-xs font-semibold uppercase tracking-[0.3em] mb-3 opacity-50">
-          Three Locations
-        </p>
+
         <h1
-          className="text-[#F4EFE6] text-center leading-none mb-2"
-          style={{
-            fontFamily: "'Lobster Two', cursive",
-            fontSize: "clamp(3.5rem, 12vw, 8rem)",
-          }}
+          className="text-[#F4EFE6] text-center leading-tight mb-2"
+          style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.8rem, 9vw, 6rem)" }}
         >
-          Choose Your Pub
+          Dublin Calling
         </h1>
-        <p className="text-[#F4EFE6] opacity-40 text-sm tracking-widest uppercase mb-16">
-          Party Pub &amp; Kitchen
+        <p
+          className="text-[#F2B035] text-center tracking-[0.25em] mb-16"
+          style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(0.75rem, 2vw, 1rem)", fontWeight: 600 }}
+        >
+          PARTY PUB &amp; KITCHEN
         </p>
 
         {/* Location cards */}
-        <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#1a1a1a]">
+        <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 border border-white/10 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
           {LOCATIONS.map((loc) => (
             <Link
               key={loc.slug}
               href={`/${loc.slug}`}
-              className="group bg-[#101010] hover:bg-[#0F5132] transition-colors duration-300 p-8 sm:p-10 flex flex-col gap-6"
+              className="group bg-[#0F5132] hover:bg-[#101010] transition-colors duration-300 p-8 flex flex-col gap-5"
             >
               <div>
-                <p className="text-[#F2B035] text-xs font-bold uppercase tracking-[0.25em] mb-3">
+                <p
+                  className="text-[#F2B035] tracking-[0.2em] mb-1"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600 }}
+                >
                   {loc.label}
                 </p>
                 <h2
-                  className="text-[#F4EFE6] leading-none mb-2"
-                  style={{
-                    fontFamily: "'Lobster Two', cursive",
-                    fontSize: "clamp(2.5rem, 6vw, 4rem)",
-                  }}
+                  className="text-[#F4EFE6] leading-tight"
+                  style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2rem, 4vw, 2.8rem)" }}
                 >
-                  {loc.name}
+                  {loc.sublabel}
                 </h2>
-                <p className="text-[#F4EFE6] opacity-50 text-sm">{loc.address}</p>
+                <p className="text-[#F4EFE6]/40 text-xs mt-1">{loc.address}</p>
               </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-[#F4EFE6] opacity-40 text-xs">{loc.hours}</p>
-                <p className="text-[#169B62] text-xs font-semibold group-hover:text-[#F2B035] transition-colors">
-                  {loc.highlight}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2 text-[#F4EFE6] opacity-30 group-hover:opacity-100 group-hover:text-[#F2B035] transition-all text-xs font-bold uppercase tracking-widest">
-                Enter
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
+              <p className="text-[#169B62] group-hover:text-[#F2B035] text-xs transition-colors leading-relaxed">
+                {loc.detail}
+              </p>
+              <div className="flex items-center gap-2 text-[#F4EFE6]/25 group-hover:text-[#F2B035] transition-colors">
+                <span
+                  style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em" }}
                 >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
+                  ENTER
+                </span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                 </svg>
               </div>
             </Link>
@@ -127,9 +113,8 @@ export default function RootPage() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-[#1a1a1a] px-6 py-4 text-center">
-        <p className="text-[#F4EFE6] opacity-20 text-xs">
+      <div className="border-t border-white/10 px-6 py-4 text-center">
+        <p className="text-[#F4EFE6]/20 text-xs">
           &copy; {new Date().getFullYear()} Dublin Calling / MRG Group
         </p>
       </div>

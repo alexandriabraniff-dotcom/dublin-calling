@@ -40,7 +40,7 @@ export default function Navbar({ location }: NavbarProps) {
   return (
     <>
       {/* DESIGNER CREDIT BANNER - remove only after client payment */}
-      <div className="w-full bg-[#0F5132] text-[#F4EFE6] text-xs text-center py-1.5 px-4">
+      <div className="w-full bg-[#101010] text-[#F4EFE6] text-xs text-center py-1.5 px-4">
         Website designed by{" "}
         <a
           href="https://alexandriabraniff.com"
@@ -59,16 +59,16 @@ export default function Navbar({ location }: NavbarProps) {
         </a>
       </div>
 
-      <header className="sticky top-0 z-50 bg-[#101010] border-b border-white/5">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-[60px] gap-6">
+      <header className="sticky top-0 z-50 bg-[#0F5132] border-b border-white/10">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-[64px] gap-6">
           {/* Logo */}
           <Link href={base} aria-label="Dublin Calling home" className="shrink-0">
             <Image
               src="/logo.png"
               alt="Dublin Calling"
-              width={44}
-              height={44}
-              className="h-10 w-auto"
+              width={48}
+              height={48}
+              className="h-11 w-auto"
               priority
             />
           </Link>
@@ -79,35 +79,36 @@ export default function Navbar({ location }: NavbarProps) {
               <li key={link.href}>
                 <Link
                   href={link.href === "" ? base : `${base}${link.href}`}
-                  className={`px-3.5 py-2 text-xs font-semibold uppercase tracking-widest transition-colors rounded-sm ${
+                  className={`px-4 py-2 text-xs transition-colors ${
                     isActive(link.href)
                       ? "text-[#F2B035]"
-                      : "text-[#F4EFE6]/50 hover:text-[#F4EFE6]"
+                      : "text-[#F4EFE6]/60 hover:text-[#F4EFE6]"
                   }`}
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 500, letterSpacing: "0.12em" }}
                 >
-                  {link.label}
+                  {link.label.toUpperCase()}
                 </Link>
               </li>
             ))}
           </ul>
 
           {/* Right */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-4 shrink-0">
             {/* Location switcher */}
             <div className="relative hidden sm:block">
               <button
                 onClick={() => setLocationOpen(!locationOpen)}
-                className="flex items-center gap-1.5 text-xs font-semibold text-[#F4EFE6]/60 hover:text-[#F4EFE6] uppercase tracking-widest transition-colors py-2"
+                className="flex items-center gap-1.5 text-[#F4EFE6]/60 hover:text-[#F4EFE6] transition-colors py-2"
+                style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.15em" }}
                 aria-expanded={locationOpen}
               >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
                 </svg>
-                {LOCATION_LABELS[location]}
+                {LOCATION_LABELS[location].toUpperCase()}
                 <svg
-                  width="10"
-                  height="10"
+                  width="9"
+                  height="9"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -119,36 +120,37 @@ export default function Navbar({ location }: NavbarProps) {
               </button>
 
               {locationOpen && (
-                <div className="absolute right-0 top-full mt-1 w-52 bg-[#0F5132] z-50 border border-white/10">
+                <div className="absolute right-0 top-full mt-0.5 w-52 bg-[#101010] border border-white/10 z-50">
                   {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map((slug) => (
                     <Link
                       key={slug}
                       href={`/${slug}`}
                       onClick={() => setLocationOpen(false)}
-                      className={`flex items-center gap-2 w-full px-4 py-3 text-xs font-semibold uppercase tracking-widest transition-colors ${
+                      className={`flex items-center w-full px-4 py-3 transition-colors ${
                         slug === location
                           ? "text-[#F2B035]"
-                          : "text-[#F4EFE6]/70 hover:text-[#F4EFE6] hover:bg-[#169B62]/20"
+                          : "text-[#F4EFE6]/60 hover:text-[#F4EFE6] hover:bg-white/5"
                       }`}
+                      style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.15em" }}
                     >
-                      {LOCATION_LABELS[slug]}
+                      {LOCATION_LABELS[slug].toUpperCase()}
                     </Link>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Separator */}
-            <div className="hidden sm:block w-px h-4 bg-white/10" />
+            <div className="hidden sm:block w-px h-4 bg-white/15" />
 
             {/* Book Now */}
             <a
               href="https://themrggroup.tripleseat.com/dynamic_party_request/528"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center px-4 py-2 bg-[#F2B035] text-[#101010] text-xs font-bold uppercase tracking-widest hover:bg-[#e0a020] transition-colors"
+              className="hidden sm:inline-flex items-center px-5 py-2 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.18em" }}
             >
-              Book Now
+              BOOK NOW
             </a>
 
             {/* Mobile hamburger */}
@@ -172,36 +174,35 @@ export default function Navbar({ location }: NavbarProps) {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="lg:hidden border-t border-white/5 bg-[#101010]">
+          <div className="lg:hidden border-t border-white/10 bg-[#0F5132]">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href === "" ? base : `${base}${link.href}`}
                 onClick={() => setMenuOpen(false)}
-                className={`flex items-center px-6 py-4 text-xs font-semibold uppercase tracking-widest border-b border-white/5 transition-colors ${
+                className={`flex items-center px-6 py-4 border-b border-white/10 transition-colors ${
                   isActive(link.href) ? "text-[#F2B035]" : "text-[#F4EFE6]/60 hover:text-[#F4EFE6]"
                 }`}
+                style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.85rem", fontWeight: 500, letterSpacing: "0.15em" }}
               >
-                {link.label}
+                {link.label.toUpperCase()}
               </Link>
             ))}
-            {/* Mobile location switcher */}
-            <div className="border-b border-white/5">
+            <div className="border-b border-white/10 py-2">
               {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map((slug) => (
                 <Link
                   key={slug}
                   href={`/${slug}`}
                   onClick={() => setMenuOpen(false)}
-                  className={`flex items-center gap-2 px-6 py-3.5 text-xs transition-colors ${
-                    slug === location
-                      ? "text-[#F2B035] font-bold"
-                      : "text-[#F4EFE6]/40 hover:text-[#F4EFE6]"
+                  className={`flex items-center gap-2 px-6 py-3 transition-colors ${
+                    slug === location ? "text-[#F2B035]" : "text-[#F4EFE6]/40 hover:text-[#F4EFE6]"
                   }`}
+                  style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.15em" }}
                 >
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
                   </svg>
-                  {LOCATION_LABELS[slug]}
+                  {LOCATION_LABELS[slug].toUpperCase()}
                 </Link>
               ))}
             </div>
@@ -210,9 +211,10 @@ export default function Navbar({ location }: NavbarProps) {
                 href="https://themrggroup.tripleseat.com/dynamic_party_request/528"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full text-center py-3 bg-[#F2B035] text-[#101010] text-xs font-bold uppercase tracking-widest"
+                className="block w-full text-center py-3 bg-[#F2B035] text-[#101010]"
+                style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.2em" }}
               >
-                Book Now
+                BOOK NOW
               </a>
             </div>
           </div>
