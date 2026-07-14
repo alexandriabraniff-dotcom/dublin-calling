@@ -77,15 +77,15 @@ export default async function LocationHome({
     return "border border-white/20 text-[#F4EFE6]/40";
   };
 
-  // Hero subtitle — avoid "Vancouver · Vancouver" repetition
+  // Hero subtitle
   const heroLabel =
-    loc.city === loc.name
-      ? `${loc.city} · Party Pub & Kitchen`
+    loc.slug === "vancouver"
+      ? "Party Pub & Kitchen"
       : `${loc.city} · ${loc.name} · Party Pub & Kitchen`;
 
   const heroH1 =
     loc.slug === "vancouver"
-      ? <>Open Until <span className="text-[#F2B035]">3AM</span></>
+      ? <>Vancouver&apos;s <span className="text-[#F2B035]">Sports Bar</span></>
       : loc.slug === "danforth"
       ? <>East Toronto&apos;s <span className="text-[#F2B035]">Party Pub</span></>
       : <>Downtown <span className="text-[#F2B035]">Toronto&apos;s</span> Party Pub</>;
@@ -136,12 +136,15 @@ export default async function LocationHome({
             {heroH1}
           </h1>
 
-          <p
-            className="text-[#F4EFE6]/65 max-w-md mb-10"
-            style={{ fontSize: "clamp(0.85rem, 1.4vw, 1rem)", lineHeight: 1.8 }}
-          >
-            {loc.heroTagline}
-          </p>
+          {loc.slug !== "vancouver" && (
+            <p
+              className="text-[#F4EFE6]/65 max-w-md mb-10"
+              style={{ fontSize: "clamp(0.85rem, 1.4vw, 1rem)", lineHeight: 1.8 }}
+            >
+              {loc.heroTagline}
+            </p>
+          )}
+          {loc.slug === "vancouver" && <div className="mb-10" />}
 
           <div className="flex flex-wrap justify-center gap-3">
             <a
@@ -168,7 +171,7 @@ export default async function LocationHome({
       {/* ── EVENTS CARDS ── */}
       <section className="bg-[#101010] py-14 border-b border-white/10">
         <FadeIn className="max-w-7xl mx-auto px-6 mb-6 flex items-end justify-between">
-          <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em]">What&apos;s On</p>
+          <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em]">Events</p>
           <Link
             href={`${base}/events`}
             className="text-[#F2B035] text-xs uppercase tracking-widest hover:text-[#e0a020] transition-colors"
@@ -186,27 +189,33 @@ export default async function LocationHome({
                 className="group border border-white/10 hover:border-[#F2B035]/40 transition-colors overflow-hidden shrink-0 snap-start w-[78vw] sm:w-80 lg:w-auto flex flex-col"
               >
                 {/* Top colour panel */}
-                <div
-                  className={`flex flex-col items-center justify-center p-8 gap-3 ${
-                    card.tagColor === "red"
-                      ? "bg-[#101010] border border-[#C8102E]"
-                      : card.tagColor === "gold"
-                      ? "bg-[#F2B035]"
-                      : card.tagColor === "green"
-                      ? "bg-[#169B62]"
-                      : "bg-[#0F5132]"
-                  }`}
-                  style={{ height: "clamp(120px, 14vw, 180px)" }}
-                >
-                  <span style={{ fontSize: "3rem" }}>{card.emoji}</span>
-                  <span
-                    className={`text-[10px] uppercase tracking-[0.2em] font-medium ${
-                      card.tagColor === "gold" ? "text-[#101010]" : "text-white/70"
+                {card.name === "Ladies Night" ? (
+                  <div className="relative overflow-hidden" style={{ height: "clamp(120px, 14vw, 180px)" }}>
+                    <Image src="/ladies-night.jpg" alt="Ladies Night" fill className="object-cover object-top" />
+                  </div>
+                ) : (
+                  <div
+                    className={`flex flex-col items-center justify-center p-8 gap-3 ${
+                      card.tagColor === "red"
+                        ? "bg-[#101010] border border-[#C8102E]"
+                        : card.tagColor === "gold"
+                        ? "bg-[#F2B035]"
+                        : card.tagColor === "green"
+                        ? "bg-[#169B62]"
+                        : "bg-[#0F5132]"
                     }`}
+                    style={{ height: "clamp(120px, 14vw, 180px)" }}
                   >
-                    {card.tag}
-                  </span>
-                </div>
+                    <span style={{ fontSize: "3rem" }}>{card.emoji}</span>
+                    <span
+                      className={`text-[10px] uppercase tracking-[0.2em] font-medium ${
+                        card.tagColor === "gold" ? "text-[#101010]" : "text-white/70"
+                      }`}
+                    >
+                      {card.tag}
+                    </span>
+                  </div>
+                )}
 
                 {/* Bottom info */}
                 <div className="bg-[#0F5132] p-5 flex flex-col gap-3 flex-1">
