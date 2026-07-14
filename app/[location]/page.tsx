@@ -108,17 +108,6 @@ export default async function LocationHome({
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-[#101010]/60" />
 
-        {/* Age note badge */}
-        {loc.ageNote && (
-          <div className="absolute top-6 right-6 z-10">
-            <span
-              className="border border-[#C8102E] text-[#F4EFE6] px-2 py-1"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.2em" }}
-            >
-              {loc.ageNote.toUpperCase()}
-            </span>
-          </div>
-        )}
 
         {/* Centre content — pushed down to clear logo overflow */}
         <div
@@ -425,13 +414,6 @@ export default async function LocationHome({
                     <span className="text-[#F4EFE6]/70 text-xs text-right">{h.time}</span>
                   </div>
                 ))}
-                {loc.ageNote && (
-                  <p
-                    className="mt-4 inline-block border border-[#C8102E] text-[#101010] px-2 py-0.5 self-start"
-                    style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em" }}
-                  >
-                    * {loc.ageNote.toUpperCase()}
-                  </p>
                 )}
               </div>
             </FadeIn>

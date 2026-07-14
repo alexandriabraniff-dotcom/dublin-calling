@@ -176,7 +176,7 @@ export default async function AboutPage({
             </p>
             <p className="text-[#F4EFE6]/65 text-sm leading-relaxed max-w-md">
               {loc.slug === "vancouver"
-                ? "19+ after 10PM. Bring valid government-issued ID. Our kitchen serves pub classics all day and into the night. Happy Hour runs Sunday to Friday, 4PM to 6PM."
+                ? "Our kitchen serves pub classics all day and into the night. Happy Hour runs Sunday to Friday, 4PM to 6PM."
                 : "No cover charge for most nights. Ticketed events are listed on our events page. Our kitchen runs from open until late, with pub classics, sharables, and mains on the menu."}
             </p>
           </div>
@@ -267,13 +267,6 @@ export default async function AboutPage({
                 </div>
               ))}
             </div>
-            {loc.ageNote && (
-              <p
-                className="mt-4 inline-block border border-[#C8102E] text-[#101010] px-2 py-0.5"
-                style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em" }}
-              >
-                * {loc.ageNote.toUpperCase()}
-              </p>
             )}
           </FadeIn>
         </div>
