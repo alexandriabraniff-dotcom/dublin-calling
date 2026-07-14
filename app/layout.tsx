@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Dublin Calling — Party Pub & Kitchen",
+  title: "Dublin Calling | Party Pub & Kitchen",
   description:
     "Dublin Calling is Toronto and Vancouver's favourite party pub and kitchen. Three locations: Adelaide St (Toronto), Danforth Ave (Toronto), and Granville St (Vancouver).",
   keywords: [

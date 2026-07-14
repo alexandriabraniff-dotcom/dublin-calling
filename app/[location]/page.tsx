@@ -94,13 +94,25 @@ export default async function LocationHome({
     <>
       {/* ── HERO ── */}
       <section
-        className="relative bg-[#0F5132] flex flex-col items-center justify-center text-center"
-        style={{ minHeight: "calc(100dvh - 68px)", padding: "clamp(4rem, 8vh, 7rem) 1.5rem clamp(5rem, 10vh, 8rem)" }}
+        className="relative overflow-hidden flex flex-col"
+        style={{ height: "calc(100dvh - 72px)" }}
       >
+        {/* Background photo */}
+        <Image
+          src="/hero.jpg"
+          alt=""
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-[#101010]/60" />
+
+        {/* Age note badge */}
         {loc.ageNote && (
-          <div className="absolute top-6 right-6">
+          <div className="absolute top-6 right-6 z-10">
             <span
-              className="border border-[#C8102E] text-[#101010] px-2 py-1"
+              className="border border-[#C8102E] text-[#F4EFE6] px-2 py-1"
               style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.2em" }}
             >
               {loc.ageNote.toUpperCase()}
@@ -108,54 +120,51 @@ export default async function LocationHome({
           </div>
         )}
 
-        <p className="text-[#F4EFE6]/35 uppercase tracking-[0.3em] mb-6" style={{ fontSize: "clamp(9px, 0.8vw, 11px)" }}>
-          {heroLabel}
-        </p>
-
-        <Image
-          src="/logo.png"
-          alt="Dublin Calling"
-          width={140}
-          height={140}
-          className="w-24 sm:w-32 md:w-36 h-auto mb-8 drop-shadow-2xl"
-          priority
-        />
-
-        <h1
-          className="text-[#F4EFE6] leading-[1.05] mb-5"
-          style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.8rem, 9vw, 7rem)" }}
+        {/* Centre content — pushed down to clear logo overflow */}
+        <div
+          className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6"
+          style={{ paddingTop: "clamp(80px, 12vh, 110px)", paddingBottom: "clamp(60px, 10vh, 90px)" }}
         >
-          {heroH1}
-        </h1>
+          <p className="text-[#F4EFE6]/50 uppercase tracking-[0.3em] mb-5" style={{ fontSize: "clamp(9px, 0.8vw, 11px)" }}>
+            {heroLabel}
+          </p>
 
-        <p
-          className="text-[#F4EFE6]/50 max-w-md mb-10"
-          style={{ fontSize: "clamp(0.9rem, 1.6vw, 1.1rem)", lineHeight: 1.7 }}
-        >
-          {loc.heroTagline}
-        </p>
+          <h1
+            className="text-[#F4EFE6] leading-[1.05] mb-5"
+            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.8rem, 9vw, 6rem)" }}
+          >
+            {heroH1}
+          </h1>
 
-        <div className="flex flex-wrap justify-center gap-3">
-          <a
-            href={loc.bookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
-            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
+          <p
+            className="text-[#F4EFE6]/65 max-w-md mb-10"
+            style={{ fontSize: "clamp(0.85rem, 1.4vw, 1rem)", lineHeight: 1.8 }}
           >
-            Book a Table
-          </a>
-          <Link
-            href={`${base}/events`}
-            className="border border-[#F4EFE6]/25 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
-            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
-          >
-            See Events
-          </Link>
+            {loc.heroTagline}
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            <a
+              href={loc.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
+            >
+              Book a Table
+            </a>
+            <Link
+              href={`${base}/events`}
+              className="border border-[#F4EFE6]/30 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
+            >
+              See Events
+            </Link>
+          </div>
         </div>
 
-        {/* Stat strip */}
-        <div className="absolute bottom-0 inset-x-0 border-t border-white/10">
+        {/* Stat strip — pinned to bottom of hero */}
+        <div className="relative z-10 border-t border-white/15 bg-[#101010]/50 backdrop-blur-sm shrink-0">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 divide-x divide-white/10 py-5">
             {loc.stats.map((s) => (
               <div key={s.label} className="text-center px-4">
@@ -165,7 +174,7 @@ export default async function LocationHome({
                 >
                   {s.value}
                 </p>
-                <p className="text-[#F4EFE6]/30 uppercase tracking-[0.2em] mt-1" style={{ fontSize: "clamp(8px, 0.65vw, 10px)" }}>
+                <p className="text-[#F4EFE6]/40 uppercase tracking-[0.2em] mt-1" style={{ fontSize: "clamp(8px, 0.65vw, 10px)" }}>
                   {s.label}
                 </p>
               </div>

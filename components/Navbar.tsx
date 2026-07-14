@@ -7,20 +7,21 @@ import { useState } from "react";
 import type { LocationSlug } from "@/lib/locations";
 
 const LOCATION_LABELS: Record<LocationSlug, string> = {
-  adelaide: "Toronto — Adelaide",
-  danforth: "Toronto — Danforth",
+  adelaide: "Toronto, Adelaide",
+  danforth: "Toronto, Danforth",
   vancouver: "Vancouver",
 };
 
 const LEFT_LINKS = [
-  { href: "/about",     label: "About"  },
-  { href: "/menu",      label: "Menu"   },
-  { href: "/events",    label: "Events" },
+  { href: "/about",  label: "About"  },
+  { href: "/menu",   label: "Menu"   },
+  { href: "/events", label: "Events" },
 ];
+
 const RIGHT_LINKS = [
-  { href: "/world-cup",      label: "World Cup" },
-  { href: "/group-bookings", label: "Groups"    },
-  { href: "/faq",            label: "FAQ"       },
+  { href: "/world-cup",      label: "World Cup"  },
+  { href: "/group-bookings", label: "Groups"     },
+  { href: "/faq",            label: "FAQ"        },
 ];
 
 function Hamburger({ open }: { open: boolean }) {
@@ -41,91 +42,123 @@ export default function Navbar({ location }: { location: LocationSlug }) {
   const allLinks = [...LEFT_LINKS, ...RIGHT_LINKS];
 
   function isActive(href: string) {
-    return pathname === (href === "" ? base : `${base}${href}`);
+    return pathname === `${base}${href}`;
   }
+
+  const linkClass = (href: string) =>
+    `font-medium uppercase tracking-[0.15em] transition-colors whitespace-nowrap ${
+      isActive(href) ? "text-[#F2B035]" : "text-[#F4EFE6]/55 hover:text-[#F4EFE6]"
+    }`;
 
   return (
     <>
-      {/* DESIGNER CREDIT BANNER - remove only after client payment */}
-      <div className="w-full bg-[#101010] text-[#F4EFE6]/50 text-xs text-center py-1.5 px-4">
+      {/* DESIGNER CREDIT BANNER */}
+      <div className="w-full bg-[#101010] text-[#F4EFE6]/40 text-xs text-center py-1.5 px-4">
         Website designed by{" "}
         <a href="https://alexandriabraniff.com" target="_blank" rel="noopener noreferrer"
-          className="underline hover:text-[#F2B035] transition-colors">Alexandria Braniff</a>{" "}—{" "}
+          className="underline hover:text-[#F2B035] transition-colors">Alexandria Braniff</a>{" "}·{" "}
         <a href="mailto:hello@alexandriabraniff.com"
           className="underline hover:text-[#F2B035] transition-colors">hello@alexandriabraniff.com</a>
       </div>
 
-      {/* Desktop: 3-column nav — logo centred, links flanking */}
-      <header className="hidden md:grid grid-cols-3 w-full items-center bg-[#0F5132] border-b border-white/10 px-8 h-[68px] sticky top-0 z-50">
-        {/* Left */}
-        <div className="flex items-center gap-7">
-          {LEFT_LINKS.map(l => (
-            <Link key={l.href} href={l.href === "" ? base : `${base}${l.href}`}
-              className={`font-medium uppercase tracking-[0.15em] transition-colors whitespace-nowrap ${isActive(l.href) ? "text-[#F2B035]" : "text-[#F4EFE6]/55 hover:text-[#F4EFE6]"}`}
-              style={{ fontSize: "clamp(10px, 0.85vw, 12px)" }}>
-              {l.label}
+      {/* ── DESKTOP ── */}
+      {/* overflow-visible lets the logo hang below into the hero */}
+      <header
+        className="hidden md:block sticky top-0 z-50 bg-[#0F5132] border-b border-white/10 overflow-visible"
+        style={{ height: "72px" }}
+      >
+        <div className="relative h-full flex items-center px-8">
+
+          {/* Left nav */}
+          <nav className="flex items-center gap-8 flex-1">
+            {LEFT_LINKS.map(l => (
+              <Link key={l.href} href={`${base}${l.href}`}
+                className={linkClass(l.href)}
+                style={{ fontSize: "clamp(10px, 0.85vw, 12px)" }}>
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Centre logo — absolutely positioned, overflows below */}
+          <div className="absolute inset-x-0 flex justify-center pointer-events-none" style={{ top: "6px" }}>
+            <Link href={base} className="pointer-events-auto relative z-[60]">
+              <Image
+                src="/logo.png"
+                alt="Dublin Calling"
+                width={200}
+                height={200}
+                className="drop-shadow-2xl w-auto"
+                style={{ height: "clamp(100px, 13vw, 150px)" }}
+                priority
+              />
             </Link>
-          ))}
-        </div>
-        {/* Centre logo */}
-        <div className="flex justify-center">
-          <Link href={base}>
-            <Image src="/logo.png" alt="Dublin Calling" width={56} height={56}
-              className="h-12 w-auto object-contain" priority />
-          </Link>
-        </div>
-        {/* Right */}
-        <div className="flex items-center justify-end gap-6">
-          {RIGHT_LINKS.map(l => (
-            <Link key={l.href} href={`${base}${l.href}`}
-              className={`font-medium uppercase tracking-[0.15em] transition-colors whitespace-nowrap ${isActive(l.href) ? "text-[#F2B035]" : "text-[#F4EFE6]/55 hover:text-[#F4EFE6]"}`}
-              style={{ fontSize: "clamp(10px, 0.85vw, 12px)" }}>
-              {l.label}
-            </Link>
-          ))}
-          {/* Location pill */}
-          <div className="relative">
-            <button onClick={() => setLocationOpen(!locationOpen)}
-              className="flex items-center gap-1 text-[#F4EFE6]/55 hover:text-[#F4EFE6] uppercase tracking-[0.12em] transition-colors"
-              style={{ fontSize: "clamp(10px, 0.85vw, 11px)" }}>
-              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-              </svg>
-              {location === "adelaide" ? "Adelaide" : location === "danforth" ? "Danforth" : "Vancouver"}
-              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
-                className={`transition-transform ${locationOpen ? "rotate-180" : ""}`}>
-                <polyline points="6 9 12 15 18 9"/>
-              </svg>
-            </button>
-            {locationOpen && (
-              <div className="absolute right-0 top-full mt-1 w-48 bg-[#101010] border border-white/10 z-50">
-                {(["adelaide","danforth","vancouver"] as LocationSlug[]).map(s => (
-                  <Link key={s} href={`/${s}`} onClick={() => setLocationOpen(false)}
-                    className={`flex w-full px-4 py-3 uppercase tracking-[0.12em] transition-colors ${s === location ? "text-[#F2B035]" : "text-[#F4EFE6]/50 hover:text-[#F4EFE6] hover:bg-white/5"}`}
-                    style={{ fontSize: "11px" }}>
-                    {LOCATION_LABELS[s]}
-                  </Link>
-                ))}
-              </div>
-            )}
           </div>
-          <a href="https://themrggroup.tripleseat.com/dynamic_party_request/528"
-            target="_blank" rel="noopener noreferrer"
-            className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
-            style={{ fontSize: "clamp(10px, 0.85vw, 12px)", padding: "0.45rem 1.1rem" }}>
-            Book Now
-          </a>
+
+          {/* Right nav */}
+          <nav className="flex items-center justify-end gap-6 flex-1">
+            {RIGHT_LINKS.map(l => (
+              <Link key={l.href} href={`${base}${l.href}`}
+                className={linkClass(l.href)}
+                style={{ fontSize: "clamp(10px, 0.85vw, 12px)" }}>
+                {l.label}
+              </Link>
+            ))}
+
+            {/* Location picker */}
+            <div className="relative">
+              <button
+                onClick={() => setLocationOpen(!locationOpen)}
+                className="flex items-center gap-1 text-[#F4EFE6]/55 hover:text-[#F4EFE6] uppercase tracking-[0.12em] transition-colors"
+                style={{ fontSize: "clamp(10px, 0.85vw, 11px)" }}
+              >
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                {LOCATION_LABELS[location]}
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
+                  className={`transition-transform ${locationOpen ? "rotate-180" : ""}`}>
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              {locationOpen && (
+                <div className="absolute right-0 top-full mt-2 w-52 bg-[#101010] border border-white/10 z-50">
+                  {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map(s => (
+                    <Link key={s} href={`/${s}`} onClick={() => setLocationOpen(false)}
+                      className={`flex w-full px-4 py-3 uppercase tracking-[0.12em] transition-colors ${
+                        s === location ? "text-[#F2B035]" : "text-[#F4EFE6]/50 hover:text-[#F4EFE6] hover:bg-white/5"
+                      }`}
+                      style={{ fontSize: "11px" }}>
+                      {LOCATION_LABELS[s]}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <a
+              href="https://themrggroup.tripleseat.com/dynamic_party_request/528"
+              target="_blank" rel="noopener noreferrer"
+              className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
+              style={{ fontSize: "clamp(10px, 0.85vw, 12px)", padding: "0.45rem 1.2rem" }}
+            >
+              Book Now
+            </a>
+          </nav>
         </div>
       </header>
 
-      {/* Mobile: logo + hamburger */}
+      {/* ── MOBILE ── */}
       <header className="md:hidden sticky top-0 z-50 bg-[#0F5132] border-b border-white/10">
-        <div className="flex items-center justify-between px-6 h-[60px]">
+        <div className="flex items-center justify-between px-5 h-[60px]">
           <Link href={base}>
-            <Image src="/logo.png" alt="Dublin Calling" width={44} height={44} className="h-10 w-auto" priority />
+            <Image src="/logo.png" alt="Dublin Calling" width={52} height={52} className="h-12 w-auto" priority />
           </Link>
-          <button onClick={() => setMenuOpen(!menuOpen)}
-            className="text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors" aria-label="Toggle menu">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
+            aria-label="Toggle menu"
+          >
             <Hamburger open={menuOpen} />
           </button>
         </div>
@@ -133,15 +166,19 @@ export default function Navbar({ location }: { location: LocationSlug }) {
         {menuOpen && (
           <div className="bg-[#0F5132] border-t border-white/10" style={{ animation: "slideDown 0.2s ease forwards" }}>
             {allLinks.map(l => (
-              <Link key={l.href} href={l.href === "" ? base : `${base}${l.href}`}
+              <Link key={l.href} href={`${base}${l.href}`}
                 onClick={() => setMenuOpen(false)}
-                className={`flex items-center px-6 py-4 text-xs font-medium uppercase tracking-[0.18em] border-b border-white/8 transition-colors ${isActive(l.href) ? "text-[#F2B035]" : "text-[#F4EFE6]/55 hover:text-[#F4EFE6]"}`}>
+                className={`flex items-center px-6 py-4 text-xs font-medium uppercase tracking-[0.18em] border-b border-white/8 transition-colors ${
+                  isActive(l.href) ? "text-[#F2B035]" : "text-[#F4EFE6]/55 hover:text-[#F4EFE6]"
+                }`}>
                 {l.label}
               </Link>
             ))}
-            {(["adelaide","danforth","vancouver"] as LocationSlug[]).map(s => (
+            {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map(s => (
               <Link key={s} href={`/${s}`} onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-2 px-6 py-3.5 text-xs uppercase tracking-[0.15em] border-b border-white/8 transition-colors ${s === location ? "text-[#F2B035] font-semibold" : "text-[#F4EFE6]/40 hover:text-[#F4EFE6]"}`}>
+                className={`flex items-center gap-2 px-6 py-3.5 text-xs uppercase tracking-[0.15em] border-b border-white/8 transition-colors ${
+                  s === location ? "text-[#F2B035] font-semibold" : "text-[#F4EFE6]/40 hover:text-[#F4EFE6]"
+                }`}>
                 <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                 </svg>
@@ -149,9 +186,11 @@ export default function Navbar({ location }: { location: LocationSlug }) {
               </Link>
             ))}
             <div className="p-4">
-              <a href="https://themrggroup.tripleseat.com/dynamic_party_request/528"
+              <a
+                href="https://themrggroup.tripleseat.com/dynamic_party_request/528"
                 target="_blank" rel="noopener noreferrer"
-                className="block w-full text-center py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs uppercase tracking-[0.15em]">
+                className="block w-full text-center py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs uppercase tracking-[0.15em]"
+              >
                 Book a Table
               </a>
             </div>

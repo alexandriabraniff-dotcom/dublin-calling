@@ -67,8 +67,8 @@ export default function Footer({ location }: FooterProps) {
               LOCATIONS
             </p>
             {[
-              { slug: "adelaide", label: "Toronto — Adelaide" },
-              { slug: "danforth", label: "Toronto — Danforth" },
+              { slug: "adelaide", label: "Toronto, Adelaide" },
+              { slug: "danforth", label: "Toronto, Danforth" },
               { slug: "vancouver", label: "Vancouver" },
             ].map((loc) => (
               <Link
@@ -145,7 +145,7 @@ export default function Footer({ location }: FooterProps) {
               className="text-[#F4EFE6]/30 mb-1"
               style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.25em" }}
             >
-              CONTACT — {location.name.toUpperCase()}
+              CONTACT: {location.name.toUpperCase()}
             </p>
             <a
               href={`tel:${location.phone}`}

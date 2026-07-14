@@ -34,22 +34,22 @@ const LOCATIONS: Record<LocationSlug, Location> = {
   adelaide: {
     slug: "adelaide",
     name: "Adelaide",
-    label: "Toronto — Adelaide St",
+    label: "Toronto, Adelaide St",
     city: "Toronto",
     province: "ON",
     address: "250 Adelaide St. W, Toronto, ON M5H 1X6",
     phone: "+1 (437) 747-5918",
     email: "adelaide@dublincalling.com",
     hours: [
-      { days: "Mon – Wed", time: "3:00 PM – 12:00 AM" },
-      { days: "Thu – Fri", time: "3:00 PM – 2:00 AM" },
-      { days: "Saturday", time: "12:00 PM – 2:00 AM" },
-      { days: "Sunday", time: "12:00 PM – 12:00 AM" },
+      { days: "Mon to Wed", time: "3:00 PM to 12:00 AM" },
+      { days: "Thu to Fri", time: "3:00 PM to 2:00 AM" },
+      { days: "Saturday", time: "12:00 PM to 2:00 AM" },
+      { days: "Sunday", time: "12:00 PM to 12:00 AM" },
     ],
     heroTagline: "Downtown Toronto's loudest party pub.",
     stats: [
       { value: "20+", label: "Big Screen TVs" },
-      { value: "4–6PM", label: "Daily Happy Hour" },
+      { value: "4-6PM", label: "Daily Happy Hour" },
       { value: "3", label: "Floors of Fun" },
     ],
     features: [
@@ -71,7 +71,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       {
         icon: "📺",
         title: "20+ Big Screens",
-        desc: "MLB, NFL, UFC, Soccer — we've got every game covered.",
+        desc: "MLB, NFL, UFC, Soccer. We've got every game covered.",
       },
     ],
     events: [
@@ -82,7 +82,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
         tag: "Weekly",
       },
       {
-        date: "Sun – Fri 4–6PM",
+        date: "Sun to Fri, 4 to 6PM",
         title: "Happy Hour",
         description: "Discounted drinks every weekday and Sunday afternoon.",
         tag: "Daily",
@@ -90,7 +90,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       {
         date: "Game Days",
         title: "Bills Backers Watch Party",
-        description: "Official Bills Backers Club — every game, every week.",
+        description: "Official Bills Backers Club. Every game, every week.",
         tag: "NFL",
       },
       {
@@ -111,11 +111,11 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       },
       {
         q: "What sports do you show?",
-        a: "All major sports — NFL, MLB, NBA, NHL, UFC, Premier League, MLS, and more.",
+        a: "All major sports: NFL, MLB, NBA, NHL, UFC, Premier League, MLS, and more.",
       },
       {
         q: "Do you have happy hour?",
-        a: "Yes! Happy Hour runs Sunday to Friday, 4PM to 6PM.",
+        a: "Yes. Happy Hour runs Sunday to Friday, 4PM to 6PM.",
       },
       {
         q: "Is the venue accessible?",
@@ -127,7 +127,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       },
     ],
     bookingUrl: "https://themrggroup.tripleseat.com/dynamic_party_request/528",
-    happyHour: "Sun – Fri, 4:00 PM – 6:00 PM",
+    happyHour: "Sun to Fri, 4:00 PM to 6:00 PM",
     social: {
       facebook: "https://facebook.com/dublincallingto",
       instagram: "https://instagram.com/dublincallingadelaide",
@@ -138,29 +138,29 @@ const LOCATIONS: Record<LocationSlug, Location> = {
   danforth: {
     slug: "danforth",
     name: "Danforth",
-    label: "Toronto — Danforth Ave",
+    label: "Toronto, Danforth Ave",
     city: "Toronto",
     province: "ON",
     address: "526 Danforth Ave, Toronto, ON M4K 1P8",
     phone: "+1 (437) 476-6778",
     email: "danforth@dublincalling.com",
     hours: [
-      { days: "Mon – Wed", time: "3:00 PM – 12:00 AM" },
-      { days: "Thu – Fri", time: "3:00 PM – 2:00 AM" },
-      { days: "Saturday", time: "12:00 PM – 2:00 AM" },
-      { days: "Sunday", time: "12:00 PM – 12:00 AM" },
+      { days: "Mon to Wed", time: "3:00 PM to 12:00 AM" },
+      { days: "Thu to Fri", time: "3:00 PM to 2:00 AM" },
+      { days: "Saturday", time: "12:00 PM to 2:00 AM" },
+      { days: "Sunday", time: "12:00 PM to 12:00 AM" },
     ],
     heroTagline: "East Toronto's favourite pub in the heart of the Danforth.",
     stats: [
       { value: "10+", label: "Big Screen TVs" },
-      { value: "4–6PM", label: "Daily Happy Hour" },
+      { value: "4-6PM", label: "Daily Happy Hour" },
       { value: "Mon", label: "Pool Tournaments" },
     ],
     features: [
       {
         icon: "🎱",
         title: "Pool Tournaments",
-        desc: "Monday night pool tournaments. Rack 'em up and compete.",
+        desc: "Monday night pool tournaments. Rack them up and compete.",
       },
       {
         icon: "🧠",
@@ -170,7 +170,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       {
         icon: "📺",
         title: "10+ Big Screens",
-        desc: "Never miss a moment — every game shown across our screens.",
+        desc: "Never miss a moment. Every game shown across our screens.",
       },
       {
         icon: "🍺",
@@ -192,7 +192,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
         tag: "Weekly",
       },
       {
-        date: "Sun – Fri 4–6PM",
+        date: "Sun to Fri, 4 to 6PM",
         title: "Happy Hour",
         description: "Discounted drinks every day, Sunday through Friday.",
         tag: "Daily",
@@ -211,7 +211,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       },
       {
         q: "Can I book for a group?",
-        a: "Yes — book online for groups up to 20. For larger events email danforth@dublincalling.com.",
+        a: "Yes. Book online for groups up to 20. For larger events email danforth@dublincalling.com.",
       },
       {
         q: "When are the pool tournaments?",
@@ -219,11 +219,11 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       },
       {
         q: "What sports are shown?",
-        a: "All major leagues — NFL, MLB, NBA, NHL, UFC, Premier League, MLS, and more.",
+        a: "All major leagues: NFL, MLB, NBA, NHL, UFC, Premier League, MLS, and more.",
       },
       {
         q: "Do you have happy hour?",
-        a: "Yes — Sunday to Friday, 4PM to 6PM.",
+        a: "Yes. Sunday to Friday, 4PM to 6PM.",
       },
       {
         q: "Is parking available nearby?",
@@ -231,7 +231,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       },
     ],
     bookingUrl: "https://themrggroup.tripleseat.com/dynamic_party_request/528",
-    happyHour: "Sun – Fri, 4:00 PM – 6:00 PM",
+    happyHour: "Sun to Fri, 4:00 PM to 6:00 PM",
     social: {
       facebook: "https://facebook.com/profile.php?id=61587657773522",
       instagram: "https://instagram.com/dublincallingdanforth",
@@ -242,18 +242,18 @@ const LOCATIONS: Record<LocationSlug, Location> = {
   vancouver: {
     slug: "vancouver",
     name: "Vancouver",
-    label: "Vancouver — Granville St",
+    label: "Vancouver, Granville St",
     city: "Vancouver",
     province: "BC",
     address: "900 Granville St, Vancouver, BC V6Z 1L2",
     phone: "(604) 670-2980",
     email: "info@dublincalling.com",
     hours: [
-      { days: "Sun – Wed", time: "12:00 PM – 1:00 AM" },
-      { days: "Thursday", time: "12:00 PM – 2:00 AM" },
-      { days: "Fri – Sat", time: "12:00 PM – 3:00 AM" },
+      { days: "Sun to Wed", time: "12:00 PM to 1:00 AM" },
+      { days: "Thursday", time: "12:00 PM to 2:00 AM" },
+      { days: "Fri to Sat", time: "12:00 PM to 3:00 AM" },
     ],
-    heroTagline: "Granville Street's biggest party pub — open until 3AM.",
+    heroTagline: "Granville Street's biggest party pub. Open until 3AM.",
     stats: [
       { value: "15", label: "Big Screen TVs" },
       { value: "12+", label: "Beers on Tap" },
@@ -268,7 +268,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       {
         icon: "👑",
         title: "Ladies Night",
-        desc: "Recurring Ladies Night events — ticket info on our events page.",
+        desc: "Recurring Ladies Night events. Ticket info on our events page.",
       },
       {
         icon: "🧠",
@@ -278,7 +278,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       {
         icon: "🌙",
         title: "Open Until 3AM",
-        desc: "Friday and Saturday nights — the party doesn't stop.",
+        desc: "Friday and Saturday nights. The party doesn't stop.",
       },
     ],
     events: [
@@ -296,7 +296,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
         tag: "UFC",
       },
       {
-        date: "Sun – Fri 4–6PM",
+        date: "Sun to Fri, 4 to 6PM",
         title: "Happy Hour",
         description: "Tap beers and cocktails at happy hour prices.",
         tag: "Daily",
@@ -315,7 +315,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       },
       {
         q: "What time do you close on weekends?",
-        a: "Friday and Saturday we are open until 3AM. Sunday through Thursday we close at 1AM (Thursday 2AM).",
+        a: "Friday and Saturday we are open until 3AM. Sunday through Thursday we close at 1AM (Thursday at 2AM).",
       },
       {
         q: "How many beers on tap?",
@@ -327,7 +327,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       },
       {
         q: "When is Ladies Night?",
-        a: "Recurring events — check our Events page for upcoming dates and ticket links.",
+        a: "Recurring events. Check our Events page for upcoming dates and ticket links.",
       },
       {
         q: "Do you show Canucks / Whitecaps / BC Lions games?",
@@ -335,12 +335,12 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       },
     ],
     bookingUrl: "https://themrggroup.tripleseat.com/dynamic_party_request/528",
-    happyHour: "Sun – Fri, 4:00 PM – 6:00 PM",
+    happyHour: "Sun to Fri, 4:00 PM to 6:00 PM",
     social: {
       facebook: "https://facebook.com/dublincallingvan",
       instagram: "https://instagram.com/dublincallingvan",
     },
-    uniqueFeature: "12+ Beers on Tap — Open Until 3AM",
+    uniqueFeature: "12+ Beers on Tap. Open Until 3AM.",
     ageNote: "19+ after 10PM",
   },
 };
