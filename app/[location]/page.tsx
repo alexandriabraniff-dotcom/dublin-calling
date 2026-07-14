@@ -163,24 +163,6 @@ export default async function LocationHome({
           </div>
         </div>
 
-        {/* Stat strip — pinned to bottom of hero */}
-        <div className="relative z-10 border-t border-white/15 bg-[#101010]/50 backdrop-blur-sm shrink-0">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 divide-x divide-white/10 py-5">
-            {loc.stats.map((s) => (
-              <div key={s.label} className="text-center px-4">
-                <p
-                  className="text-[#F2B035] leading-none"
-                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.4rem, 3vw, 2.2rem)", letterSpacing: "0.02em" }}
-                >
-                  {s.value}
-                </p>
-                <p className="text-[#F4EFE6]/40 uppercase tracking-[0.2em] mt-1" style={{ fontSize: "clamp(8px, 0.65vw, 10px)" }}>
-                  {s.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* ── EVENTS CARDS ── */}
