@@ -184,15 +184,15 @@ export default function Footer({ location }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="The MRG Group"
-                className="opacity-70 hover:opacity-100 transition-opacity"
+                className="opacity-80 hover:opacity-100 transition-opacity bg-white px-4 py-2 inline-flex items-center"
               >
                 <Image
                   src="/mrg-logo.png"
                   alt="The MRG Group"
                   width={200}
                   height={80}
-                  className="object-contain w-auto invert"
-                  style={{ height: "70px" }}
+                  className="object-contain w-auto"
+                  style={{ height: "50px" }}
                 />
               </a>
             </div>

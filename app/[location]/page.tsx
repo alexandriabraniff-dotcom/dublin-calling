@@ -24,6 +24,7 @@ export default async function LocationHome({
     tag: string;
     tagColor: TagColor;
     emoji: string;
+    image?: string;
   }[] = (
     {
       adelaide: [
@@ -34,19 +35,18 @@ export default async function LocationHome({
       ],
       danforth: [
         { day: "Every Monday",  name: "Pool Tournament",   detail: "Sign in by 7:00 PM to compete",          tag: "Weekly", tagColor: "default", emoji: "🎱" },
-        { day: "Every Tuesday", name: "Trivia Night",      detail: "TriviaTO, main floor, 7:00 PM",         tag: "Weekly", tagColor: "default", emoji: "🧠" },
+        { day: "Every Tuesday", name: "Trivia Night",      detail: "TriviaTO, main floor, 7:00 PM",          tag: "Weekly", tagColor: "default", emoji: "🧠" },
         { day: "Fight Nights",  name: "UFC Live",          detail: "Every card live on our big screens",      tag: "UFC",    tagColor: "red",     emoji: "🥊" },
         { day: "Sun to Fri",    name: "Happy Hour",        detail: "4:00 PM to 6:00 PM · Drink specials",    tag: "Daily",  tagColor: "green",   emoji: "🍺" },
       ],
       vancouver: [
-        { day: "Recurring",         name: "Ladies Night",    detail: "Recurring event, tickets via AdmitOne",   tag: "Event",  tagColor: "gold",    emoji: "👑" },
-        { day: "Biweekly Tuesdays", name: "Trivia Night",    detail: "TriviaTO, main floor, 7:00 PM",           tag: "Weekly", tagColor: "default", emoji: "🧠" },
-        { day: "Sun to Fri",        name: "Happy Hour",      detail: "4:00 PM to 6:00 PM · 12+ taps on special", tag: "Daily",  tagColor: "green",   emoji: "🍺" },
-        { day: "Fight Nights",      name: "UFC Live",        detail: "Every card live on our big screens",        tag: "UFC",    tagColor: "red",     emoji: "🥊" },
+        { day: "Aug 15, 6:00 PM",   name: "UFC 330",      detail: "Makhachev vs Machado Garry. VIP table packages available.", tag: "UFC",    tagColor: "red",     emoji: "🥊", image: "/ufc-330.png" },
+        { day: "Every Friday, 8PM", name: "Ladies Night", detail: "8PM till late. Live DJ. $6.95 Vodka Highballs.",            tag: "Event",  tagColor: "gold",    emoji: "👑", image: "/ladies-night.jpg" },
+        { day: "Ongoing",           name: "FIFA & Soccer", detail: "Every match live on 15+ TVs. Sound on. Table packages available.", tag: "Soccer", tagColor: "default", emoji: "⚽", image: "/fifa-soccer.jpg" },
       ],
     } as Record<
       string,
-      { day: string; name: string; detail: string; tag: string; tagColor: TagColor; emoji: string }[]
+      { day: string; name: string; detail: string; tag: string; tagColor: TagColor; emoji: string; image?: string }[]
     >
   )[loc.slug] ?? [];
 
@@ -189,9 +189,9 @@ export default async function LocationHome({
                 className="group border border-white/10 hover:border-[#F2B035]/40 transition-colors overflow-hidden shrink-0 snap-start w-[78vw] sm:w-80 lg:w-auto flex flex-col"
               >
                 {/* Top colour panel */}
-                {card.name === "Ladies Night" ? (
+                {card.image ? (
                   <div className="relative overflow-hidden" style={{ height: "clamp(120px, 14vw, 180px)" }}>
-                    <Image src="/ladies-night.jpg" alt="Ladies Night" fill className="object-cover object-top" />
+                    <Image src={card.image} alt={card.name} fill className="object-cover object-top" />
                   </div>
                 ) : (
                   <div
