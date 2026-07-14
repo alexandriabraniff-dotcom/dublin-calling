@@ -61,7 +61,7 @@ export default function RootPage() {
 
         <h1
           className="text-[#F4EFE6] text-center leading-tight mb-2"
-          style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.8rem, 9vw, 6rem)" }}
+          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.8rem, 9vw, 6rem)", letterSpacing: "0.02em" }}
         >
           Dublin Calling
         </h1>
@@ -89,7 +89,7 @@ export default function RootPage() {
                 </p>
                 <h2
                   className="text-[#F4EFE6] leading-tight"
-                  style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2rem, 4vw, 2.8rem)" }}
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 2.8rem)", letterSpacing: "0.02em" }}
                 >
                   {loc.sublabel}
                 </h2>

@@ -175,15 +175,7 @@ export default function Footer({ location }: FooterProps) {
                   <span className="text-[#F4EFE6]/25">{h.days}: </span>{h.time}
                 </p>
               ))}
-              {location.ageNote && (
-                <p
-                  className="inline-block border border-[#C8102E] text-[#101010] mt-2 px-2 py-0.5"
-                  style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.12em" }}
-                >
-                  * {location.ageNote.toUpperCase()}
-                </p>
-              )}
-            </div>
+              </div>
 
             {/* MRG Group logo */}
             <div className="mt-6 pt-5 border-t border-white/10 flex md:justify-end">
@@ -192,14 +184,15 @@ export default function Footer({ location }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="The MRG Group"
-                className="opacity-30 hover:opacity-50 transition-opacity"
+                className="opacity-70 hover:opacity-100 transition-opacity"
               >
                 <Image
                   src="/mrg-logo.png"
                   alt="The MRG Group"
-                  width={80}
-                  height={32}
-                  className="object-contain h-7 w-auto invert"
+                  width={200}
+                  height={80}
+                  className="object-contain w-auto invert"
+                  style={{ height: "70px" }}
                 />
               </a>
             </div>

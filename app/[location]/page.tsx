@@ -130,8 +130,8 @@ export default async function LocationHome({
           </p>
 
           <h1
-            className="text-[#F4EFE6] leading-[1.05] mb-5"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.8rem, 9vw, 6rem)" }}
+            className="text-[#F4EFE6] leading-[1.0] mb-5"
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.8rem, 9vw, 6rem)", letterSpacing: "0.02em" }}
           >
             {heroH1}
           </h1>
