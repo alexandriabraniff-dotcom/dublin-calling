@@ -12,7 +12,7 @@ export default function FAQPage() {
   if (!loc) return null;
 
   const generalFaqs = [
-    { q: "Do you have Happy Hour at all locations?", a: "Yes — Sunday through Friday, 4:00 PM to 6:00 PM at all three Dublin Calling locations." },
+    { q: "Do you have Happy Hour at all locations?", a: "Yes. Sunday through Friday, 4:00 PM to 6:00 PM at all three Dublin Calling locations." },
     { q: "What sports do you broadcast?", a: "All major sports: NFL, CFL, MLB, NBA, NHL, UFC, Premier League, Bundesliga, MLS, Champions League, Rugby, and more." },
     { q: "Can I book for a private event?", a: "Absolutely. Groups of up to 20 can book online. Larger groups should contact the location directly." },
     { q: "Is there a dress code?", a: "No formal dress code. We ask all guests to be presentable and respectful. Management reserves the right to refuse entry." },
@@ -35,7 +35,7 @@ export default function FAQPage() {
           </p>
           <h1
             className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
           >
             FAQ
           </h1>
@@ -80,7 +80,7 @@ export default function FAQPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <h2
             className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
             Still Have a Question?
           </h2>

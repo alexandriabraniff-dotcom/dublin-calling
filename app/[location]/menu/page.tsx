@@ -36,7 +36,7 @@ export default async function MenuPage({
         { name: "Poutine", desc: "Fries, cheese curds, beef gravy", price: "$14" },
         { name: "Pretzel & Beer Cheese", desc: "Soft pretzel, house beer cheese dip", price: "$13" },
         { name: "Onion Rings", desc: "Crispy beer battered, smoked paprika mayo", price: "$11" },
-        { name: "DC Platter", desc: "Wings, nachos, onion rings, fries — great for the group", price: "$42" },
+        { name: "DC Platter", desc: "Wings, nachos, onion rings, fries. Great for the group.", price: "$42" },
       ],
     },
   ];
@@ -45,8 +45,8 @@ export default async function MenuPage({
     {
       name: "Draught Beer",
       items: [
-        { name: "Guinness", desc: "The classic Irish stout — 20oz", price: "$10" },
-        { name: "Harp Lager", desc: "Crisp Irish lager — 20oz", price: "$9" },
+        { name: "Guinness", desc: "The classic Irish stout, 20oz pint", price: "$10" },
+        { name: "Harp Lager", desc: "Crisp Irish lager, 20oz pint", price: "$9" },
         { name: loc.slug === "vancouver" ? "12+ Rotating Taps" : "Rotating Craft Tap", desc: "Ask your server what's pouring tonight", price: "Varies" },
       ],
     },
@@ -55,7 +55,7 @@ export default async function MenuPage({
       items: [
         { name: "Irish Mule", desc: "Jameson, ginger beer, lime, mint", price: "$14" },
         { name: "Espresso Martini", desc: "Vodka, espresso, Kahlua, simple syrup", price: "$15" },
-        { name: "Green Goblin", desc: "Midori, vodka, lime — house specialty", price: "$13" },
+        { name: "Green Goblin", desc: "Midori, vodka, lime. House specialty.", price: "$13" },
         { name: "Whiskey Sour", desc: "Bourbon, lemon juice, egg white, bitters", price: "$14" },
       ],
     },
@@ -85,7 +85,7 @@ export default async function MenuPage({
           <Label text={`${loc.name.toUpperCase()} · ${loc.city.toUpperCase()}`} />
           <h1
             className="text-[#F4EFE6] mt-3 mb-4"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(3.5rem, 10vw, 7rem)", letterSpacing: "0.02em" }}
           >
             Menu
           </h1>
@@ -104,7 +104,7 @@ export default async function MenuPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-5 mb-14">
             <div className="h-px flex-1 bg-white/8" />
-            <h2 style={{ fontFamily: "'Pacifico', cursive", fontSize: "2.2rem" }} className="text-[#F4EFE6]">
+            <h2 style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "2.2rem", letterSpacing: "0.02em" }} className="text-[#F4EFE6]">
               Food
             </h2>
             <div className="h-px flex-1 bg-white/8" />
@@ -144,7 +144,7 @@ export default async function MenuPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-5 mb-14">
             <div className="h-px flex-1 bg-white/15" />
-            <h2 style={{ fontFamily: "'Pacifico', cursive", fontSize: "2.2rem" }} className="text-[#F4EFE6]">
+            <h2 style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "2.2rem", letterSpacing: "0.02em" }} className="text-[#F4EFE6]">
               Drinks
             </h2>
             <div className="h-px flex-1 bg-white/15" />

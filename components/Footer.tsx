@@ -4,9 +4,10 @@ import type { Location } from "@/lib/locations";
 
 const NAV_LINKS = [
   { href: "", label: "Home" },
+  { href: "/about", label: "About" },
   { href: "/menu", label: "Menu" },
   { href: "/events", label: "Events" },
-  { href: "/world-cup", label: "World Cup" },
+  { href: "/world-cup", label: "World Cup 2026" },
   { href: "/group-bookings", label: "Group Bookings" },
   { href: "/faq", label: "FAQ" },
 ];
@@ -171,12 +172,12 @@ export default function Footer({ location }: FooterProps) {
             <div className="mt-4 pt-4 border-t border-white/10 space-y-1.5 md:text-right">
               {location.hours.map((h) => (
                 <p key={h.days} className="text-xs text-[#F4EFE6]/35">
-                  <span className="text-[#F4EFE6]/25">{h.days} &mdash; </span>{h.time}
+                  <span className="text-[#F4EFE6]/25">{h.days}: </span>{h.time}
                 </p>
               ))}
               {location.ageNote && (
                 <p
-                  className="text-[#C8102E] mt-2"
+                  className="inline-block border border-[#C8102E] text-[#101010] mt-2 px-2 py-0.5"
                   style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.12em" }}
                 >
                   * {location.ageNote.toUpperCase()}
@@ -212,7 +213,7 @@ export default function Footer({ location }: FooterProps) {
             className="text-[#F4EFE6]/25 uppercase"
             style={{ fontSize: "0.6rem", letterSpacing: "0.15em" }}
           >
-            Dublin Calling &copy; {new Date().getFullYear()} &mdash; All rights reserved
+            Dublin Calling &copy; {new Date().getFullYear()}. All rights reserved.
           </p>
           <p className="text-[#F4EFE6]/25" style={{ fontSize: "0.6rem" }}>
             Website designed by{" "}

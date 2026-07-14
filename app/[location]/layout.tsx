@@ -18,8 +18,8 @@ export async function generateMetadata({
   const loc = getLocation(slug);
   if (!loc) return {};
   return {
-    title: `Dublin Calling ${loc.name} — Party Pub & Kitchen | ${loc.city}`,
-    description: `Dublin Calling ${loc.name} — ${loc.address}. Party pub, sports bar, live events, happy hour and group bookings in ${loc.city}.`,
+    title: `Dublin Calling ${loc.name} | Party Pub & Kitchen | ${loc.city}`,
+    description: `Dublin Calling ${loc.name} at ${loc.address}. Party pub, sports bar, live events, happy hour and group bookings in ${loc.city}.`,
   };
 }
 

@@ -11,7 +11,7 @@ export default async function EventsPage({
   if (!loc) notFound();
 
   const tagColors: Record<string, string> = {
-    UFC: "bg-[#C8102E] text-white",
+    UFC: "border border-[#C8102E] text-[#101010]",
     Ticketed: "bg-[#F2B035] text-[#101010]",
     Weekly: "border border-white/20 text-[#F4EFE6]/50",
     Daily: "border border-[#169B62] text-[#169B62]",
@@ -32,7 +32,7 @@ export default async function EventsPage({
           </p>
           <h1
             className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(3.5rem, 10vw, 7rem)", letterSpacing: "0.02em" }}
           >
             Events
           </h1>
@@ -50,7 +50,7 @@ export default async function EventsPage({
             <div>
               <h2
                 className="text-[#F2B035]"
-                style={{ fontFamily: "'Pacifico', cursive", fontSize: "1.8rem" }}
+                style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "1.8rem", letterSpacing: "0.02em" }}
               >
                 Happy Hour Every Day
               </h2>
@@ -76,8 +76,8 @@ export default async function EventsPage({
                 className="bg-[#101010] border border-white/8 hover:border-[#F2B035]/40 transition-colors flex flex-col"
               >
                 {/* Top colour strip */}
-                <div className={`h-1 w-full ${
-                  event.tag === "UFC" ? "bg-[#C8102E]"
+                <div className={`h-[2px] w-full ${
+                  event.tag === "UFC" ? "border-t border-[#C8102E] bg-transparent"
                   : event.tag === "Ticketed" ? "bg-[#F2B035]"
                   : event.tag === "Daily" ? "bg-[#169B62]"
                   : "bg-[#0F5132]"
@@ -103,7 +103,7 @@ export default async function EventsPage({
 
                   <h2
                     className="text-[#F4EFE6] mb-3 flex-1"
-                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(1.3rem, 3vw, 1.8rem)" }}
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)", letterSpacing: "0.02em" }}
                   >
                     {event.title}
                   </h2>
@@ -137,7 +137,7 @@ export default async function EventsPage({
                   </p>
                   <h2
                     className="text-[#F4EFE6] mb-3"
-                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(1.3rem, 3vw, 1.8rem)" }}
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)", letterSpacing: "0.02em" }}
                   >
                     Host Your Own Night
                   </h2>
@@ -165,7 +165,7 @@ export default async function EventsPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2
             className="text-[#F4EFE6] mb-6"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "2rem" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "2rem", letterSpacing: "0.02em" }}
           >
             Every Major Sport, Every Night
           </h2>

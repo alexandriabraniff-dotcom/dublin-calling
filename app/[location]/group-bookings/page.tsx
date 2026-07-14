@@ -52,7 +52,7 @@ export default async function GroupBookingsPage({
           </p>
           <h1
             className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(3rem, 10vw, 6.5rem)" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3rem, 10vw, 6.5rem)" }}
           >
             Group Bookings
           </h1>
@@ -90,7 +90,7 @@ export default async function GroupBookingsPage({
                   </p>
                   <h2
                     className="text-[#F4EFE6] mb-4"
-                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(1.8rem, 3vw, 2.5rem)" }}
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(1.8rem, 3vw, 2.5rem)" }}
                   >
                     {pkg.name}
                   </h2>
@@ -126,7 +126,7 @@ export default async function GroupBookingsPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2
             className="text-[#F4EFE6] mb-12"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
             How It Works
           </h2>
@@ -139,14 +139,14 @@ export default async function GroupBookingsPage({
               <div key={item.step} className="flex gap-5">
                 <div
                   className="w-10 h-10 bg-[#F2B035] text-[#101010] flex items-center justify-center shrink-0"
-                  style={{ fontFamily: "'Pacifico', cursive", fontSize: "1.2rem" }}
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "1.2rem" }}
                 >
                   {item.step}
                 </div>
                 <div>
                   <h3
                     className="text-[#F4EFE6] mb-2"
-                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "1.4rem" }}
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "1.4rem" }}
                   >
                     {item.title}
                   </h3>
@@ -163,7 +163,7 @@ export default async function GroupBookingsPage({
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <h2
             className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
             Questions?
           </h2>

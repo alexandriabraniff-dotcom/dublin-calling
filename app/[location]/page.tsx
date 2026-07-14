@@ -15,41 +15,52 @@ export default async function LocationHome({
 
   const base = `/${loc.slug}`;
 
-  // Event cards — coloured top panel + info bottom
+  // Event cards
   type TagColor = "red" | "gold" | "green" | "default";
-  const eventCards: { day: string; name: string; detail: string; tag: string; tagColor: TagColor; emoji: string; }[] = ({
-    adelaide: [
-      { day: "Every Sunday",  name: "Bills Backers Watch Party", detail: "Official Buffalo Bills fan chapter — every game day", tag: "NFL",    tagColor: "gold",    emoji: "🏈" },
-      { day: "Every Monday",  name: "Trivia Night",              detail: "TriviaTO — doors at 7:00 PM",                        tag: "Weekly", tagColor: "default", emoji: "🧠" },
-      { day: "Fight Nights",  name: "UFC Live",                  detail: "Every card live on 20+ big screens",                 tag: "UFC",    tagColor: "red",     emoji: "🥊" },
-      { day: "Sun – Fri",     name: "Happy Hour",                detail: "4:00 PM – 6:00 PM · Drink specials all week",        tag: "Daily",  tagColor: "green",   emoji: "🍺" },
-    ],
-    danforth: [
-      { day: "Every Monday",  name: "Pool Tournament",   detail: "Sign in by 7:00 PM to compete",            tag: "Weekly", tagColor: "default", emoji: "🎱" },
-      { day: "Every Tuesday", name: "Trivia Night",      detail: "TriviaTO — main floor, 7:00 PM",           tag: "Weekly", tagColor: "default", emoji: "🧠" },
-      { day: "Fight Nights",  name: "UFC Live",          detail: "Every card live on our big screens",        tag: "UFC",    tagColor: "red",     emoji: "🥊" },
-      { day: "Sun – Fri",     name: "Happy Hour",        detail: "4:00 PM – 6:00 PM · Drink specials",        tag: "Daily",  tagColor: "green",   emoji: "🍺" },
-    ],
-    vancouver: [
-      { day: "Jul 17 + Jul 31",  name: "Ladies Night",                    detail: "Recurring event — tickets via AdmitOne",       tag: "Event",  tagColor: "gold", emoji: "👑" },
-      { day: "Biweekly Tuesdays",name: "Trivia Night",                    detail: "TriviaTO — main floor, 7:00 PM",               tag: "Weekly", tagColor: "default", emoji: "🧠" },
-      { day: "Sun – Fri",        name: "Happy Hour",                      detail: "4:00 PM – 6:00 PM · 12+ taps on special",      tag: "Daily",  tagColor: "green", emoji: "🍺" },
-      { day: "Fight Nights",     name: "UFC Live",                        detail: "Every card live on our big screens",            tag: "UFC",    tagColor: "red",  emoji: "🥊" },
-    ],
-  } as Record<string, { day: string; name: string; detail: string; tag: string; tagColor: TagColor; emoji: string; }[]>)[loc.slug] ?? [];
+  const eventCards: {
+    day: string;
+    name: string;
+    detail: string;
+    tag: string;
+    tagColor: TagColor;
+    emoji: string;
+  }[] = (
+    {
+      adelaide: [
+        { day: "Every Sunday",  name: "Bills Backers Watch Party", detail: "Official Buffalo Bills fan chapter, every game day", tag: "NFL",    tagColor: "gold",    emoji: "🏈" },
+        { day: "Every Monday",  name: "Trivia Night",              detail: "TriviaTO, doors at 7:00 PM",                        tag: "Weekly", tagColor: "default", emoji: "🧠" },
+        { day: "Fight Nights",  name: "UFC Live",                  detail: "Every card live on 20+ big screens",                 tag: "UFC",    tagColor: "red",     emoji: "🥊" },
+        { day: "Sun to Fri",    name: "Happy Hour",                detail: "4:00 PM to 6:00 PM · Drink specials all week",       tag: "Daily",  tagColor: "green",   emoji: "🍺" },
+      ],
+      danforth: [
+        { day: "Every Monday",  name: "Pool Tournament",   detail: "Sign in by 7:00 PM to compete",          tag: "Weekly", tagColor: "default", emoji: "🎱" },
+        { day: "Every Tuesday", name: "Trivia Night",      detail: "TriviaTO, main floor, 7:00 PM",         tag: "Weekly", tagColor: "default", emoji: "🧠" },
+        { day: "Fight Nights",  name: "UFC Live",          detail: "Every card live on our big screens",      tag: "UFC",    tagColor: "red",     emoji: "🥊" },
+        { day: "Sun to Fri",    name: "Happy Hour",        detail: "4:00 PM to 6:00 PM · Drink specials",    tag: "Daily",  tagColor: "green",   emoji: "🍺" },
+      ],
+      vancouver: [
+        { day: "Recurring",         name: "Ladies Night",    detail: "Recurring event, tickets via AdmitOne",   tag: "Event",  tagColor: "gold",    emoji: "👑" },
+        { day: "Biweekly Tuesdays", name: "Trivia Night",    detail: "TriviaTO, main floor, 7:00 PM",           tag: "Weekly", tagColor: "default", emoji: "🧠" },
+        { day: "Sun to Fri",        name: "Happy Hour",      detail: "4:00 PM to 6:00 PM · 12+ taps on special", tag: "Daily",  tagColor: "green",   emoji: "🍺" },
+        { day: "Fight Nights",      name: "UFC Live",        detail: "Every card live on our big screens",        tag: "UFC",    tagColor: "red",     emoji: "🥊" },
+      ],
+    } as Record<
+      string,
+      { day: string; name: string; detail: string; tag: string; tagColor: TagColor; emoji: string }[]
+    >
+  )[loc.slug] ?? [];
 
   const features = [
     {
       title: loc.stats[0].value + " Big Screens",
-      body: `Every major game. Every sport. ${loc.stats[0].value} big screens so you never miss a moment — wherever you're sitting.`,
-      accent: "#F2B035",
+      body: `Every major game. Every sport. ${loc.stats[0].value} screens across the room so you never miss a moment, wherever you're sitting.`,
     },
     {
       title: loc.slug === "vancouver" ? "12+ Beers on Tap" : "Ice-Cold Draught",
-      body: loc.slug === "vancouver"
-        ? "Twelve taps, always rotating. Ask your server what's pouring tonight."
-        : "Draught pints, craft cans, and a cocktail list built for long nights.",
-      accent: "#169B62",
+      body:
+        loc.slug === "vancouver"
+          ? "Twelve taps, always rotating. Ask your server what's pouring tonight."
+          : "Draught pints, craft cans, and a cocktail list built for long nights.",
     },
   ];
 
@@ -60,58 +71,85 @@ export default async function LocationHome({
   };
 
   const tagStyle = (color: "red" | "gold" | "green" | "default") => {
-    if (color === "red")     return "bg-[#C8102E] text-white";
-    if (color === "gold")    return "bg-[#F2B035] text-[#101010]";
-    if (color === "green")   return "border border-[#169B62] text-[#169B62]";
+    if (color === "red")   return "border border-[#C8102E] text-[#101010]";
+    if (color === "gold")  return "bg-[#F2B035] text-[#101010]";
+    if (color === "green") return "border border-[#169B62] text-[#169B62]";
     return "border border-white/20 text-[#F4EFE6]/40";
   };
+
+  // Hero subtitle — avoid "Vancouver · Vancouver" repetition
+  const heroLabel =
+    loc.city === loc.name
+      ? `${loc.city} · Party Pub & Kitchen`
+      : `${loc.city} · ${loc.name} · Party Pub & Kitchen`;
+
+  const heroH1 =
+    loc.slug === "vancouver"
+      ? <>Open Until <span className="text-[#F2B035]">3AM</span></>
+      : loc.slug === "danforth"
+      ? <>East Toronto&apos;s <span className="text-[#F2B035]">Party Pub</span></>
+      : <>Downtown <span className="text-[#F2B035]">Toronto&apos;s</span> Party Pub</>;
 
   return (
     <>
       {/* ── HERO ── */}
-      <section className="relative bg-[#0F5132] flex flex-col items-center justify-center text-center"
-        style={{ minHeight: "calc(100dvh - 68px)", padding: "clamp(4rem, 8vh, 7rem) 1.5rem clamp(3rem, 6vh, 5rem)" }}>
-
+      <section
+        className="relative bg-[#0F5132] flex flex-col items-center justify-center text-center"
+        style={{ minHeight: "calc(100dvh - 68px)", padding: "clamp(4rem, 8vh, 7rem) 1.5rem clamp(5rem, 10vh, 8rem)" }}
+      >
         {loc.ageNote && (
           <div className="absolute top-6 right-6">
-            <span className="border border-[#C8102E] text-[#C8102E] px-2 py-1"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.2em" }}>
+            <span
+              className="border border-[#C8102E] text-[#101010] px-2 py-1"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.2em" }}
+            >
               {loc.ageNote.toUpperCase()}
             </span>
           </div>
         )}
 
-        <p className="text-[#F4EFE6]/35 uppercase tracking-[0.3em] mb-6"
-          style={{ fontSize: "clamp(9px, 0.8vw, 11px)" }}>
-          {loc.city} &nbsp;·&nbsp; {loc.name} &nbsp;·&nbsp; Party Pub &amp; Kitchen
+        <p className="text-[#F4EFE6]/35 uppercase tracking-[0.3em] mb-6" style={{ fontSize: "clamp(9px, 0.8vw, 11px)" }}>
+          {heroLabel}
         </p>
 
-        <Image src="/logo.png" alt="Dublin Calling" width={140} height={140}
-          className="w-24 sm:w-32 md:w-40 h-auto mb-8 drop-shadow-2xl" priority />
+        <Image
+          src="/logo.png"
+          alt="Dublin Calling"
+          width={140}
+          height={140}
+          className="w-24 sm:w-32 md:w-36 h-auto mb-8 drop-shadow-2xl"
+          priority
+        />
 
-        <h1 className="text-[#F4EFE6] leading-[1.05] mb-4"
-          style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(3rem, 10vw, 8rem)" }}>
-          {loc.name === "Vancouver"
-            ? <>Open Until <span className="text-[#F2B035]">3AM</span></>
-            : loc.name === "Danforth"
-            ? <>East Toronto&apos;s <span className="text-[#F2B035]">Party Pub</span></>
-            : <>Downtown <span className="text-[#F2B035]">Toronto&apos;s</span> Party Pub</>}
+        <h1
+          className="text-[#F4EFE6] leading-[1.05] mb-5"
+          style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.8rem, 9vw, 7rem)" }}
+        >
+          {heroH1}
         </h1>
 
-        <p className="text-[#F4EFE6]/50 font-light max-w-md mb-10"
-          style={{ fontSize: "clamp(0.95rem, 1.8vw, 1.15rem)" }}>
+        <p
+          className="text-[#F4EFE6]/50 max-w-md mb-10"
+          style={{ fontSize: "clamp(0.9rem, 1.6vw, 1.1rem)", lineHeight: 1.7 }}
+        >
           {loc.heroTagline}
         </p>
 
         <div className="flex flex-wrap justify-center gap-3">
-          <a href={loc.bookingUrl} target="_blank" rel="noopener noreferrer"
+          <a
+            href={loc.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
-            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}>
+            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
+          >
             Book a Table
           </a>
-          <Link href={`${base}/events`}
+          <Link
+            href={`${base}/events`}
             className="border border-[#F4EFE6]/25 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
-            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}>
+            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
+          >
             See Events
           </Link>
         </div>
@@ -121,12 +159,13 @@ export default async function LocationHome({
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 divide-x divide-white/10 py-5">
             {loc.stats.map((s) => (
               <div key={s.label} className="text-center px-4">
-                <p className="text-[#F2B035] leading-none"
-                  style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)" }}>
+                <p
+                  className="text-[#F2B035] leading-none"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.4rem, 3vw, 2.2rem)", letterSpacing: "0.02em" }}
+                >
                   {s.value}
                 </p>
-                <p className="text-[#F4EFE6]/30 uppercase tracking-[0.2em] mt-1"
-                  style={{ fontSize: "clamp(8px, 0.65vw, 10px)" }}>
+                <p className="text-[#F4EFE6]/30 uppercase tracking-[0.2em] mt-1" style={{ fontSize: "clamp(8px, 0.65vw, 10px)" }}>
                   {s.label}
                 </p>
               </div>
@@ -139,35 +178,52 @@ export default async function LocationHome({
       <section className="bg-[#101010] py-14 border-b border-white/10">
         <FadeIn className="max-w-7xl mx-auto px-6 mb-6 flex items-end justify-between">
           <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em]">What&apos;s On</p>
-          <Link href={`${base}/events`}
-            className="text-[#F2B035] text-xs uppercase tracking-widest hover:text-[#e0a020] transition-colors">
+          <Link
+            href={`${base}/events`}
+            className="text-[#F2B035] text-xs uppercase tracking-widest hover:text-[#e0a020] transition-colors"
+          >
             Full Schedule +
           </Link>
         </FadeIn>
 
-        {/* Horizontal scroll on mobile, 4-col on desktop */}
         <div className="max-w-7xl mx-auto">
           <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-6 pb-3 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {eventCards.map((card) => (
-              <Link key={card.name} href={`${base}/events`}
-                className="group border border-white/10 hover:border-[#F2B035]/40 transition-colors overflow-hidden shrink-0 snap-start w-[78vw] sm:w-80 lg:w-auto flex flex-col">
-                {/* Top — coloured panel */}
+              <Link
+                key={card.name}
+                href={`${base}/events`}
+                className="group border border-white/10 hover:border-[#F2B035]/40 transition-colors overflow-hidden shrink-0 snap-start w-[78vw] sm:w-80 lg:w-auto flex flex-col"
+              >
+                {/* Top colour panel */}
                 <div
                   className={`flex flex-col items-center justify-center p-8 gap-3 ${
-                    card.tagColor === "red" ? "bg-[#C8102E]"
-                    : card.tagColor === "gold" ? "bg-[#F2B035]"
-                    : card.tagColor === "green" ? "bg-[#169B62]"
-                    : "bg-[#0F5132]"
+                    card.tagColor === "red"
+                      ? "bg-[#101010] border border-[#C8102E]"
+                      : card.tagColor === "gold"
+                      ? "bg-[#F2B035]"
+                      : card.tagColor === "green"
+                      ? "bg-[#169B62]"
+                      : "bg-[#0F5132]"
                   }`}
-                  style={{ height: "clamp(120px, 14vw, 180px)" }}>
+                  style={{ height: "clamp(120px, 14vw, 180px)" }}
+                >
                   <span style={{ fontSize: "3rem" }}>{card.emoji}</span>
-                  <span className="text-white/70 text-[10px] uppercase tracking-[0.2em] font-medium">{card.tag}</span>
+                  <span
+                    className={`text-[10px] uppercase tracking-[0.2em] font-medium ${
+                      card.tagColor === "gold" ? "text-[#101010]" : "text-white/70"
+                    }`}
+                  >
+                    {card.tag}
+                  </span>
                 </div>
-                {/* Bottom — info */}
+
+                {/* Bottom info */}
                 <div className="bg-[#0F5132] p-5 flex flex-col gap-3 flex-1">
                   <p className="text-[#F4EFE6]/40 text-[10px] uppercase tracking-[0.2em]">{card.day}</p>
-                  <h3 className="text-[#F4EFE6] leading-tight"
-                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(1.1rem, 2.2vw, 1.4rem)" }}>
+                  <h3
+                    className="text-[#F4EFE6] leading-tight"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1rem, 2vw, 1.3rem)", letterSpacing: "0.02em" }}
+                  >
                     {card.name}
                   </h3>
                   <p className="text-[#F4EFE6]/50 text-xs leading-relaxed">{card.detail}</p>
@@ -188,52 +244,59 @@ export default async function LocationHome({
       </section>
 
       {/* ── FEATURES — alternating rows ── */}
-      <section className="bg-[#0F5132] border-t border-white/10 py-16">
+      <section className="bg-[#0F5132] border-t border-white/10 py-20">
         <div className="max-w-7xl mx-auto px-6">
-          <FadeIn className="mb-12">
+          <FadeIn className="mb-16">
             <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em]">The Experience</p>
           </FadeIn>
 
-          {features.map((feat, i) => (
-            <FadeIn key={feat.title} delay={i * 120}
-              className={`flex flex-col md:flex-row items-center gap-8 ${i > 0 ? "mt-10" : ""}`}>
-              {/* Text side */}
-              <div className={`flex flex-col gap-3 w-full md:w-[40%] shrink-0 ${i % 2 === 1 ? "md:order-2 md:pl-10" : "md:pr-10"}`}>
-                <h3 className="text-[#F4EFE6] leading-none"
-                  style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
-                  {feat.title}
-                </h3>
-                <p className="text-[#F4EFE6]/55 text-sm leading-relaxed max-w-xs">{feat.body}</p>
-              </div>
-              {/* Visual panel */}
-              <div className={`w-full flex-1 bg-[#101010] border border-white/10 flex items-center justify-center ${i % 2 === 1 ? "md:order-1" : ""}`}
-                style={{ height: "clamp(180px, 24vw, 280px)" }}>
-                <div className="text-center">
-                  <p className="leading-none text-[#F4EFE6]"
-                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(4rem, 10vw, 8rem)", color: feat.accent, opacity: 0.15 }}>
-                    {i === 0 ? loc.stats[0].value : loc.slug === "vancouver" ? "12+" : "🍺"}
-                  </p>
+          <div className="flex flex-col gap-16">
+            {features.map((feat, i) => (
+              <FadeIn
+                key={feat.title}
+                delay={i * 120}
+                className={`flex flex-col md:flex-row items-center gap-10 ${i % 2 === 1 ? "md:flex-row-reverse" : ""}`}
+              >
+                {/* Text side */}
+                <div className="flex flex-col gap-4 w-full md:w-[42%] shrink-0">
+                  <h3
+                    className="text-[#F4EFE6] leading-none"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4.5vw, 4rem)", letterSpacing: "0.02em" }}
+                  >
+                    {feat.title}
+                  </h3>
+                  <p className="text-[#F4EFE6]/55 text-sm leading-relaxed max-w-xs">{feat.body}</p>
                 </div>
-                <div className="absolute">
-                  <p className="text-[#F4EFE6]/60 text-center"
-                    style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(3rem, 8vw, 6rem)", color: feat.accent }}>
-                    {i === 0 ? loc.stats[0].value : loc.slug === "vancouver" ? "12+" : "✓"}
-                  </p>
+
+                {/* Photo placeholder */}
+                <div
+                  className="w-full flex-1 bg-[#101010] border border-white/10 flex flex-col items-center justify-center gap-3"
+                  style={{ height: "clamp(200px, 26vw, 320px)" }}
+                >
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" className="text-[#F4EFE6]/20">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
+                  </svg>
+                  <p className="text-[#F4EFE6]/20 text-[10px] uppercase tracking-[0.25em]">Photo Coming Soon</p>
                 </div>
-              </div>
-            </FadeIn>
-          ))}
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── MENU + BOOK — split ── */}
       <section className="grid grid-cols-1 sm:grid-cols-2 border-t border-white/10">
-        <Link href={`${base}/menu`}
-          className="group bg-[#101010] border-r border-white/10 px-10 sm:px-14 py-16 flex flex-col justify-between gap-10 hover:bg-[#0a0a0a] transition-colors">
+        <Link
+          href={`${base}/menu`}
+          className="group bg-[#101010] border-r border-white/10 px-10 sm:px-14 py-16 flex flex-col justify-between gap-10 hover:bg-[#0a0a0a] transition-colors"
+        >
           <div>
             <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-5">Food &amp; Drinks</p>
-            <h2 className="text-[#F4EFE6] leading-none"
-              style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.5rem, 5vw, 4rem)" }}>
+            <h2
+              className="text-[#F4EFE6] leading-none"
+              style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4.5rem)", letterSpacing: "0.02em" }}
+            >
               The Menu
             </h2>
             <p className="text-[#F4EFE6]/45 text-sm mt-4 max-w-xs leading-relaxed">
@@ -244,12 +307,19 @@ export default async function LocationHome({
             View Menu +
           </p>
         </Link>
-        <a href={loc.bookingUrl} target="_blank" rel="noopener noreferrer"
-          className="group bg-[#0F5132] px-10 sm:px-14 py-16 flex flex-col justify-between gap-10 hover:bg-[#0a4028] transition-colors">
+
+        <a
+          href={loc.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group bg-[#0F5132] px-10 sm:px-14 py-16 flex flex-col justify-between gap-10 hover:bg-[#0a4028] transition-colors"
+        >
           <div>
             <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-5">Private Events</p>
-            <h2 className="text-[#F4EFE6] leading-none"
-              style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.5rem, 5vw, 4rem)" }}>
+            <h2
+              className="text-[#F4EFE6] leading-none"
+              style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4.5rem)", letterSpacing: "0.02em" }}
+            >
               Book Your Table
             </h2>
             <p className="text-[#F4EFE6]/45 text-sm mt-4 max-w-xs leading-relaxed">
@@ -262,21 +332,25 @@ export default async function LocationHome({
         </a>
       </section>
 
-      {/* ── GROUP BOOKING CTA ── (Yale "brown section" equivalent) */}
+      {/* ── GROUP BOOKING CTA ── */}
       <FadeIn>
-        <section className="bg-[#101010] border-t border-white/10 px-6 py-16">
+        <section className="bg-[#101010] border-t border-white/10 px-6 py-20">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
-              <h2 className="text-[#F4EFE6] leading-tight"
-                style={{ fontFamily: "'Pacifico', cursive", fontSize: "clamp(2.2rem, 4vw, 3.5rem)" }}>
+              <h2
+                className="text-[#F4EFE6] leading-tight"
+                style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "0.02em" }}
+              >
                 Book Your Group Night
               </h2>
               <p className="mt-3 text-[#F4EFE6]/55 text-sm max-w-sm leading-relaxed">
                 Birthdays, corporate outings, post-game parties. Get in touch and we&apos;ll take care of everything.
               </p>
             </div>
-            <Link href={`${base}/group-bookings`}
-              className="shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors">
+            <Link
+              href={`${base}/group-bookings`}
+              className="shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors"
+            >
               Learn More
             </Link>
           </div>
@@ -285,52 +359,78 @@ export default async function LocationHome({
 
       {/* ── FIND US ── */}
       <section id="find-us" className="bg-[#0F5132] border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-14">
-          <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-10">Find Us</p>
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-12">Find Us</p>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
             {/* Contact */}
-            <FadeIn className="flex flex-col gap-5" direction="left">
+            <FadeIn className="flex flex-col gap-6" direction="left">
               <div>
                 <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-1">Address</p>
-                <a href={`https://maps.google.com/?q=${encodeURIComponent(loc.address)}`}
-                  target="_blank" rel="noopener noreferrer"
-                  className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors leading-relaxed">
+                <a
+                  href={`https://maps.google.com/?q=${encodeURIComponent(loc.address)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors leading-relaxed"
+                >
                   {loc.address}
                 </a>
               </div>
               <div>
                 <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-1">Phone</p>
-                <a href={`tel:${loc.phone}`} className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors">{loc.phone}</a>
+                <a href={`tel:${loc.phone}`} className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors">
+                  {loc.phone}
+                </a>
               </div>
               <div>
                 <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-1">Email</p>
-                <a href={`mailto:${loc.email}`} className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors break-all">{loc.email}</a>
+                <a href={`mailto:${loc.email}`} className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors break-all">
+                  {loc.email}
+                </a>
               </div>
               <div>
                 <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-2">Follow</p>
                 <div className="flex gap-5">
-                  <a href={loc.social.instagram} target="_blank" rel="noopener noreferrer"
-                    className="text-[#F4EFE6]/40 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors">Instagram</a>
-                  <a href={loc.social.facebook} target="_blank" rel="noopener noreferrer"
-                    className="text-[#F4EFE6]/40 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors">Facebook</a>
+                  <a
+                    href={loc.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#F4EFE6]/40 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors"
+                  >
+                    Instagram
+                  </a>
+                  <a
+                    href={loc.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#F4EFE6]/40 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors"
+                  >
+                    Facebook
+                  </a>
                 </div>
               </div>
             </FadeIn>
 
             {/* Hours */}
             <FadeIn direction="none" delay={100}>
-              <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-5">Hours</p>
+              <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-6">Hours</p>
               <div className="flex flex-col">
                 {loc.hours.map((h, i) => (
-                  <div key={h.days} className={`flex items-start justify-between py-3 ${i < loc.hours.length - 1 ? "border-b border-white/10" : ""}`}>
+                  <div
+                    key={h.days}
+                    className={`flex items-start justify-between py-3 ${i < loc.hours.length - 1 ? "border-b border-white/10" : ""}`}
+                  >
                     <span className="text-[#F4EFE6]/45 text-xs">{h.days}</span>
                     <span className="text-[#F4EFE6]/70 text-xs text-right">{h.time}</span>
                   </div>
                 ))}
                 {loc.ageNote && (
-                  <p className="mt-3 text-[#C8102E] text-[10px] uppercase tracking-[0.12em] font-semibold">
-                    * {loc.ageNote}
+                  <p
+                    className="mt-4 inline-block border border-[#C8102E] text-[#101010] px-2 py-0.5 self-start"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em" }}
+                  >
+                    * {loc.ageNote.toUpperCase()}
                   </p>
                 )}
               </div>
