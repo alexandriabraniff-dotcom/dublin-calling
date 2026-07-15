@@ -25,14 +25,10 @@ export default function FAQPage() {
 
   return (
     <>
+
+      {/* Header */}
       <section className="bg-[#0F5132] py-20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <p
-            className="text-[#F2B035] mb-4"
-            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.3em" }}
-          >
-            {loc.name.toUpperCase()} &nbsp;·&nbsp; {loc.city.toUpperCase()}
-          </p>
           <h1
             className="text-[#F4EFE6] mb-4"
             style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}

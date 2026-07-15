@@ -8,6 +8,11 @@ export interface Event {
   ticketUrl?: string;
 }
 
+export interface ScheduleDay {
+  dayName: string;
+  items: string[];
+}
+
 export interface Location {
   slug: LocationSlug;
   name: string;
@@ -28,6 +33,7 @@ export interface Location {
   social: { facebook: string; instagram: string };
   uniqueFeature?: string;
   ageNote?: string;
+  weeklySchedule: ScheduleDay[];
 }
 
 const LOCATIONS: Record<LocationSlug, Location> = {
@@ -133,6 +139,15 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       instagram: "https://instagram.com/dublincallingadelaide",
     },
     uniqueFeature: "Home of the Official Bills Backers Club",
+    weeklySchedule: [
+      { dayName: "Tuesday",   items: ["MLB All-Star Game, 8:00 PM ET"] },
+      { dayName: "Wednesday", items: [] },
+      { dayName: "Thursday",  items: ["Toronto FC at CF Montreal, 7:30 PM ET"] },
+      { dayName: "Friday",    items: ["Chicago White Sox vs Toronto Blue Jays, 7:07 PM ET"] },
+      { dayName: "Saturday",  items: ["Chicago White Sox vs Toronto Blue Jays, 3:07 PM ET"] },
+      { dayName: "Sunday",    items: ["Chicago White Sox vs Toronto Blue Jays, 12:15 PM ET"] },
+      { dayName: "Monday",    items: ["Tampa Bay Rays vs Toronto Blue Jays, 7:07 PM ET", "Trivia Night with TriviaTO, 7:00 PM"] },
+    ],
   },
 
   danforth: {
@@ -237,6 +252,15 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       instagram: "https://instagram.com/dublincallingdanforth",
     },
     uniqueFeature: "Monday Night Pool Tournaments",
+    weeklySchedule: [
+      { dayName: "Tuesday",   items: ["MLB All-Star Game, 8:00 PM ET", "Trivia Night with TriviaTO, 7:00 PM"] },
+      { dayName: "Wednesday", items: [] },
+      { dayName: "Thursday",  items: ["Toronto FC at CF Montreal, 7:30 PM ET"] },
+      { dayName: "Friday",    items: ["Chicago White Sox vs Toronto Blue Jays, 7:07 PM ET"] },
+      { dayName: "Saturday",  items: ["Chicago White Sox vs Toronto Blue Jays, 3:07 PM ET"] },
+      { dayName: "Sunday",    items: ["Chicago White Sox vs Toronto Blue Jays, 12:15 PM ET"] },
+      { dayName: "Monday",    items: ["Tampa Bay Rays vs Toronto Blue Jays, 7:07 PM ET", "Pool Tournament, sign in by 7:00 PM"] },
+    ],
   },
 
   vancouver: {
@@ -342,6 +366,15 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     },
     uniqueFeature: "12+ Beers on Tap. Open Until 3AM.",
     ageNote: "19+ after 10PM",
+    weeklySchedule: [
+      { dayName: "Tuesday",   items: ["MLB All-Star Game, 5:00 PM PT"] },
+      { dayName: "Wednesday", items: [] },
+      { dayName: "Thursday",  items: ["Vancouver Whitecaps FC at Chicago Fire FC, 5:30 PM PT"] },
+      { dayName: "Friday",    items: ["Chicago White Sox vs Toronto Blue Jays, 4:07 PM PT", "BC Lions at Edmonton Elks, 6:00 PM PT"] },
+      { dayName: "Saturday",  items: ["Chicago White Sox vs Toronto Blue Jays, 12:07 PM PT"] },
+      { dayName: "Sunday",    items: ["Chicago White Sox vs Toronto Blue Jays, 9:15 AM PT"] },
+      { dayName: "Monday",    items: ["Tampa Bay Rays vs Toronto Blue Jays, 4:07 PM PT"] },
+    ],
   },
 };
 

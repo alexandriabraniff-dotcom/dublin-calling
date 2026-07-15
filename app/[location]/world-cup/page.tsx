@@ -21,62 +21,21 @@ export default async function WorldCupPage({
 
   return (
     <>
-      {/* Hero */}
-      <section className="bg-[#0F5132] min-h-[65vh] flex flex-col justify-end py-16 sm:py-20 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
-          <div className="flex items-center gap-3 mb-6">
-            <span
-              className="inline-flex items-center gap-2 border border-[#C8102E] text-[#101010] px-3 py-1.5"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em" }}
-            >
-              <span className="w-2 h-2 rounded-full bg-[#C8102E] animate-pulse" />
-              LIVE EVENTS
-            </span>
-          </div>
+      {/* Header */}
+      <section className="bg-[#0F5132] py-20 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1
-            className="text-[#F4EFE6] leading-none mb-4"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3rem, 10vw, 8rem)" }}
+            className="text-[#F4EFE6] mb-4"
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
           >
             World Cup <span className="text-[#F2B035]">2026</span>
           </h1>
-          <p className="text-[#F4EFE6]/70 text-xl sm:text-2xl mb-3 max-w-2xl">
-            Every Goal. Every Game. Every Moment.
-          </p>
-          <p className="text-[#F4EFE6]/40 text-base max-w-md">
-            Watch every match of FIFA World Cup 2026 on our big screens at Dublin Calling {loc.name}, the best pub in {loc.city}.
+          <p className="text-[#F4EFE6]/50 text-lg font-light max-w-xl">
+            Every match. Every goal. Watch the FIFA World Cup 2026 live at Dublin Calling.
           </p>
         </div>
       </section>
 
-      {/* Why watch here */}
-      <section className="py-16 bg-[#101010]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h2
-            className="text-[#F4EFE6] mb-10"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
-          >
-            The Best Seat in {loc.city}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {[
-              { icon: "📺", title: `${loc.stats[0].value} Big Screens`, desc: "Crystal-clear screens covering every angle. You won't miss a second." },
-              { icon: "🍺", title: loc.slug === "vancouver" ? "12+ Beers on Tap" : "Ice Cold Pints", desc: loc.slug === "vancouver" ? "12+ beers on tap. The perfect match companion." : "Draught pints and happy hour deals all tournament long." },
-              { icon: "🎉", title: "Incredible Atmosphere", desc: "Hundreds of fans under one roof. This is how football was meant to be watched." },
-            ].map((item) => (
-              <div key={item.title} className="bg-[#0F5132] border border-white/10 p-8">
-                <div className="text-3xl mb-4">{item.icon}</div>
-                <h3
-                  className="text-[#F4EFE6] mb-2"
-                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "1.4rem" }}
-                >
-                  {item.title}
-                </h3>
-                <p className="text-[#F4EFE6]/50 text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Fixtures */}
       <section className="py-16 bg-[#0F5132] border-t border-white/10">

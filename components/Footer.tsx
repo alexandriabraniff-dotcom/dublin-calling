@@ -128,15 +128,13 @@ export default function Footer({ location }: FooterProps) {
             </p>
 
             {/* Privacy */}
-            <a
-              href="https://www.themrggroup.com/privacy-policy"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={`/${location.slug}/privacy-policy`}
               className="text-[#F4EFE6]/25 hover:text-[#F4EFE6]/50 transition-colors uppercase tracking-widest"
               style={{ fontSize: "0.6rem" }}
             >
               Privacy Policy
-            </a>
+            </Link>
           </div>
 
           {/* Col 3 — Contact (right-aligned) */}

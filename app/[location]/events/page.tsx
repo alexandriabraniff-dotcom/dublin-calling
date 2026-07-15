@@ -21,48 +21,19 @@ export default async function EventsPage({
 
   return (
     <>
+
       {/* Header */}
       <section className="bg-[#0F5132] py-20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <p
-            className="text-[#F2B035] mb-4"
-            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.3em" }}
-          >
-            {loc.name.toUpperCase()} &nbsp;·&nbsp; {loc.city.toUpperCase()}
-          </p>
           <h1
             className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(3.5rem, 10vw, 7rem)", letterSpacing: "0.02em" }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
           >
             Events
           </h1>
-          <p className="text-[#F4EFE6]/50 text-lg max-w-xl font-light">
+          <p className="text-[#F4EFE6]/50 text-lg font-light max-w-xl">
             Live sports, trivia nights, ticketed events, and more. Something on every night of the week.
           </p>
-        </div>
-      </section>
-
-      {/* Happy Hour banner */}
-      <section className="bg-[#101010] border-b border-white/8 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-5">
-            <span className="text-4xl">🍺</span>
-            <div>
-              <h2
-                className="text-[#F2B035]"
-                style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "1.8rem", letterSpacing: "0.02em" }}
-              >
-                Happy Hour Every Day
-              </h2>
-              <p className="text-[#F4EFE6]/50 text-sm mt-0.5">{loc.happyHour}</p>
-            </div>
-          </div>
-          <span
-            className="border border-[#169B62] text-[#169B62] px-4 py-1.5"
-            style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.2em" }}
-          >
-            DRINK SPECIALS
-          </span>
         </div>
       </section>
 
@@ -160,28 +131,6 @@ export default async function EventsPage({
         </div>
       </section>
 
-      {/* Sports strip */}
-      <section className="py-12 bg-[#101010] border-t border-white/8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h2
-            className="text-[#F4EFE6] mb-6"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "2rem", letterSpacing: "0.02em" }}
-          >
-            Every Major Sport, Every Night
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {["NFL","CFL","MLB","NBA","NHL","UFC","Premier League","MLS","Champions League","Rugby","Tennis","Golf"].map((sport) => (
-              <span
-                key={sport}
-                className="border border-white/10 text-[#F4EFE6]/40 hover:border-[#F2B035] hover:text-[#F2B035] transition-colors cursor-default px-4 py-2"
-                style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.65rem", fontWeight: 500, letterSpacing: "0.12em" }}
-              >
-                {sport}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   );
 }

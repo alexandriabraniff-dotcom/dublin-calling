@@ -19,9 +19,9 @@ const LEFT_LINKS = [
 ];
 
 const RIGHT_LINKS = [
-  { href: "/world-cup",      label: "World Cup"  },
-  { href: "/group-bookings", label: "Groups"     },
-  { href: "/faq",            label: "FAQ"        },
+  { href: "/world-cup",      label: "World Cup"      },
+  { href: "/group-bookings", label: "Group Bookings" },
+  { href: "/faq",            label: "FAQ"            },
 ];
 
 function Hamburger({ open }: { open: boolean }) {
@@ -126,14 +126,13 @@ export default function Navbar({ location }: { location: LocationSlug }) {
           </nav>
 
           {/* Far right — Book Now */}
-          <a
-            href="https://themrggroup.tripleseat.com/dynamic_party_request/528"
-            target="_blank" rel="noopener noreferrer"
+          <Link
+            href={`${base}/book-a-table`}
             className="shrink-0 bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
             style={{ fontSize: "clamp(10px, 0.85vw, 12px)", padding: "0.45rem 1.2rem" }}
           >
             Book Now
-          </a>
+          </Link>
 
           {/* Centre logo — absolutely positioned, overflows below */}
           <div className="absolute inset-x-0 flex justify-center pointer-events-none" style={{ top: "6px" }}>
@@ -190,13 +189,13 @@ export default function Navbar({ location }: { location: LocationSlug }) {
               </Link>
             ))}
             <div className="p-4">
-              <a
-                href="https://themrggroup.tripleseat.com/dynamic_party_request/528"
-                target="_blank" rel="noopener noreferrer"
+              <Link
+                href={`${base}/book-a-table`}
+                onClick={() => setMenuOpen(false)}
                 className="block w-full text-center py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs uppercase tracking-[0.15em]"
               >
                 Book a Table
-              </a>
+              </Link>
             </div>
           </div>
         )}

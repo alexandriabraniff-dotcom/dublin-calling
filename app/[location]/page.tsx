@@ -20,7 +20,7 @@ export default async function LocationHome({
   const eventCards: {
     day: string;
     name: string;
-    detail: string;
+    details: string[];
     tag: string;
     tagColor: TagColor;
     emoji: string;
@@ -28,25 +28,25 @@ export default async function LocationHome({
   }[] = (
     {
       adelaide: [
-        { day: "Every Sunday",  name: "Bills Backers Watch Party", detail: "Official Buffalo Bills fan chapter, every game day", tag: "NFL",    tagColor: "gold",    emoji: "🏈" },
-        { day: "Every Monday",  name: "Trivia Night",              detail: "TriviaTO, doors at 7:00 PM",                        tag: "Weekly", tagColor: "default", emoji: "🧠" },
-        { day: "Fight Nights",  name: "UFC Live",                  detail: "Every card live on 20+ big screens",                 tag: "UFC",    tagColor: "red",     emoji: "🥊" },
-        { day: "Sun to Fri",    name: "Happy Hour",                detail: "4:00 PM to 6:00 PM · Drink specials all week",       tag: "Daily",  tagColor: "green",   emoji: "🍺" },
+        { day: "Every Sunday",  name: "Bills Backers Watch Party", details: ["Official Buffalo Bills fan chapter", "Every game day", "Drink specials all game"],  tag: "NFL",    tagColor: "gold",    emoji: "🏈" },
+        { day: "Every Monday",  name: "Trivia Night",              details: ["Hosted by TriviaTO", "Doors at 7:00 PM", "Prizes for top table"],                  tag: "Weekly", tagColor: "default", emoji: "🧠" },
+        { day: "Fight Nights",  name: "UFC Live",                  details: ["Every card live", "20+ big screens", "Come early for best seats"],                  tag: "UFC",    tagColor: "red",     emoji: "🥊" },
+        { day: "Sun to Fri",    name: "Happy Hour",                details: ["4:00 PM to 6:00 PM", "Discounted drinks all week", "Draught, cocktails and more"],  tag: "Daily",  tagColor: "green",   emoji: "🍺" },
       ],
       danforth: [
-        { day: "Every Monday",  name: "Pool Tournament",   detail: "Sign in by 7:00 PM to compete",          tag: "Weekly", tagColor: "default", emoji: "🎱" },
-        { day: "Every Tuesday", name: "Trivia Night",      detail: "TriviaTO, main floor, 7:00 PM",          tag: "Weekly", tagColor: "default", emoji: "🧠" },
-        { day: "Fight Nights",  name: "UFC Live",          detail: "Every card live on our big screens",      tag: "UFC",    tagColor: "red",     emoji: "🥊" },
-        { day: "Sun to Fri",    name: "Happy Hour",        detail: "4:00 PM to 6:00 PM · Drink specials",    tag: "Daily",  tagColor: "green",   emoji: "🍺" },
+        { day: "Every Monday",  name: "Pool Tournament",   details: ["Sign in by 7:00 PM", "Open to all skill levels", "Prizes for winners"],            tag: "Weekly", tagColor: "default", emoji: "🎱" },
+        { day: "Every Tuesday", name: "Trivia Night",      details: ["Hosted by TriviaTO", "Main floor, 7:00 PM", "Prizes for top table"],               tag: "Weekly", tagColor: "default", emoji: "🧠" },
+        { day: "Fight Nights",  name: "UFC Live",          details: ["Every card live on our big screens", "Come early for best seats"],                  tag: "UFC",    tagColor: "red",     emoji: "🥊" },
+        { day: "Sun to Fri",    name: "Happy Hour",        details: ["4:00 PM to 6:00 PM", "Discounted drinks daily", "Draught, cocktails and more"],    tag: "Daily",  tagColor: "green",   emoji: "🍺" },
       ],
       vancouver: [
-        { day: "Aug 15, 6:00 PM",   name: "UFC 330",      detail: "Makhachev vs Machado Garry. VIP table packages available.", tag: "UFC",    tagColor: "red",     emoji: "🥊", image: "/ufc-330.png" },
-        { day: "Every Friday, 8PM", name: "Ladies Night", detail: "8PM till late. Live DJ. $6.95 Vodka Highballs.",            tag: "Event",  tagColor: "gold",    emoji: "👑", image: "/ladies-night.jpg" },
-        { day: "Ongoing",           name: "FIFA & Soccer", detail: "Every match live on 15+ TVs. Sound on. Table packages available.", tag: "Soccer", tagColor: "default", emoji: "⚽", image: "/fifa-soccer.jpg" },
+        { day: "Aug 15, 6:00 PM",   name: "UFC 330",       details: ["Makhachev vs Machado Garry", "Doors open at 6:00 PM", "VIP table packages available"], tag: "UFC",    tagColor: "red",     emoji: "🥊", image: "/ufc-330.jpg" },
+        { day: "Every Friday, 8PM", name: "Ladies Night",  details: ["Every Friday, 8PM till late", "Live DJ", "$6.95 Vodka Highballs"],                    tag: "Event",  tagColor: "gold",    emoji: "👑", image: "/ladies-night.jpg" },
+        { day: "Ongoing",           name: "FIFA & Soccer", details: ["Every match live on 15+ TVs", "Sound on", "Table packages available"],                tag: "Soccer", tagColor: "default", emoji: "⚽", image: "/fifa-soccer.jpg" },
       ],
     } as Record<
       string,
-      { day: string; name: string; detail: string; tag: string; tagColor: TagColor; emoji: string; image?: string }[]
+      { day: string; name: string; details: string[]; tag: string; tagColor: TagColor; emoji: string; image?: string }[]
     >
   )[loc.slug] ?? [];
 
@@ -54,6 +54,7 @@ export default async function LocationHome({
     {
       title: loc.stats[0].value + " Big Screens",
       body: `Every major game. Every sport. ${loc.stats[0].value} screens across the room so you never miss a moment, wherever you're sitting.`,
+      image: "/big-screens.png" as string | undefined,
     },
     {
       title: loc.slug === "vancouver" ? "12+ Beers on Tap" : "Ice-Cold Draught",
@@ -61,6 +62,7 @@ export default async function LocationHome({
         loc.slug === "vancouver"
           ? "Twelve taps, always rotating. Ask your server what's pouring tonight."
           : "Draught pints, craft cans, and a cocktail list built for long nights.",
+      image: loc.slug === "vancouver" ? "/beers-on-tap.jpg" : undefined,
     },
   ];
 
@@ -136,22 +138,22 @@ export default async function LocationHome({
           {loc.slug === "vancouver" && <div className="mb-10" />}
 
           <div className="flex flex-wrap justify-center gap-3">
-            <a
-              href={loc.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
-            >
-              Book a Table
-            </a>
             <Link
               href={`${base}/events`}
-              className="border border-[#F4EFE6]/30 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
+              className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
               style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
             >
               See Events
             </Link>
+            <a
+              href={loc.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-[#F4EFE6]/30 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
+            >
+              Book a Table
+            </a>
           </div>
         </div>
 
@@ -170,17 +172,23 @@ export default async function LocationHome({
         </FadeIn>
 
         <div className="max-w-7xl mx-auto">
-          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-6 pb-3 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {eventCards.map((card) => (
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-3 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {eventCards.map((card, i) => (
               <Link
                 key={card.name}
                 href={`${base}/events`}
-                className="group border border-white/10 hover:border-[#F2B035]/40 transition-colors overflow-hidden shrink-0 snap-start w-[78vw] sm:w-80 lg:w-auto flex flex-col"
+                className={`group border border-white/10 hover:border-[#F2B035]/40 transition-colors overflow-hidden shrink-0 snap-start w-[78vw] sm:w-80 lg:w-auto flex flex-col${i === 0 ? " ml-6 lg:ml-0" : ""}${i === eventCards.length - 1 ? " mr-6 lg:mr-0" : ""}`}
               >
                 {/* Top colour panel */}
                 {card.image ? (
-                  <div className="relative overflow-hidden" style={{ height: "clamp(120px, 14vw, 180px)" }}>
-                    <Image src={card.image} alt={card.name} fill className="object-cover object-top" />
+                  <div className="relative overflow-hidden" style={{ height: "clamp(200px, 44vw, 240px)" }}>
+                    <Image
+                      src={card.image}
+                      alt={card.name}
+                      fill
+                      className="object-cover"
+                      style={{ objectPosition: card.image.includes("ufc") ? "center -8px" : "center top" }}
+                    />
                   </div>
                 ) : (
                   <div
@@ -193,7 +201,7 @@ export default async function LocationHome({
                         ? "bg-[#169B62]"
                         : "bg-[#0F5132]"
                     }`}
-                    style={{ height: "clamp(120px, 14vw, 180px)" }}
+                    style={{ height: "clamp(200px, 44vw, 240px)" }}
                   >
                     <span style={{ fontSize: "3rem" }}>{card.emoji}</span>
                     <span
@@ -215,7 +223,14 @@ export default async function LocationHome({
                   >
                     {card.name}
                   </h3>
-                  <p className="text-[#F4EFE6]/50 text-xs leading-relaxed">{card.detail}</p>
+                  <ul className="flex flex-col gap-1">
+                    {card.details.map((d) => (
+                      <li key={d} className="flex items-start gap-1.5 text-[#F4EFE6]/50 text-xs leading-relaxed">
+                        <span className="text-[#F2B035] mt-[3px] shrink-0">·</span>
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
                   <p className="text-[#F2B035]/70 group-hover:text-[#F2B035] transition-colors text-xs uppercase tracking-widest mt-auto">
                     Details +
                   </p>
@@ -225,12 +240,70 @@ export default async function LocationHome({
           </div>
         </div>
 
-        <FadeIn className="max-w-7xl mx-auto px-6 mt-5">
-          <p className="text-[#F4EFE6]/25 text-[10px] uppercase tracking-[0.25em]">
-            Happy Hour every Sunday through Friday, 4:00 PM to 6:00 PM
-          </p>
-        </FadeIn>
       </section>
+
+      {/* ── THIS WEEK ── */}
+      {(() => {
+        const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        const nowVan = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Vancouver" }));
+        const todayIdx = nowVan.getDay();
+
+        const week = loc.weeklySchedule.map((entry) => {
+          const targetIdx = DAY_NAMES.indexOf(entry.dayName);
+          let diff = targetIdx - todayIdx;
+          if (diff < 0) diff += 7;
+          const d = new Date(nowVan);
+          d.setDate(d.getDate() + diff);
+          const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Vancouver" });
+          return { ...entry, dateLabel, isToday: diff === 0 };
+        });
+
+        return (
+          <section className="bg-[#082a1c] border-t border-white/10 py-16">
+            <div className="max-w-7xl mx-auto">
+              <FadeIn className="mb-10 flex items-end justify-between px-6">
+                <h2
+                  className="text-white"
+                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}
+                >
+                  This Week at Dublin Calling
+                </h2>
+              </FadeIn>
+              <div className="flex overflow-x-auto snap-x snap-mandatory pb-3 lg:grid lg:grid-cols-7 lg:overflow-visible lg:pb-0 lg:snap-none gap-px bg-white/10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {week.map((day, di) => (
+                  <div
+                    key={day.dayName}
+                    className={`flex flex-col gap-3 p-5 shrink-0 snap-start w-[72vw] sm:w-60 lg:w-auto${di === 0 ? " ml-6 lg:ml-0" : ""}${di === week.length - 1 ? " mr-6 lg:mr-0" : ""} ${day.isToday ? "bg-[#0a1f14]" : "bg-[#082a1c]"}`}
+                  >
+                    <div className="border-b border-white/15 pb-3">
+                      <p
+                        className={`text-[10px] uppercase tracking-[0.2em] ${day.isToday ? "text-[#F2B035]" : "text-white/60"}`}
+                        style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600 }}
+                      >
+                        {day.isToday ? "Today" : day.dayName}
+                      </p>
+                      <p className="text-white/70 text-xs mt-0.5">{day.dateLabel}</p>
+                    </div>
+                    {day.items.length === 0 ? (
+                      <p className="text-white/30 text-xs italic">No events</p>
+                    ) : (
+                      <ul className="flex flex-col gap-2 flex-1">
+                        {day.items.map((item) => (
+                          <li key={item} className="flex items-start gap-1.5">
+                            <span className="text-[#F2B035] shrink-0 mt-[3px]">·</span>
+                            <span className="text-white/85 text-xs leading-relaxed">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
 
       {/* ── FEATURES — alternating rows ── */}
       <section className="bg-[#0F5132] border-t border-white/10 py-20">
@@ -257,69 +330,29 @@ export default async function LocationHome({
                   <p className="text-[#F4EFE6]/55 text-sm leading-relaxed max-w-xs">{feat.body}</p>
                 </div>
 
-                {/* Photo placeholder */}
-                <div
-                  className="w-full flex-1 bg-[#101010] border border-white/10 flex flex-col items-center justify-center gap-3"
-                  style={{ height: "clamp(200px, 26vw, 320px)" }}
-                >
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" className="text-[#F4EFE6]/20">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                    <circle cx="12" cy="13" r="4" />
-                  </svg>
-                  <p className="text-[#F4EFE6]/20 text-[10px] uppercase tracking-[0.25em]">Photo Coming Soon</p>
-                </div>
+                {/* Photo */}
+                {feat.image ? (
+                  <div className="relative w-full flex-1 overflow-hidden" style={{ height: "clamp(200px, 26vw, 320px)" }}>
+                    <Image src={feat.image} alt={feat.title} fill className="object-cover" />
+                  </div>
+                ) : (
+                  <div
+                    className="w-full flex-1 bg-[#101010] border border-white/10 flex flex-col items-center justify-center gap-3"
+                    style={{ height: "clamp(200px, 26vw, 320px)" }}
+                  >
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" className="text-[#F4EFE6]/20">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                      <circle cx="12" cy="13" r="4" />
+                    </svg>
+                    <p className="text-[#F4EFE6]/20 text-[10px] uppercase tracking-[0.25em]">Photo Coming Soon</p>
+                  </div>
+                )}
               </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── MENU + BOOK — split ── */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 border-t border-white/10">
-        <Link
-          href={`${base}/menu`}
-          className="group bg-[#101010] border-r border-white/10 px-10 sm:px-14 py-16 flex flex-col justify-between gap-10 hover:bg-[#0a0a0a] transition-colors"
-        >
-          <div>
-            <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-5">Food &amp; Drinks</p>
-            <h2
-              className="text-[#F4EFE6] leading-none"
-              style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4.5rem)", letterSpacing: "0.02em" }}
-            >
-              The Menu
-            </h2>
-            <p className="text-[#F4EFE6]/45 text-sm mt-4 max-w-xs leading-relaxed">
-              Pub classics, sharables, mains, and a full drinks list.
-            </p>
-          </div>
-          <p className="text-[#F2B035]/70 group-hover:text-[#F2B035] text-xs uppercase tracking-widest transition-colors">
-            View Menu +
-          </p>
-        </Link>
-
-        <a
-          href={loc.bookingUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group bg-[#0F5132] px-10 sm:px-14 py-16 flex flex-col justify-between gap-10 hover:bg-[#0a4028] transition-colors"
-        >
-          <div>
-            <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-5">Private Events</p>
-            <h2
-              className="text-[#F4EFE6] leading-none"
-              style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4.5rem)", letterSpacing: "0.02em" }}
-            >
-              Book Your Table
-            </h2>
-            <p className="text-[#F4EFE6]/45 text-sm mt-4 max-w-xs leading-relaxed">
-              Groups of any size. Online booking for up to 20.
-            </p>
-          </div>
-          <p className="text-[#F2B035]/70 group-hover:text-[#F2B035] text-xs uppercase tracking-widest transition-colors">
-            Reserve Now +
-          </p>
-        </a>
-      </section>
 
       {/* ── GROUP BOOKING CTA ── */}
       <FadeIn>
@@ -414,7 +447,6 @@ export default async function LocationHome({
                     <span className="text-[#F4EFE6]/70 text-xs text-right">{h.time}</span>
                   </div>
                 ))}
-                )}
               </div>
             </FadeIn>
 

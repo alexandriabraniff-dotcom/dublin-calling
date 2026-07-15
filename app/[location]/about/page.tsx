@@ -77,33 +77,18 @@ export default async function AboutPage({
 
   return (
     <>
+
       {/* Header */}
       <section className="bg-[#0F5132] py-20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <p
-            className="text-[#F2B035] mb-4"
-            style={{
-              fontFamily: "'Oswald', sans-serif",
-              fontSize: "0.7rem",
-              fontWeight: 600,
-              letterSpacing: "0.3em",
-            }}
-          >
-            {loc.name.toUpperCase()} &nbsp;·&nbsp; {loc.city.toUpperCase()}
-          </p>
           <h1
             className="text-[#F4EFE6] mb-4"
-            style={{
-              fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em",
-              fontSize: "clamp(3.5rem, 10vw, 7rem)",
-            }}
+            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
           >
             About Us
           </h1>
           <p className="text-[#F4EFE6]/50 text-lg font-light max-w-xl">
-            Your neighbourhood Party Pub &amp; Kitchen. Live sports, cold
-            drinks, and a room full of people who showed up for the same reason
-            you did.
+            Your neighbourhood Party Pub &amp; Kitchen. Live sports, cold drinks, and a room full of people who showed up for the same reason you did.
           </p>
         </div>
       </section>
@@ -240,37 +225,6 @@ export default async function AboutPage({
         </div>
       </section>
 
-      {/* Hours strip */}
-      <section className="bg-[#0F5132] border-t border-white/10 py-14">
-        <div className="max-w-7xl mx-auto px-6">
-          <FadeIn>
-            <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-8">
-              Hours: {loc.name}
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-white/10">
-              {loc.hours.map((h) => (
-                <div key={h.days} className="bg-[#0F5132] px-6 py-6">
-                  <p className="text-[#F4EFE6]/40 text-[10px] uppercase tracking-[0.18em] mb-2">
-                    {h.days}
-                  </p>
-                  <p
-                    className="text-[#F2B035]"
-                    style={{
-                      fontFamily: "'Oswald', sans-serif",
-                      fontWeight: 600,
-                      fontSize: "0.9rem",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    {h.time}
-                  </p>
-                </div>
-              ))}
-            </div>
-            )}
-          </FadeIn>
-        </div>
-      </section>
 
       {/* CTA — group bookings */}
       <section className="bg-[#101010] border-t border-white/10 px-6 py-16">
