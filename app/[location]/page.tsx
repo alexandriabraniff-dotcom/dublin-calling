@@ -245,7 +245,7 @@ export default async function LocationHome({
       {/* ── THIS WEEK ── */}
       {(() => {
         const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        const nowVan = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Vancouver" }));
+        const nowVan = new Date(new Date().toLocaleString("en-US", { timeZone: loc.timezone }));
         const todayIdx = nowVan.getDay();
 
         const week = loc.weeklySchedule.map((entry) => {
@@ -254,7 +254,7 @@ export default async function LocationHome({
           if (diff < 0) diff += 7;
           const d = new Date(nowVan);
           d.setDate(d.getDate() + diff);
-          const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Vancouver" });
+          const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: loc.timezone });
           return { ...entry, dateLabel, isToday: diff === 0 };
         });
 

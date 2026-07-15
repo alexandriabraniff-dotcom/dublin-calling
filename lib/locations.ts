@@ -15,6 +15,7 @@ export interface ScheduleDay {
 
 export interface Location {
   slug: LocationSlug;
+  timezone: string;
   name: string;
   label: string;
   city: string;
@@ -39,6 +40,7 @@ export interface Location {
 const LOCATIONS: Record<LocationSlug, Location> = {
   adelaide: {
     slug: "adelaide",
+    timezone: "America/Toronto",
     name: "Adelaide",
     label: "Toronto, Adelaide St",
     city: "Toronto",
@@ -152,6 +154,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
 
   danforth: {
     slug: "danforth",
+    timezone: "America/Toronto",
     name: "Danforth",
     label: "Toronto, Danforth Ave",
     city: "Toronto",
@@ -265,6 +268,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
 
   vancouver: {
     slug: "vancouver",
+    timezone: "America/Vancouver",
     name: "Vancouver",
     label: "Vancouver, Granville St",
     city: "Vancouver",
