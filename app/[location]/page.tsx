@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -42,7 +44,6 @@ export default async function LocationHome({
       vancouver: [
         { day: "Aug 15, 6:00 PM",   name: "UFC 330",       details: ["Makhachev vs Machado Garry", "Doors open at 6:00 PM", "VIP table packages available"], tag: "UFC",    tagColor: "red",     emoji: "🥊", image: "/ufc-330.jpg" },
         { day: "Every Friday, 8PM", name: "Ladies Night",  details: ["Every Friday, 8PM till late", "Live DJ", "$6.95 Vodka Highballs"],                    tag: "Event",  tagColor: "gold",    emoji: "👑", image: "/ladies-night.jpg" },
-        { day: "Ongoing",           name: "FIFA & Soccer", details: ["Every match live on 15+ TVs", "Sound on", "Table packages available"],                tag: "Soccer", tagColor: "default", emoji: "⚽", image: "/fifa-soccer.jpg" },
       ],
     } as Record<
       string,

@@ -7,7 +7,6 @@ const NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/menu", label: "Menu" },
   { href: "/events", label: "Events" },
-  { href: "/world-cup", label: "World Cup 2026" },
   { href: "/group-bookings", label: "Group Bookings" },
   { href: "/faq", label: "FAQ" },
 ];

@@ -19,7 +19,6 @@ const LEFT_LINKS = [
 ];
 
 const RIGHT_LINKS = [
-  { href: "/world-cup",      label: "World Cup"      },
   { href: "/group-bookings", label: "Group Bookings" },
   { href: "/faq",            label: "FAQ"            },
 ];
