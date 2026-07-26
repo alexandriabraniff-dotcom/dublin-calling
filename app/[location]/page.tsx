@@ -256,8 +256,8 @@ export default async function LocationHome({
           const d = new Date(nowVan);
           d.setDate(d.getDate() + diff);
           const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: loc.timezone });
-          return { ...entry, dateLabel, isToday: diff === 0 };
-        });
+          return { ...entry, dateLabel, isToday: diff === 0, diff };
+        }).sort((a, b) => a.diff - b.diff);
 
         return (
           <section className="bg-[#082a1c] border-t border-white/10 py-16">
