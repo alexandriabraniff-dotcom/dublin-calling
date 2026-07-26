@@ -6,7 +6,7 @@ import FadeIn from "@/components/FadeIn";
 const BOOKING: Record<string, { type: "opentable" | "tripleseat"; url: string }> = {
   vancouver: {
     type: "opentable",
-    url: "https://www.opentable.ca/r/dublin-calling-vancouver",
+    url: "https://www.opentable.ca/widget/reservation/loader?rid=1400461&type=standard&theme=wide&color=1&dark=false&iframe=true&overlay=false&lang=en-CA&newtab=false&ot_source=Restaurant%20website",
   },
   adelaide: {
     type: "tripleseat",
@@ -151,61 +151,27 @@ export default async function BookATablePage({
         <div className="max-w-4xl mx-auto">
           {booking.type === "opentable" ? (
             <FadeIn>
-              <div className="border border-white/10 bg-[#0a0a0a] p-10 flex flex-col items-center text-center gap-8">
-                {/* OpenTable badge */}
-                <div className="flex items-center gap-3">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <circle cx="14" cy="14" r="14" fill="#DA3743" />
-                    <circle cx="14" cy="14" r="6" fill="white" />
-                    <circle cx="14" cy="14" r="3" fill="#DA3743" />
-                  </svg>
-                  <span
-                    className="text-[#F4EFE6]/60"
-                    style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: "0.7rem",
-                      fontWeight: 600,
-                      letterSpacing: "0.15em",
-                    }}
-                  >
-                    POWERED BY OPENTABLE
-                  </span>
-                </div>
-
-                <div>
-                  <h2
-                    className="text-[#F4EFE6] mb-3"
-                    style={{
-                      fontFamily: "'Oswald', sans-serif",
-                      fontWeight: 700,
-                      fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-                      letterSpacing: "0.02em",
-                    }}
-                  >
-                    Reserve Your Table
-                  </h2>
-                  <p className="text-[#F4EFE6]/40 text-sm max-w-sm leading-relaxed">
-                    Instantly confirmed. Free to book. No fees.
-                  </p>
-                </div>
-
-                <a
-                  href={booking.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
-                  style={{
-                    fontFamily: "'Oswald', sans-serif",
-                    fontSize: "clamp(12px, 1vw, 14px)",
-                    padding: "1rem 3.5rem",
-                  }}
-                >
-                  Find a Table on OpenTable
-                </a>
-
-                <p className="text-[#F4EFE6]/25 text-[10px] uppercase tracking-[0.2em]">
-                  You will be taken to OpenTable to complete your reservation
-                </p>
+              <p
+                className="text-[#F4EFE6]/30 mb-6"
+                style={{
+                  fontFamily: "'Oswald', sans-serif",
+                  fontSize: "0.6rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.25em",
+                }}
+              >
+                RESERVATION REQUEST
+              </p>
+              <div className="border border-white/10 overflow-hidden">
+                <iframe
+                  src={booking.url}
+                  width="100%"
+                  height="600"
+                  frameBorder="0"
+                  title={`Dublin Calling ${loc.name} Reservations`}
+                  className="w-full"
+                  style={{ minHeight: "550px", background: "white" }}
+                />
               </div>
             </FadeIn>
           ) : (
