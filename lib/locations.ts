@@ -311,11 +311,11 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     ],
     events: [
       {
-        date: "Jul 17, 31 & Aug 7",
+        date: "Every Friday, 8PM",
         title: "Ladies Night",
         description: "An unforgettable night out. Tickets via AdmitOne.",
         tag: "Ticketed",
-        ticketUrl: "https://admitone.com",
+        ticketUrl: "https://admitone.com/events/vancouver/community/party/ladies-night/RQMN6R?referral=website",
       },
       {
         date: "Aug 15",
