@@ -1,5 +1,22 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { getLocation } from "@/lib/locations";
+import FadeIn from "@/components/FadeIn";
+
+const BOOKING: Record<string, { type: "opentable" | "tripleseat"; url: string }> = {
+  vancouver: {
+    type: "opentable",
+    url: "https://www.opentable.ca/r/dublin-calling-vancouver",
+  },
+  adelaide: {
+    type: "tripleseat",
+    url: "https://themrggroup.tripleseat.com/dynamic_party_request/528",
+  },
+  danforth: {
+    type: "tripleseat",
+    url: "https://themrggroup.tripleseat.com/dynamic_party_request/528",
+  },
+};
 
 export default async function BookATablePage({
   params,
@@ -10,37 +27,215 @@ export default async function BookATablePage({
   const loc = getLocation(slug);
   if (!loc) notFound();
 
-  return (
-    <section className="bg-[#101010] min-h-screen">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14">
-        <p
-          className="text-[#F2B035] mb-3"
-          style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.3em" }}
-        >
-          {loc.name.toUpperCase()} &nbsp;·&nbsp; GROUP BOOKINGS
-        </p>
-        <h1
-          className="text-[#F4EFE6] mb-2 leading-none"
-          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2.5rem, 8vw, 5rem)" }}
-        >
-          Book a Table
-        </h1>
-        <p className="text-[#F4EFE6]/45 text-sm mb-10 max-w-md">
-          Fill out the form below and our team will be in touch to confirm your booking.
-        </p>
+  const booking = BOOKING[loc.slug];
+  const base = `/${loc.slug}`;
 
-        <div className="w-full border border-white/10 overflow-hidden">
-          <iframe
-            src="https://themrggroup.tripleseat.com/dynamic_party_request/528"
-            width="100%"
-            height="900"
-            frameBorder="0"
-            title="Dublin Calling Group Booking Form"
-            className="w-full"
-            style={{ minHeight: "900px", background: "white" }}
-          />
+  return (
+    <>
+      {/* ── HERO ── */}
+      <section className="bg-[#0F5132] border-b border-white/10 py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <FadeIn>
+            <p
+              className="text-[#F2B035] mb-4"
+              style={{
+                fontFamily: "'Oswald', sans-serif",
+                fontSize: "0.65rem",
+                fontWeight: 600,
+                letterSpacing: "0.3em",
+              }}
+            >
+              {loc.name.toUpperCase()} &nbsp;·&nbsp; RESERVATIONS
+            </p>
+            <h1
+              className="text-[#F4EFE6] leading-none mb-4"
+              style={{
+                fontFamily: "'Oswald', sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(2.8rem, 8vw, 5.5rem)",
+                letterSpacing: "0.02em",
+              }}
+            >
+              Book a Table
+            </h1>
+            <p className="text-[#F4EFE6]/50 text-sm max-w-md leading-relaxed">
+              {loc.address}
+            </p>
+          </FadeIn>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* ── INFO STRIP ── */}
+      <section className="bg-[#101010] border-b border-white/10 py-10 px-6">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {/* Hours */}
+          <FadeIn direction="left">
+            <p
+              className="text-[#F4EFE6]/30 mb-3"
+              style={{
+                fontFamily: "'Oswald', sans-serif",
+                fontSize: "0.6rem",
+                fontWeight: 600,
+                letterSpacing: "0.25em",
+              }}
+            >
+              HOURS
+            </p>
+            <div className="flex flex-col gap-1.5">
+              {loc.hours.map((h) => (
+                <p key={h.days} className="text-[#F4EFE6]/55 text-xs leading-relaxed">
+                  <span className="text-[#F4EFE6]/30">{h.days}: </span>
+                  {h.time}
+                </p>
+              ))}
+            </div>
+          </FadeIn>
+
+          {/* Contact */}
+          <FadeIn direction="none" delay={80}>
+            <p
+              className="text-[#F4EFE6]/30 mb-3"
+              style={{
+                fontFamily: "'Oswald', sans-serif",
+                fontSize: "0.6rem",
+                fontWeight: 600,
+                letterSpacing: "0.25em",
+              }}
+            >
+              CONTACT
+            </p>
+            <div className="flex flex-col gap-2">
+              <a
+                href={`tel:${loc.phone}`}
+                className="text-[#F4EFE6]/55 text-xs hover:text-[#F4EFE6] transition-colors"
+              >
+                {loc.phone}
+              </a>
+              <a
+                href={`mailto:${loc.email}`}
+                className="text-[#F4EFE6]/55 text-xs hover:text-[#F4EFE6] transition-colors break-all"
+              >
+                {loc.email}
+              </a>
+            </div>
+          </FadeIn>
+
+          {/* Group Bookings CTA */}
+          <FadeIn direction="right" delay={160}>
+            <p
+              className="text-[#F4EFE6]/30 mb-3"
+              style={{
+                fontFamily: "'Oswald', sans-serif",
+                fontSize: "0.6rem",
+                fontWeight: 600,
+                letterSpacing: "0.25em",
+              }}
+            >
+              LARGE GROUPS
+            </p>
+            <p className="text-[#F4EFE6]/50 text-xs leading-relaxed mb-4">
+              Planning a birthday, corporate night, or big group outing?
+            </p>
+            <Link
+              href={`${base}/group-bookings`}
+              className="inline-block text-[#F2B035] text-xs uppercase tracking-widest hover:text-[#e0a020] transition-colors"
+            >
+              Group Bookings +
+            </Link>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── BOOKING WIDGET ── */}
+      <section className="bg-[#101010] py-16 px-6 min-h-[50vh]">
+        <div className="max-w-4xl mx-auto">
+          {booking.type === "opentable" ? (
+            <FadeIn>
+              <div className="border border-white/10 bg-[#0a0a0a] p-10 flex flex-col items-center text-center gap-8">
+                {/* OpenTable badge */}
+                <div className="flex items-center gap-3">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <circle cx="14" cy="14" r="14" fill="#DA3743" />
+                    <circle cx="14" cy="14" r="6" fill="white" />
+                    <circle cx="14" cy="14" r="3" fill="#DA3743" />
+                  </svg>
+                  <span
+                    className="text-[#F4EFE6]/60"
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: "0.7rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.15em",
+                    }}
+                  >
+                    POWERED BY OPENTABLE
+                  </span>
+                </div>
+
+                <div>
+                  <h2
+                    className="text-[#F4EFE6] mb-3"
+                    style={{
+                      fontFamily: "'Oswald', sans-serif",
+                      fontWeight: 700,
+                      fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+                      letterSpacing: "0.02em",
+                    }}
+                  >
+                    Reserve Your Table
+                  </h2>
+                  <p className="text-[#F4EFE6]/40 text-sm max-w-sm leading-relaxed">
+                    Instantly confirmed. Free to book. No fees.
+                  </p>
+                </div>
+
+                <a
+                  href={booking.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
+                  style={{
+                    fontFamily: "'Oswald', sans-serif",
+                    fontSize: "clamp(12px, 1vw, 14px)",
+                    padding: "1rem 3.5rem",
+                  }}
+                >
+                  Find a Table on OpenTable
+                </a>
+
+                <p className="text-[#F4EFE6]/25 text-[10px] uppercase tracking-[0.2em]">
+                  You will be taken to OpenTable to complete your reservation
+                </p>
+              </div>
+            </FadeIn>
+          ) : (
+            <FadeIn>
+              <p
+                className="text-[#F4EFE6]/30 mb-6"
+                style={{
+                  fontFamily: "'Oswald', sans-serif",
+                  fontSize: "0.6rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.25em",
+                }}
+              >
+                RESERVATION REQUEST
+              </p>
+              <div className="border border-white/10 overflow-hidden">
+                <iframe
+                  src={booking.url}
+                  width="100%"
+                  height="900"
+                  frameBorder="0"
+                  title={`Dublin Calling ${loc.name} Booking`}
+                  className="w-full"
+                  style={{ minHeight: "900px", background: "white" }}
+                />
+              </div>
+            </FadeIn>
+          )}
+        </div>
+      </section>
+    </>
   );
 }
