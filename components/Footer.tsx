@@ -188,7 +188,7 @@ export default function Footer({ location }: FooterProps) {
                   alt="The MRG Group"
                   width={200}
                   height={80}
-                  className="object-contain w-auto invert"
+                  className="object-contain w-auto"
                   style={{ height: "70px" }}
                 />
               </a>
