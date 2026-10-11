@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getLocation, todayIn } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
+import DecorLayer from "@/components/Decor";
 import ExperienceList from "@/components/ExperienceList";
 import { getExperience } from "@/lib/experience";
 import InstagramFeed from "@/components/InstagramFeed";
@@ -148,7 +149,11 @@ export default async function LocationHome({
       </section>
 
       {/* ── THIS WEEK ── */}
-      <section className="bg-[#0F5132] border-t border-white/10 py-16">
+      <section className="relative isolate overflow-x-clip bg-[#0F5132] border-t border-white/10 py-16">
+        <DecorLayer spots={[
+          { name: "beers", x: 12.5, y: "80px", rotate: -8 },
+          { name: "pennant", x: 78, y: "112px", rotate: 6, scale: 1.15 },
+        ]} />
         <FadeIn>
           <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} sectionBg="#0F5132" />
         </FadeIn>
@@ -157,7 +162,11 @@ export default async function LocationHome({
 
       {/* ── THE EXPERIENCE — alternating rows ── */}
       {/* Divider line between the calendar and The Experience (same style as the footer line) */}
-      <section className="bg-[#0F5132] py-16">
+      <section className="relative isolate overflow-x-clip bg-[#0F5132] py-16">
+        <DecorLayer spots={[
+          { name: "shamrock", x: 33, y: "120px", rotate: 10 },
+          { name: "eight-ball", x: 89, y: "96px", rotate: -6 },
+        ]} />
         <div className="max-w-7xl mx-auto px-6 -mt-16 mb-16" aria-hidden="true">
           <div className="border-t-2 border-[#F4EFE6]" />
         </div>
@@ -165,14 +174,28 @@ export default async function LocationHome({
           <FadeIn className="mb-10">
             <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">The Experience</p>
           </FadeIn>
-          <ExperienceList items={getExperience(loc)} />
+          <ExperienceList
+            items={getExperience(loc)}
+            decor={{
+              0: [
+                { name: "pennant", x: 5, y: "calc(100% + 25px)", rotate: -10, scale: 1.15 },
+                { name: "beers", x: 88, y: "calc(100% + 120px)", rotate: 8 },
+              ],
+              1: [{ name: "eight-ball", x: 48, y: "calc(100% + 55px)", rotate: 12 }],
+              2: [
+                { name: "shamrock", x: 33, y: "calc(100% - 4px)", rotate: -8, scale: 0.78 },
+                { name: "pennant", x: 95, y: "calc(100% - 75px)", rotate: 8, front: true },
+              ],
+            }}
+          />
         </div>
       </section>
 
 
       {/* ── GROUP BOOKING CTA ── */}
       <FadeIn>
-        <section className="bg-[#F2B035] px-6 py-20">
+        <section className="relative isolate overflow-x-clip bg-[#F2B035] px-6 py-20">
+          <DecorLayer spots={[{ name: "beers", x: 63, y: "50%", rotate: -6 }]} />
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
               <h2

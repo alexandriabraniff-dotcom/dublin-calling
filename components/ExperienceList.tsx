@@ -2,16 +2,19 @@ import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
 import GoldFrame from "@/components/GoldFrame";
 import type { ExperienceItem } from "@/lib/experience";
+import DecorLayer, { type DecorSpot } from "@/components/Decor";
 
-export default function ExperienceList({ items }: { items: ExperienceItem[] }) {
+// decor: optional decorative drawings per row index, positioned relative to that row
+export default function ExperienceList({ items, decor }: { items: ExperienceItem[]; decor?: Record<number, DecorSpot[]> }) {
   return (
     <div className="flex flex-col gap-12 md:gap-14">
       {items.map((item, i) => (
         <FadeIn
           key={item.title}
           delay={i * 100}
-          className={`flex flex-col md:flex-row md:items-center gap-8 md:gap-12 ${i % 2 === 1 ? "md:flex-row-reverse" : ""}`}
+          className={`relative flex flex-col md:flex-row md:items-center gap-8 md:gap-12 ${i % 2 === 1 ? "md:flex-row-reverse" : ""}`}
         >
+          {decor?.[i] && <DecorLayer spots={decor[i]} />}
           {/* Text side */}
           <div className="flex flex-col gap-4 w-full md:flex-1">
             <h3

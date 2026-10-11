@@ -28,6 +28,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Slide-in animations and edge decorations must never cause sideways scrolling */
+  overflow-x: clip;
 }
 
 body {
