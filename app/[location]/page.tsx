@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getLocation } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
+import EventCarousel, { type EventCard } from "@/components/EventCarousel";
 
 export default async function LocationHome({
   params,
@@ -18,16 +19,7 @@ export default async function LocationHome({
   const base = `/${loc.slug}`;
 
   // Event cards
-  type TagColor = "red" | "gold" | "green" | "default";
-  const eventCards: {
-    day: string;
-    name: string;
-    details: string[];
-    tag: string;
-    tagColor: TagColor;
-    emoji: string;
-    image?: string;
-  }[] = (
+  const eventCards: EventCard[] = (
     {
       adelaide: [
         { day: "Every Sunday",  name: "Bills Backers Watch Party", details: ["Official Buffalo Bills fan chapter", "Every game day", "Drink specials all game"],  tag: "NFL",    tagColor: "gold",    emoji: "🏈" },
@@ -48,10 +40,7 @@ export default async function LocationHome({
         { day: "Every Friday, 8PM to Late",     name: "Ladies Night",         details: [], tag: "Event", tagColor: "gold", emoji: "👑", image: "/event-ladies-night.jpg" },
         { day: "Every Saturday, 10PM to 3AM",   name: "Saturday Shenanigans", details: [], tag: "Event", tagColor: "gold", emoji: "☘️", image: "/event-saturday-shenanigans.jpg" },
       ],
-    } as Record<
-      string,
-      { day: string; name: string; details: string[]; tag: string; tagColor: TagColor; emoji: string; image?: string }[]
-    >
+    } as Record<string, EventCard[]>
   )[loc.slug] ?? [];
 
   const features = [
@@ -165,85 +154,9 @@ export default async function LocationHome({
 
       {/* ── EVENTS CARDS ── */}
       <section className="bg-[#101010] py-14 border-b border-white/10">
-        <FadeIn className="max-w-7xl mx-auto px-6 mb-6 flex items-end justify-between">
-          <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em]">Events</p>
-          <Link
-            href={`${base}/events`}
-            className="text-[#F2B035] text-xs uppercase tracking-widest hover:text-[#e0a020] transition-colors"
-          >
-            Full Schedule +
-          </Link>
+        <FadeIn>
+          <EventCarousel cards={eventCards} base={base} />
         </FadeIn>
-
-        <div className="max-w-7xl mx-auto">
-          <div className={`flex gap-4 overflow-x-auto snap-x snap-mandatory pb-3 lg:grid ${eventCards.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"} lg:overflow-visible lg:pb-0 lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}>
-            {eventCards.map((card, i) => (
-              <Link
-                key={card.name}
-                href={`${base}/events`}
-                className={`group border border-white/10 hover:border-[#F2B035]/40 transition-colors overflow-hidden shrink-0 snap-start w-[78vw] sm:w-80 lg:w-auto flex flex-col${i === 0 ? " ml-6 lg:ml-0" : ""}${i === eventCards.length - 1 ? " mr-6 lg:mr-0" : ""}`}
-              >
-                {/* Top colour panel */}
-                {card.image ? (
-                  <div className="relative overflow-hidden aspect-[2/1]">
-                    <Image
-                      src={card.image}
-                      alt={card.name}
-                      fill
-                      sizes="(min-width: 1024px) 420px, (min-width: 640px) 320px, 78vw"
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div
-                    className={`flex flex-col items-center justify-center p-8 gap-3 ${
-                      card.tagColor === "red"
-                        ? "bg-[#101010] border border-[#C8102E]"
-                        : card.tagColor === "gold"
-                        ? "bg-[#F2B035]"
-                        : card.tagColor === "green"
-                        ? "bg-[#169B62]"
-                        : "bg-[#0F5132]"
-                    }`}
-                    style={{ height: "clamp(200px, 44vw, 240px)" }}
-                  >
-                    <span style={{ fontSize: "3rem" }}>{card.emoji}</span>
-                    <span
-                      className={`text-[10px] uppercase tracking-[0.2em] font-medium ${
-                        card.tagColor === "gold" ? "text-[#101010]" : "text-white/70"
-                      }`}
-                    >
-                      {card.tag}
-                    </span>
-                  </div>
-                )}
-
-                {/* Bottom info */}
-                <div className="bg-[#0F5132] p-5 flex flex-col gap-3 flex-1">
-                  <p className="text-[#F4EFE6]/40 text-[10px] uppercase tracking-[0.2em]">{card.day}</p>
-                  <h3
-                    className="text-[#F4EFE6] leading-tight"
-                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1rem, 2vw, 1.3rem)", letterSpacing: "0.02em" }}
-                  >
-                    {card.name}
-                  </h3>
-                  {card.details.length > 0 && <ul className="flex flex-col gap-1">
-                    {card.details.map((d) => (
-                      <li key={d} className="flex items-start gap-1.5 text-[#F4EFE6]/50 text-xs leading-relaxed">
-                        <span className="text-[#F2B035] mt-[3px] shrink-0">·</span>
-                        {d}
-                      </li>
-                    ))}
-                  </ul>}
-                  <p className="text-[#F2B035]/70 group-hover:text-[#F2B035] transition-colors text-xs uppercase tracking-widest mt-auto">
-                    Details +
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
       </section>
 
       {/* ── THIS WEEK ── */}

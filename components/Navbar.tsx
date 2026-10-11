@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { LocationSlug } from "@/lib/locations";
 
 const LOCATION_LABELS: Record<LocationSlug, string> = {
@@ -37,6 +37,25 @@ export default function Navbar({ location }: { location: LocationSlug }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [locationOpen, setLocationOpen] = useState(false);
+  const [logoSmall, setLogoSmall] = useState(false);
+
+  // Shrink the desktop logo once 85% of the hero (first section) has scrolled under the header
+  useEffect(() => {
+    const HEADER_H = 72;
+    const update = () => {
+      const hero = document.querySelector("section");
+      if (!hero) return setLogoSmall(window.scrollY > HEADER_H);
+      const rect = hero.getBoundingClientRect();
+      setLogoSmall(HEADER_H - rect.top >= rect.height * 0.85);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
   const base = `/${location}`;
   const allLinks = [...LEFT_LINKS, ...RIGHT_LINKS];
 
@@ -132,8 +151,8 @@ export default function Navbar({ location }: { location: LocationSlug }) {
                 alt="Dublin Calling"
                 width={200}
                 height={200}
-                className="drop-shadow-2xl w-auto"
-                style={{ height: "clamp(100px, 13vw, 150px)" }}
+                className="drop-shadow-2xl w-auto transition-[height] duration-300 ease-out"
+                style={{ height: logoSmall ? "60px" : "clamp(100px, 13vw, 150px)" }}
                 priority
               />
             </Link>
