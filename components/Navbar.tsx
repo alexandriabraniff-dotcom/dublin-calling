@@ -134,13 +134,13 @@ export default function Navbar({ location }: { location: LocationSlug }) {
             ))}
           </nav>
 
-          {/* Far right — Book Now */}
+          {/* Far right — Book a Table */}
           <Link
             href={`${base}/book-a-table`}
             className="shrink-0 bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
             style={{ fontSize: "clamp(10px, 0.85vw, 12px)", padding: "0.45rem 1.2rem" }}
           >
-            Book Now
+            Book a Table
           </Link>
 
           {/* Centre logo — absolutely positioned, overflows below */}

@@ -36,28 +36,49 @@ export default function EventCarousel({ cards, base }: { cards: EventCard[]; bas
   const trackRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
+  const [active, setActive] = useState(0);
+  // One stop per card, merged where cards near the end can't reach the left edge
+  const [stops, setStops] = useState<number[]>(() => cards.map((_, i) => i));
 
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
+    let current: number[] = [];
+    const measure = () => {
+      const padL = parseFloat(getComputedStyle(el).paddingLeft);
+      const max = el.scrollWidth - el.clientWidth;
+      const positions = Array.from(el.querySelectorAll<HTMLElement>("[data-card]")).map((c) =>
+        Math.round(Math.min(Math.max(c.offsetLeft - padL, 0), max))
+      );
+      current = positions.filter((p, i) => i === 0 || p - positions[i - 1] > 4);
+      setStops(current);
+    };
     const update = () => {
       setCanPrev(el.scrollLeft > 4);
       setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+      let best = 0;
+      current.forEach((p, i) => {
+        if (Math.abs(p - el.scrollLeft) < Math.abs(current[best] - el.scrollLeft)) best = i;
+      });
+      setActive(best);
     };
-    update();
+    const onResize = () => { measure(); update(); };
+    onResize();
     el.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("resize", onResize);
     return () => {
       el.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
   function scrollByCard(dir: 1 | -1) {
-    const el = trackRef.current;
-    const card = el?.querySelector<HTMLElement>("[data-card]");
-    if (!el || !card) return;
-    el.scrollBy({ left: dir * (card.offsetWidth + 20), behavior: "smooth" });
+    const target = stops[Math.min(Math.max(active + dir, 0), stops.length - 1)];
+    trackRef.current?.scrollTo({ left: target, behavior: "smooth" });
+  }
+
+  function goTo(i: number) {
+    trackRef.current?.scrollTo({ left: stops[i], behavior: "smooth" });
   }
 
   // Left edge lines up with the max-w-7xl content column; right edge bleeds off-screen
@@ -162,6 +183,22 @@ export default function EventCarousel({ cards, base }: { cards: EventCard[]; bas
         <div
           className={`pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-16 bg-gradient-to-r from-[#101010] to-transparent transition-opacity ${canPrev ? "opacity-100" : "opacity-0"}`}
         />
+      </div>
+
+      {/* Position dots: tap one to jump to that card */}
+      <div role="group" aria-label="Event nights" className="flex justify-center gap-1.5 mt-5">
+        {stops.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => goTo(i)}
+            aria-label={`Show ${cards[i]?.name ?? "more events"}`}
+            aria-current={i === active}
+            className="w-6 h-6 flex items-center justify-center"
+          >
+            <span className={`block w-2 h-2 rounded-full transition-all ${i === active ? "bg-[#F2B035] scale-125" : "bg-[#F4EFE6]/50"}`} />
+          </button>
+        ))}
       </div>
     </>
   );
