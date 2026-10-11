@@ -11,8 +11,8 @@ const EVENT_DATA: Record<
   {
     day: string;
     name: string;
-    description: string;
-    details: string[];
+    description?: string;
+    details?: string[];
     tag: string;
     tagColor: TagColor;
     image?: string;
@@ -136,36 +136,41 @@ const EVENT_DATA: Record<
   ],
   vancouver: [
     {
-      day: "Aug 15, 6:00 PM",
-      name: "UFC 330",
-      description:
-        "One of the biggest cards of the year. Makhachev defends the lightweight title against Machado Garry — watch every round live at Dublin Calling Vancouver on every screen in the house. VIP table packages available.",
-      details: [
-        "Makhachev vs Machado Garry",
-        "Doors open at 6:00 PM",
-        "VIP table packages available",
-        "15 screens throughout the venue",
-      ],
-      tag: "UFC",
-      tagColor: "red",
-      image: "/ufc-330.jpg",
-    },
-    {
-      day: "Every Friday, 8 PM",
-      name: "Ladies Night",
-      description:
-        "Every Friday from 8 PM till late. Live DJ spinning all night, $6.95 Vodka Highballs, and the best crowd on Granville Street. Get your tickets in advance — this one fills up fast.",
-      details: [
-        "Every Friday, 8PM till late",
-        "Live DJ all night",
-        "$6.95 Vodka Highballs",
-        "Tickets via AdmitOne",
-      ],
+      day: "Bi-weekly Tuesdays, 7 to 10PM",
+      name: "Music Bingo",
       tag: "Event",
       tagColor: "gold",
-      image: "/ladies-night.jpg",
+      image: "/event-music-bingo.jpg",
+    },
+    {
+      day: "Bi-weekly Tuesdays, 7 to 10PM",
+      name: "Trivia Tuesdays",
+      tag: "Event",
+      tagColor: "gold",
+      image: "/event-trivia-tuesdays.jpg",
+    },
+    {
+      day: "Every Thursday, 8PM to 2AM",
+      name: "Thursday Nights",
+      tag: "Event",
+      tagColor: "gold",
+      image: "/event-thursday-nights.jpg",
+    },
+    {
+      day: "Every Friday, 8PM to Late",
+      name: "Ladies Night",
+      tag: "Event",
+      tagColor: "gold",
+      image: "/event-ladies-night.jpg",
       ticketUrl:
         "https://admitone.com/events/vancouver/community/party/ladies-night/RQMN6R?referral=website",
+    },
+    {
+      day: "Every Saturday, 10PM to 3AM",
+      name: "Saturday Shenanigans",
+      tag: "Event",
+      tagColor: "gold",
+      image: "/event-saturday-shenanigans.jpg",
     },
   ],
 };
@@ -233,14 +238,14 @@ export default async function EventsPage({
 
                 {/* Image or placeholder */}
                 {event.image ? (
-                  <div className="relative w-full aspect-[16/9] md:aspect-auto md:min-h-[340px]">
+                  <div className="relative w-full aspect-[2/1] md:self-center">
                     <Image
                       src={event.image}
                       alt={event.name}
                       fill
+                      sizes="(min-width: 768px) 512px, 100vw"
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
                   </div>
                 ) : (
                   <div className="hidden md:flex items-center justify-center bg-[#0d0d0d] border-r border-white/10 min-h-[340px]">
@@ -292,11 +297,14 @@ export default async function EventsPage({
                     </h2>
 
                     {/* Description */}
-                    <p className="text-[#F4EFE6]/50 text-sm leading-relaxed mb-7">
-                      {event.description}
-                    </p>
+                    {event.description && (
+                      <p className="text-[#F4EFE6]/50 text-sm leading-relaxed mb-7">
+                        {event.description}
+                      </p>
+                    )}
 
                     {/* Detail list */}
+                    {event.details && event.details.length > 0 && (
                     <ul className="flex flex-col gap-2.5 mb-9">
                       {event.details.map((d) => (
                         <li key={d} className="flex items-start gap-2.5 text-xs text-[#F4EFE6]/40">
@@ -305,6 +313,7 @@ export default async function EventsPage({
                         </li>
                       ))}
                     </ul>
+                    )}
                   </div>
 
                   {/* CTAs */}

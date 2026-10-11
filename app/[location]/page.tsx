@@ -42,8 +42,11 @@ export default async function LocationHome({
         { day: "Sun to Fri",    name: "Happy Hour",        details: ["4:00 PM to 6:00 PM", "Discounted drinks daily", "Draught, cocktails and more"],    tag: "Daily",  tagColor: "green",   emoji: "🍺" },
       ],
       vancouver: [
-        { day: "Aug 15, 6:00 PM",   name: "UFC 330",       details: ["Makhachev vs Machado Garry", "Doors open at 6:00 PM", "VIP table packages available"], tag: "UFC",    tagColor: "red",     emoji: "🥊", image: "/ufc-330.jpg" },
-        { day: "Every Friday, 8PM", name: "Ladies Night",  details: ["Every Friday, 8PM till late", "Live DJ", "$6.95 Vodka Highballs"],                    tag: "Event",  tagColor: "gold",    emoji: "👑", image: "/ladies-night.jpg" },
+        { day: "Bi-weekly Tuesdays, 7 to 10PM", name: "Music Bingo",          details: [], tag: "Event", tagColor: "gold", emoji: "🎵", image: "/event-music-bingo.jpg" },
+        { day: "Bi-weekly Tuesdays, 7 to 10PM", name: "Trivia Tuesdays",      details: [], tag: "Event", tagColor: "gold", emoji: "🧠", image: "/event-trivia-tuesdays.jpg" },
+        { day: "Every Thursday, 8PM to 2AM",    name: "Thursday Nights",      details: [], tag: "Event", tagColor: "gold", emoji: "🎧", image: "/event-thursday-nights.jpg" },
+        { day: "Every Friday, 8PM to Late",     name: "Ladies Night",         details: [], tag: "Event", tagColor: "gold", emoji: "👑", image: "/event-ladies-night.jpg" },
+        { day: "Every Saturday, 10PM to 3AM",   name: "Saturday Shenanigans", details: [], tag: "Event", tagColor: "gold", emoji: "☘️", image: "/event-saturday-shenanigans.jpg" },
       ],
     } as Record<
       string,
@@ -173,7 +176,7 @@ export default async function LocationHome({
         </FadeIn>
 
         <div className="max-w-7xl mx-auto">
-          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-3 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className={`flex gap-4 overflow-x-auto snap-x snap-mandatory pb-3 lg:grid ${eventCards.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"} lg:overflow-visible lg:pb-0 lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}>
             {eventCards.map((card, i) => (
               <Link
                 key={card.name}
@@ -182,13 +185,13 @@ export default async function LocationHome({
               >
                 {/* Top colour panel */}
                 {card.image ? (
-                  <div className="relative overflow-hidden" style={{ height: "clamp(200px, 44vw, 240px)" }}>
+                  <div className="relative overflow-hidden aspect-[2/1]">
                     <Image
                       src={card.image}
                       alt={card.name}
                       fill
+                      sizes="(min-width: 1024px) 420px, (min-width: 640px) 320px, 78vw"
                       className="object-cover"
-                      style={{ objectPosition: card.image.includes("ufc") ? "center -8px" : "center top" }}
                     />
                   </div>
                 ) : (
@@ -224,14 +227,14 @@ export default async function LocationHome({
                   >
                     {card.name}
                   </h3>
-                  <ul className="flex flex-col gap-1">
+                  {card.details.length > 0 && <ul className="flex flex-col gap-1">
                     {card.details.map((d) => (
                       <li key={d} className="flex items-start gap-1.5 text-[#F4EFE6]/50 text-xs leading-relaxed">
                         <span className="text-[#F2B035] mt-[3px] shrink-0">·</span>
                         {d}
                       </li>
                     ))}
-                  </ul>
+                  </ul>}
                   <p className="text-[#F2B035]/70 group-hover:text-[#F2B035] transition-colors text-xs uppercase tracking-widest mt-auto">
                     Details +
                   </p>
