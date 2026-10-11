@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getLocation } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
 import ExperienceList from "@/components/ExperienceList";
-import { getExperience } from "@/lib/experience";
+import { getExperience, getAboutExtras } from "@/lib/experience";
 
 export default async function AboutPage({
   params,
@@ -99,7 +99,7 @@ export default async function AboutPage({
           <FadeIn className="mb-10">
             <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">The Experience</p>
           </FadeIn>
-          <ExperienceList items={getExperience(loc)} />
+          <ExperienceList items={[...getExperience(loc), ...getAboutExtras(loc)]} />
         </div>
       </section>
 

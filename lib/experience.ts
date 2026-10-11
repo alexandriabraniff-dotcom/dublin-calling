@@ -39,3 +39,14 @@ export function getExperience(loc: Location): ExperienceItem[] {
 
   return items;
 }
+
+// Extra rows shown on the About page only, after the shared Experience rows
+export function getAboutExtras(loc: Location): ExperienceItem[] {
+  if (loc.slug !== "vancouver") return [];
+  return [
+    {
+      title: "Live DJ on Every Floor",
+      body: "When the night picks up, every floor gets its own DJ. Three levels, three soundtracks, one big party on Granville Street. Find the floor that matches your mood, or keep moving between them all night long.",
+    },
+  ];
+}
