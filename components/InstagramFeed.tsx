@@ -71,7 +71,7 @@ export default async function InstagramFeed({ profileUrl, locationName }: { prof
           href={profileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="self-start sm:self-auto inline-flex items-center gap-2 px-8 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.12em] uppercase hover:bg-[#e0a020] transition-colors"
+          className="btn self-start sm:self-auto inline-flex items-center gap-2 px-8 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.12em] uppercase hover:bg-[#e0a020] transition-colors"
           style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
         >
           <InstagramIcon size={16} />

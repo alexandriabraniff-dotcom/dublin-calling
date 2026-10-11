@@ -302,7 +302,7 @@ export default async function EventsPage({
                         href={event.ticketUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
+                        className="btn inline-block bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
                         style={{
                           fontFamily: "'Oswald', sans-serif",
                           fontSize: "clamp(11px, 1vw, 13px)",
@@ -314,7 +314,7 @@ export default async function EventsPage({
                     ) : null}
                     <Link
                       href={`${base}/book-a-table`}
-                      className="inline-block border border-white/20 text-[#F4EFE6]/75 uppercase tracking-[0.15em] hover:border-white/40 hover:text-[#F4EFE6] transition-colors"
+                      className="btn inline-block border border-white/20 text-[#F4EFE6]/75 uppercase tracking-[0.15em] hover:border-white/40 hover:text-[#F4EFE6] transition-colors"
                       style={{
                         fontFamily: "'Oswald', sans-serif",
                         fontSize: "clamp(11px, 1vw, 13px)",

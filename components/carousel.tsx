@@ -66,7 +66,7 @@ export function CarouselArrow({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
-      className="w-11 h-11 flex items-center justify-center border-2 border-[#F2B035] text-[#F2B035] hover:bg-[#F2B035] hover:text-[#101010] disabled:opacity-30 disabled:pointer-events-none transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4EFE6]"
+      className="w-12 h-12 flex items-center justify-center border-2 border-[#F2B035] text-[#F2B035] hover:bg-[#F2B035] hover:text-[#101010] disabled:opacity-30 disabled:pointer-events-none transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4EFE6]"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
         {dir === "prev" ? <polyline points="15 18 9 12 15 6" /> : <polyline points="9 18 15 12 9 6" />}

@@ -75,14 +75,14 @@ export default function FAQPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href={`tel:${loc.phone}`}
-              className="inline-flex items-center px-7 py-3 bg-[#101010] border border-white/15 text-[#F4EFE6] hover:border-[#F2B035] transition-colors"
+              className="btn inline-flex items-center px-7 py-3 bg-[#101010] border border-white/15 text-[#F4EFE6] hover:border-[#F2B035] transition-colors"
               style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.2em" }}
             >
               {loc.phone}
             </a>
             <a
               href={`mailto:${loc.email}`}
-              className="inline-flex items-center px-7 py-3 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
+              className="btn inline-flex items-center px-7 py-3 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
               style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}
             >
               {loc.email}

@@ -129,7 +129,7 @@ export default function EnquiryDialog({
         type="button"
         onClick={open}
         aria-haspopup="dialog"
-        className="block w-full sm:w-auto text-center px-10 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F4EFE6]"
+        className="btn block w-full sm:w-auto text-center px-10 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F4EFE6]"
         style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
       >
         Get in Touch<span className="sr-only"> about a {type.title.toLowerCase()}</span>
@@ -158,7 +158,7 @@ export default function EnquiryDialog({
                 type="button"
                 onClick={close}
                 aria-label="Close form"
-                className="shrink-0 w-11 h-11 flex items-center justify-center border-2 border-white/50 text-[#F4EFE6] hover:border-[#F2B035] hover:text-[#F2B035] transition-colors"
+                className="shrink-0 w-12 h-12 flex items-center justify-center border-2 border-white/50 text-[#F4EFE6] hover:border-[#F2B035] hover:text-[#F2B035] transition-colors"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                   <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
@@ -179,7 +179,7 @@ export default function EnquiryDialog({
                 <button
                   type="button"
                   onClick={close}
-                  className="self-start px-8 py-3 border-2 border-[#F2B035] text-[#F2B035] font-semibold text-sm uppercase tracking-[0.1em] hover:bg-[#F2B035] hover:text-[#101010] transition-colors"
+                  className="btn self-start px-8 py-3 border-2 border-[#F2B035] text-[#F2B035] font-semibold text-sm uppercase tracking-[0.1em] hover:bg-[#F2B035] hover:text-[#101010] transition-colors"
                 >
                   Close
                 </button>
@@ -213,7 +213,7 @@ export default function EnquiryDialog({
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="px-10 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] disabled:opacity-60 transition-colors"
+                    className="btn px-10 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] disabled:opacity-60 transition-colors"
                     style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
                   >
                     {status === "sending" ? "Sending..." : "Send Enquiry"}

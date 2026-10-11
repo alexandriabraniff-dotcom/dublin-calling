@@ -192,7 +192,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
           <button
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 -mr-2 text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
+            className="p-3 -mr-3 text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -227,7 +227,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
               <Link
                 href={`${base}/book-a-table`}
                 onClick={() => setMenuOpen(false)}
-                className="block w-full text-center py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs uppercase tracking-[0.15em]"
+                className="btn block w-full text-center py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs uppercase tracking-[0.15em]"
               >
                 Book a Table
               </Link>

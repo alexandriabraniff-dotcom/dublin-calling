@@ -74,7 +74,7 @@ export default async function AboutPage({
             </div>
             <Link
               href={`${base}/events`}
-              className="block w-full sm:w-auto text-center px-8 py-3 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors"
+              className="btn block w-full sm:w-auto text-center px-8 py-3 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors"
             >
               View Upcoming Events
             </Link>
@@ -112,7 +112,7 @@ export default async function AboutPage({
           </div>
           <Link
             href={`${base}/group-bookings`}
-            className="shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors"
+            className="btn shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors"
           >
             Group Bookings
           </Link>

@@ -1,7 +1,9 @@
 /* Decorative mono illustrations (from the Figma set) placed at the spots the client marked.
    The layer spans the full screen width over its parent, so x is a % of the viewport and
    y is any CSS length relative to the parent (e.g. "50%" or "calc(100% + 40px)").
-   Purely decorative: hidden from assistive tech, not clickable, behind content, hidden on phones. */
+   `spots` show from md up; `mobileSpots` show below md (the layout stacks there, so they get
+   their own positions in gaps and edges). Purely decorative: hidden from assistive tech,
+   not clickable, behind content unless `front`. */
 
 export type DecorName = "beers" | "shamrock" | "eight-ball" | "pennant";
 
@@ -14,20 +16,24 @@ export interface DecorSpot {
   front?: boolean; // sit in front of photos/frames like a sticker instead of behind content
 }
 
-export default function DecorLayer({ spots }: { spots: DecorSpot[] }) {
-  const back = spots.filter((s) => !s.front);
-  const front = spots.filter((s) => s.front);
+const DESKTOP_SIZE = "clamp(110px, 12vw, 190px)";
+const MOBILE_SIZE = "clamp(84px, 26vw, 130px)";
+
+export default function DecorLayer({ spots = [], mobileSpots = [] }: { spots?: DecorSpot[]; mobileSpots?: DecorSpot[] }) {
   return (
     <>
-      {back.length > 0 && <Layer spots={back} z="-z-10" />}
-      {front.length > 0 && <Layer spots={front} z="z-10" />}
+      <Layer spots={spots.filter((s) => !s.front)} z="-z-10" show="hidden md:block" size={DESKTOP_SIZE} />
+      <Layer spots={spots.filter((s) => s.front)} z="z-10" show="hidden md:block" size={DESKTOP_SIZE} />
+      <Layer spots={mobileSpots.filter((s) => !s.front)} z="-z-10" show="md:hidden" size={MOBILE_SIZE} />
+      <Layer spots={mobileSpots.filter((s) => s.front)} z="z-10" show="md:hidden" size={MOBILE_SIZE} />
     </>
   );
 }
 
-function Layer({ spots, z }: { spots: DecorSpot[]; z: string }) {
+function Layer({ spots, z, show, size }: { spots: DecorSpot[]; z: string; show: string; size: string }) {
+  if (spots.length === 0) return null;
   return (
-    <div aria-hidden="true" className={`hidden md:block pointer-events-none absolute inset-y-0 left-1/2 w-screen -translate-x-1/2 ${z}`}>
+    <div aria-hidden="true" className={`${show} pointer-events-none absolute inset-y-0 left-1/2 w-screen -translate-x-1/2 ${z}`}>
       {spots.map((s, i) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -39,7 +45,7 @@ function Layer({ spots, z }: { spots: DecorSpot[]; z: string }) {
           style={{
             left: `${s.x}%`,
             top: s.y,
-            width: `calc(clamp(110px, 12vw, 190px) * ${s.scale ?? 1})`,
+            width: `calc(${size} * ${s.scale ?? 1})`,
             transform: `translate(-50%, -50%) rotate(${s.rotate ?? 0}deg)`,
           }}
         />

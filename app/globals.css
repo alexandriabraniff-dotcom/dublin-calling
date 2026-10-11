@@ -53,6 +53,19 @@ body {
   outline-offset: 2px;
 }
 
+/* Phones: every button is full width and at least 45px tall (buttons carry the .btn class) */
+@media (max-width: 639px) {
+  .btn {
+    display: flex !important;
+    width: 100% !important;
+    min-height: 45px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    align-self: stretch !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* FadeIn content shows straight away */
   [data-fade] {

@@ -96,9 +96,20 @@ export default async function LocationHome({
         {/* Centre content — pushed down to clear logo overflow */}
         <div
           className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6"
-          style={{ paddingTop: "clamp(80px, 12vh, 110px)", paddingBottom: "clamp(60px, 10vh, 90px)" }}
+          style={{ paddingTop: "clamp(32px, 12vh, 110px)", paddingBottom: "clamp(40px, 10vh, 90px)" }}
         >
-          <p className="text-[#F4EFE6]/75 uppercase tracking-[0.3em] mb-5" style={{ fontSize: "clamp(9px, 0.8vw, 11px)" }}>
+          {/* Logo in the hero on phones/tablets (on desktop the header logo hangs into the hero) */}
+          <Image
+            src="/logo.png"
+            alt=""
+            width={240}
+            height={240}
+            priority
+            className="lg:hidden w-auto mb-6 drop-shadow-2xl"
+            style={{ height: "clamp(120px, 34vw, 190px)" }}
+          />
+
+          <p className="text-[#F4EFE6]/75 uppercase tracking-[0.3em] mb-5" style={{ fontSize: "11px" }}>
             {heroLabel}
           </p>
 
@@ -119,10 +130,10 @@ export default async function LocationHome({
           )}
           {loc.slug === "vancouver" && <div className="mb-10" />}
 
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="w-full sm:w-auto flex flex-wrap justify-center gap-3">
             <Link
               href={`${base}/events`}
-              className="bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
+              className="btn bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
               style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
             >
               See Events
@@ -131,7 +142,7 @@ export default async function LocationHome({
               href={loc.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-[#F4EFE6]/30 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
+              className="btn border border-[#F4EFE6]/30 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
               style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
             >
               Book a Table
@@ -153,6 +164,9 @@ export default async function LocationHome({
         <DecorLayer spots={[
           { name: "beers", x: 12.5, y: "80px", rotate: -8 },
           { name: "pennant", x: 78, y: "112px", rotate: 6, scale: 1.15 },
+        ]} mobileSpots={[
+          { name: "beers", x: 12, y: "26px", rotate: -8, scale: 0.8 },
+          { name: "pennant", x: 82, y: "calc(100% - 26px)", rotate: 6 },
         ]} />
         <FadeIn>
           <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} sectionBg="#0F5132" />
@@ -166,6 +180,8 @@ export default async function LocationHome({
         <DecorLayer spots={[
           { name: "shamrock", x: 33, y: "120px", rotate: 10 },
           { name: "eight-ball", x: 89, y: "96px", rotate: -6 },
+        ]} mobileSpots={[
+          { name: "shamrock", x: 86, y: "78px", rotate: 10, scale: 0.9 },
         ]} />
         <div className="max-w-7xl mx-auto px-6 -mt-16 mb-16" aria-hidden="true">
           <div className="border-t-2 border-[#F4EFE6]" />
@@ -187,6 +203,14 @@ export default async function LocationHome({
                 { name: "pennant", x: 92, y: "calc(100% + 8px)", rotate: 8, scale: 1.6 }, // behind the photo, peeking out below and right
               ],
             }}
+            mobileDecor={{
+              0: [{ name: "beers", x: 86, y: "calc(100% + 24px)", rotate: 8, scale: 0.8 }],
+              1: [{ name: "eight-ball", x: 88, y: "calc(100% + 24px)", rotate: 12, scale: 0.7 }],
+              2: [
+                { name: "shamrock", x: 14, y: "calc(100% + 46px)", rotate: -8, scale: 0.9 },
+                { name: "pennant", x: 78, y: "calc(100% + 34px)", rotate: 8 },
+              ],
+            }}
           />
         </div>
       </section>
@@ -195,7 +219,10 @@ export default async function LocationHome({
       {/* ── GROUP BOOKING CTA ── */}
       <FadeIn>
         <section className="relative isolate overflow-x-clip bg-[#F2B035] px-6 py-20">
-          <DecorLayer spots={[{ name: "beers", x: 63, y: "50%", rotate: -6, scale: 1.6 }]} />
+          <DecorLayer
+            spots={[{ name: "beers", x: 63, y: "50%", rotate: -6, scale: 1.6 }]}
+            mobileSpots={[{ name: "beers", x: 84, y: "40px", rotate: -6, scale: 0.8 }]}
+          />
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
               <h2
@@ -210,7 +237,7 @@ export default async function LocationHome({
             </div>
             <Link
               href={`${base}/group-bookings`}
-              className="shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#101010] text-[#F2B035] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#0F5132] hover:text-[#F4EFE6] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#101010]"
+              className="btn shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#101010] text-[#F2B035] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#0F5132] hover:text-[#F4EFE6] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#101010]"
             >
               Learn More
             </Link>
