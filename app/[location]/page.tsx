@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getLocation } from "@/lib/locations";
+import { getLocation, todayIn } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
 import ExperienceList from "@/components/ExperienceList";
 import { getExperience } from "@/lib/experience";
@@ -147,29 +147,11 @@ export default async function LocationHome({
       </section>
 
       {/* ── THIS WEEK ── */}
-      {(() => {
-        const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        const nowVan = new Date(new Date().toLocaleString("en-US", { timeZone: loc.timezone }));
-        const todayIdx = nowVan.getDay();
-
-        const week = loc.weeklySchedule.map((entry) => {
-          const targetIdx = DAY_NAMES.indexOf(entry.dayName);
-          let diff = targetIdx - todayIdx;
-          if (diff < 0) diff += 7;
-          const d = new Date(nowVan);
-          d.setDate(d.getDate() + diff);
-          const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: loc.timezone });
-          return { ...entry, dateLabel, isToday: diff === 0, diff };
-        }).sort((a, b) => a.diff - b.diff);
-
-        return (
-          <section className="bg-[#082a1c] border-t border-white/10 py-16">
-            <FadeIn>
-              <WeekCalendar week={week} />
-            </FadeIn>
-          </section>
-        );
-      })()}
+      <section className="bg-[#082a1c] border-t border-white/10 py-16">
+        <FadeIn>
+          <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} />
+        </FadeIn>
+      </section>
 
 
       {/* ── THE EXPERIENCE — alternating rows ── */}

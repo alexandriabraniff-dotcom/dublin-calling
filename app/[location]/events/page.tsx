@@ -1,8 +1,11 @@
+export const dynamic = "force-dynamic";
+
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getLocation } from "@/lib/locations";
+import { getLocation, todayIn } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
+import WeekCalendar from "@/components/WeekCalendar";
 
 type TagColor = "red" | "gold" | "green" | "default";
 
@@ -351,6 +354,11 @@ export default async function EventsPage({
             </FadeIn>
           ))}
         </div>
+      </section>
+
+      {/* ── THIS WEEK + date picker ── */}
+      <section className="bg-[#082a1c] border-t border-white/10 py-16">
+        <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} withPicker />
       </section>
     </>
   );
