@@ -183,8 +183,8 @@ export default async function LocationHome({
               ],
               1: [{ name: "eight-ball", x: 48, y: "calc(100% + 55px)", rotate: 12 }],
               2: [
-                { name: "shamrock", x: 33, y: "calc(100% - 4px)", rotate: -8, scale: 0.78 },
-                { name: "pennant", x: 95, y: "calc(100% - 75px)", rotate: 8, front: true },
+                { name: "shamrock", x: 23, y: "calc(100% + 80px)", rotate: -8, scale: 1.3 }, // runs into the gold section, which covers its bottom
+                { name: "pennant", x: 92, y: "calc(100% + 8px)", rotate: 8, scale: 1.6 }, // behind the photo, peeking out below and right
               ],
             }}
           />
@@ -195,7 +195,7 @@ export default async function LocationHome({
       {/* ── GROUP BOOKING CTA ── */}
       <FadeIn>
         <section className="relative isolate overflow-x-clip bg-[#F2B035] px-6 py-20">
-          <DecorLayer spots={[{ name: "beers", x: 63, y: "50%", rotate: -6 }]} />
+          <DecorLayer spots={[{ name: "beers", x: 63, y: "50%", rotate: -6, scale: 1.6 }]} />
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
               <h2
