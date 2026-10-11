@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRef } from "react";
-import { useSnapCarousel, CarouselArrow, CarouselDots } from "@/components/carousel";
+import { useSnapCarousel, CarouselDots } from "@/components/carousel";
 
 export type TagColor = "red" | "gold" | "green" | "default";
 
@@ -19,7 +19,7 @@ export interface EventCard {
 
 export default function EventCarousel({ cards, base }: { cards: EventCard[]; base: string }) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const { canPrev, canNext, active, stops, goTo, step } = useSnapCarousel(trackRef, cards.length);
+  const { canPrev, canNext, active, stops, goTo } = useSnapCarousel(trackRef, cards.length);
 
   // Left edge lines up with the max-w-7xl content column; right edge bleeds off-screen
   const edge = "max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem))";
@@ -28,18 +28,12 @@ export default function EventCarousel({ cards, base }: { cards: EventCard[]; bas
     <>
       <div className="max-w-7xl mx-auto px-6 mb-6 flex items-end justify-between gap-4">
         <h2 className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">Events</h2>
-        <div className="flex items-center gap-4">
-          <Link
-            href={`${base}/events`}
-            className="hidden sm:inline text-[#F2B035] text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F2B035] uppercase tracking-widest hover:text-[#e0a020] transition-colors"
-          >
-            Full Schedule +
-          </Link>
-          <div className="flex gap-2">
-            <CarouselArrow dir="prev" label="Previous events" disabled={!canPrev} onClick={() => step(-1)} />
-            <CarouselArrow dir="next" label="Next events" disabled={!canNext} onClick={() => step(1)} />
-          </div>
-        </div>
+        <Link
+          href={`${base}/events`}
+          className="text-[#F2B035] text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F2B035] uppercase tracking-widest hover:text-[#e0a020] transition-colors"
+        >
+          Full Schedule +
+        </Link>
       </div>
 
       <div className="relative">
