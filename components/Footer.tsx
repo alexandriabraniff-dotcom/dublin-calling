@@ -205,17 +205,6 @@ export default function Footer({ location }: FooterProps) {
           >
             Dublin Calling &copy; {new Date().getFullYear()}. All rights reserved.
           </p>
-          <p className="text-[#F4EFE6]/25" style={{ fontSize: "0.6rem" }}>
-            Website designed by{" "}
-            <a
-              href="https://alexandriabraniff.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-[#F4EFE6]/50 transition-colors"
-            >
-              Alexandria Braniff
-            </a>
-          </p>
         </div>
       </div>
     </footer>
