@@ -168,22 +168,22 @@ export default async function LocationHome({
 
       {/* ── GROUP BOOKING CTA ── */}
       <FadeIn>
-        <section className="bg-[#101010] border-t border-white/10 px-6 py-20">
+        <section className="bg-[#F2B035] px-6 py-20">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
               <h2
-                className="text-[#F4EFE6] leading-tight"
+                className="text-[#101010] leading-tight"
                 style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "0.02em" }}
               >
                 Book Your Group Night
               </h2>
-              <p className="mt-3 text-[#F4EFE6]/75 text-sm max-w-sm leading-relaxed">
+              <p className="mt-3 text-[#101010]/85 text-sm max-w-sm leading-relaxed">
                 Birthdays, corporate outings, post-game parties. Get in touch and we&apos;ll take care of everything.
               </p>
             </div>
             <Link
               href={`${base}/group-bookings`}
-              className="shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors"
+              className="shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#101010] text-[#F2B035] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#0F5132] hover:text-[#F4EFE6] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#101010]"
             >
               Learn More
             </Link>
