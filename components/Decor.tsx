@@ -41,7 +41,7 @@ function Layer({ spots, z, show, size }: { spots: DecorSpot[]; z: string; show: 
           src={`/decor/${s.name}.webp`}
           alt=""
           loading="lazy"
-          className="absolute h-auto select-none"
+          className="absolute h-auto select-none opacity-80"
           style={{
             left: `${s.x}%`,
             top: s.y,
