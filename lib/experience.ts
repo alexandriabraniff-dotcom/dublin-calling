@@ -27,10 +27,6 @@ export function getExperience(loc: Location): ExperienceItem[] {
   if (loc.slug === "vancouver") {
     items.push(
       {
-        title: "Three Floors, Three Experiences",
-        body: "Dublin Calling is a three-storey building, and every floor holds something new. Start the night with the game on the big screens, find your crew on another level, and keep the party moving as the night goes on. One address, three completely different experiences.",
-      },
-      {
         title: "Never a Dull Moment",
         body: "Waiting for the next UFC fight to start or halftime to wrap up? Rack up a game on our pool tables, test your power on the punching bag machines and more. There's always something to keep you busy between the big moments.",
       }
@@ -44,6 +40,10 @@ export function getExperience(loc: Location): ExperienceItem[] {
 export function getAboutExtras(loc: Location): ExperienceItem[] {
   if (loc.slug !== "vancouver") return [];
   return [
+    {
+      title: "Three Floors, Three Experiences",
+      body: "Dublin Calling is a three-storey building, and every floor holds something new. Start the night with the game on the big screens, find your crew on another level, and keep the party moving as the night goes on. One address, three completely different experiences.",
+    },
     {
       title: "Live DJ on Every Floor",
       body: "When the night picks up, every floor gets its own DJ. Three levels, three soundtracks, one big party on Granville Street. Find the floor that matches your mood, or keep moving between them all night long.",
