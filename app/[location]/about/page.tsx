@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import PageHeader from "@/components/PageHeader";
 import { getLocation } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
 import ExperienceList from "@/components/ExperienceList";
@@ -20,19 +21,7 @@ export default async function AboutPage({
     <>
 
       {/* Header */}
-      <section className="bg-[#0F5132] py-20 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1
-            className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
-          >
-            About Us
-          </h1>
-          <p className="text-[#F4EFE6]/75 text-lg font-light max-w-xl">
-            Your neighbourhood Party Pub &amp; Kitchen. Live sports, cold drinks, and a room full of people who showed up for the same reason you did.
-          </p>
-        </div>
-      </section>
+      <PageHeader location={loc.name} label="About" title="About Us" subtitle="Your neighbourhood Party Pub & Kitchen. Live sports, cold drinks, and a room full of people who showed up for the same reason you did." />
 
       {/* Our Story */}
       <section className="bg-[#101010] border-b border-white/10">

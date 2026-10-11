@@ -19,10 +19,12 @@ export default function WeekCalendar({
   schedule,
   today,
   withPicker = false,
+  sectionBg = "#082a1c",
 }: {
   schedule: ScheduleEvent[];
   today: string;
   withPicker?: boolean;
+  sectionBg?: string; // colour of the surrounding section, for the edge fade
 }) {
   const [start, setStart] = useState(today);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -127,7 +129,8 @@ export default function WeekCalendar({
         {/* Edge fade while more days are off-screen */}
         <div
           aria-hidden="true"
-          className={`lg:hidden pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#082a1c] to-transparent transition-opacity ${canNext ? "opacity-100" : "opacity-0"}`}
+          className={`lg:hidden pointer-events-none absolute inset-y-0 right-0 w-12 transition-opacity ${canNext ? "opacity-100" : "opacity-0"}`}
+          style={{ background: `linear-gradient(to left, ${sectionBg}, transparent)` }}
         />
       </div>
 

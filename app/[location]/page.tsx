@@ -7,6 +7,7 @@ import { getLocation, todayIn } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
 import ExperienceList from "@/components/ExperienceList";
 import { getExperience } from "@/lib/experience";
+import InstagramFeed from "@/components/InstagramFeed";
 import WeekCalendar from "@/components/WeekCalendar";
 import EventCarousel, { type EventCard } from "@/components/EventCarousel";
 
@@ -147,15 +148,15 @@ export default async function LocationHome({
       </section>
 
       {/* ── THIS WEEK ── */}
-      <section className="bg-[#082a1c] border-t border-white/10 py-16">
+      <section className="bg-[#0F5132] border-t border-white/10 py-16">
         <FadeIn>
-          <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} />
+          <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} sectionBg="#0F5132" />
         </FadeIn>
       </section>
 
 
       {/* ── THE EXPERIENCE — alternating rows ── */}
-      <section className="bg-[#0F5132] border-t border-white/10 py-16">
+      <section className="bg-[#0F5132] py-16">
         <div className="max-w-7xl mx-auto px-6">
           <FadeIn className="mb-10">
             <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">The Experience</p>
@@ -189,6 +190,9 @@ export default async function LocationHome({
           </div>
         </section>
       </FadeIn>
+
+      {/* ── INSTAGRAM ── */}
+      <InstagramFeed profileUrl={loc.social.instagram} locationName={loc.name} />
 
       {/* ── FIND US ── */}
       <section id="find-us" className="bg-[#0F5132] border-t border-white/10">

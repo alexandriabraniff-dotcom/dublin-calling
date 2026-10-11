@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import PageHeader from "@/components/PageHeader";
 import { getLocation } from "@/lib/locations";
 
 export default async function PrivacyPolicyPage({
@@ -11,12 +12,14 @@ export default async function PrivacyPolicyPage({
   if (!loc) notFound();
 
   return (
-    <section className="bg-white py-20">
+    <>
+    <PageHeader location={loc.name} label="Privacy" title="Privacy Policy" />
+    <section className="bg-white py-16">
       <div className="max-w-3xl mx-auto px-6 sm:px-8">
         <p className="text-[#0F5132] text-xs uppercase tracking-[0.25em] mb-4">Updated: May 31, 2024</p>
-        <h1 className="text-[#0F5132] mb-10" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 6vw, 3.5rem)", letterSpacing: "0.02em" }}>
+        <h2 className="text-[#0F5132] mb-10" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.6rem, 4vw, 2.4rem)", letterSpacing: "0.02em" }}>
           THE MRG GROUP PRIVACY STATEMENT
-        </h1>
+        </h2>
 
         <div className="prose prose-green max-w-none text-[#0F5132]/80 text-sm leading-relaxed flex flex-col gap-6">
           <p>
@@ -234,6 +237,7 @@ export default async function PrivacyPolicyPage({
         </div>
       </div>
     </section>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import PageHeader from "@/components/PageHeader";
 import { getLocation } from "@/lib/locations";
 
 export default function FAQPage() {
@@ -27,19 +28,7 @@ export default function FAQPage() {
     <>
 
       {/* Header */}
-      <section className="bg-[#0F5132] py-20 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1
-            className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
-          >
-            FAQ
-          </h1>
-          <p className="text-[#F4EFE6]/75 text-lg font-light max-w-xl">
-            Got a question? We&apos;ve probably answered it below. If not, reach out directly.
-          </p>
-        </div>
-      </section>
+      <PageHeader location={loc.name} label="FAQ" title="FAQ" subtitle="Got a question? We've probably answered it below. If not, reach out directly." />
 
       <section className="py-16 bg-[#101010]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">

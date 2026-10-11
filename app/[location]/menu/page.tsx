@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import PageHeader from "@/components/PageHeader";
 import { getLocation } from "@/lib/locations";
 
 export default async function MenuPage({
@@ -16,19 +17,7 @@ export default async function MenuPage({
     <>
 
       {/* Header */}
-      <section className="bg-[#0F5132] py-20 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1
-            className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
-          >
-            Menu
-          </h1>
-          <p className="text-[#F4EFE6]/75 text-lg font-light max-w-xl">
-            Pub classics done properly. Built for big nights and even better company.
-          </p>
-        </div>
-      </section>
+      <PageHeader location={loc.name} label="Menu" title="Menu" subtitle="Pub classics done properly. Built for big nights and even better company." />
 
       {/* Menu images — side by side */}
       <section className="bg-[#101010] py-16">

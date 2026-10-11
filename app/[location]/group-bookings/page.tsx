@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import PageHeader from "@/components/PageHeader";
 import { getLocation } from "@/lib/locations";
 import { getBookingTypes } from "@/lib/group-bookings";
 import FadeIn from "@/components/FadeIn";
@@ -20,16 +21,7 @@ export default async function GroupBookingsPage({
   return (
     <>
       {/* Header */}
-      <section className="bg-[#0F5132] py-20 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <h1
-            className="text-[#F4EFE6]"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(3.5rem, 10vw, 7rem)" }}
-          >
-            Group Bookings
-          </h1>
-        </div>
-      </section>
+      <PageHeader location={loc.name} label="Group Bookings" title="Group Bookings" />
 
       {/* Booking types: photo + write-up + its own enquiry pop-up */}
       <section className="bg-[#101010] py-16">
