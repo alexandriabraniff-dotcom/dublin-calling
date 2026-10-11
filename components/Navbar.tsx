@@ -51,15 +51,6 @@ export default function Navbar({ location }: { location: LocationSlug }) {
 
   return (
     <>
-      {/* DESIGNER CREDIT BANNER */}
-      <div className="w-full bg-[#101010] text-[#F4EFE6]/40 text-xs text-center py-1.5 px-4">
-        Website designed by{" "}
-        <a href="https://alexandriabraniff.com" target="_blank" rel="noopener noreferrer"
-          className="underline hover:text-[#F2B035] transition-colors">Alexandria Braniff</a>{" "}·{" "}
-        <a href="mailto:hello@alexandriabraniff.com"
-          className="underline hover:text-[#F2B035] transition-colors">hello@alexandriabraniff.com</a>
-      </div>
-
       {/* ── DESKTOP ── */}
       {/* overflow-visible lets the logo hang below into the hero */}
       <header
