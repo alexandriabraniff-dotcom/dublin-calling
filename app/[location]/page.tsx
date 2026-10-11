@@ -156,7 +156,11 @@ export default async function LocationHome({
 
 
       {/* ── THE EXPERIENCE — alternating rows ── */}
+      {/* Divider line between the calendar and The Experience (same style as the footer line) */}
       <section className="bg-[#0F5132] py-16">
+        <div className="max-w-7xl mx-auto px-6 -mt-16 mb-16" aria-hidden="true">
+          <div className="border-t-2 border-[#F4EFE6]" />
+        </div>
         <div className="max-w-7xl mx-auto px-6">
           <FadeIn className="mb-10">
             <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">The Experience</p>
