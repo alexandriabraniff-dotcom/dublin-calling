@@ -232,6 +232,11 @@ export default async function EventsPage({
         </div>
       </section>
 
+      {/* ── THIS WEEK + date picker ── */}
+      <section className="bg-[#082a1c] border-b border-white/10 py-16">
+        <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} withPicker />
+      </section>
+
       {/* ── EVENTS ── */}
       <section className="bg-[#101010] py-16 px-6">
         <div className="max-w-5xl mx-auto flex flex-col gap-10">
@@ -354,11 +359,6 @@ export default async function EventsPage({
             </FadeIn>
           ))}
         </div>
-      </section>
-
-      {/* ── THIS WEEK + date picker ── */}
-      <section className="bg-[#082a1c] border-t border-white/10 py-16">
-        <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} withPicker />
       </section>
     </>
   );
