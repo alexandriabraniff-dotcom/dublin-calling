@@ -199,7 +199,7 @@ export default async function LocationHome({
       <InstagramFeed profileUrl={loc.social.instagram} locationName={loc.name} />
 
       {/* ── FIND US ── */}
-      <section id="find-us" className="bg-[#0F5132] border-t border-white/10">
+      <section id="find-us" className="bg-[#0F5132] border-t border-white/10 scroll-mt-[72px]">
         <div className="max-w-7xl mx-auto px-6 py-16">
           <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em] mb-12">Find Us</p>
 

@@ -20,6 +20,7 @@ const LEFT_LINKS = [
 
 const RIGHT_LINKS = [
   { href: "/group-bookings", label: "Group Bookings" },
+  { href: "#find-us",        label: "Find Us"        }, // homepage Find Us section, from any page
   { href: "/faq",            label: "FAQ"            },
 ];
 
@@ -90,7 +91,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
       {/* ── DESKTOP ── */}
       {/* overflow-visible lets the logo hang below into the hero */}
       <header
-        className="hidden md:block sticky top-0 z-50 bg-[#0F5132] border-b border-white/10 overflow-visible"
+        className="hidden lg:block sticky top-0 z-50 bg-[#0F5132] border-b border-white/10 overflow-visible"
         style={{ height: "72px" }}
       >
         <div className="relative h-full flex items-center px-8 gap-4">
@@ -183,7 +184,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
       </header>
 
       {/* ── MOBILE ── */}
-      <header className="md:hidden sticky top-0 z-50 bg-[#0F5132] border-b border-white/10">
+      <header className="lg:hidden sticky top-0 z-50 bg-[#0F5132] border-b border-white/10">
         <div className="flex items-center justify-between px-5 h-[60px]">
           <Link href={base}>
             <Image src="/logo.png" alt="Dublin Calling" width={52} height={52} className="h-12 w-auto" priority />
