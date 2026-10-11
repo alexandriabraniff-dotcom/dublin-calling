@@ -35,7 +35,7 @@ export default function FAQPage() {
           >
             FAQ
           </h1>
-          <p className="text-[#F4EFE6]/50 text-lg font-light max-w-xl">
+          <p className="text-[#F4EFE6]/75 text-lg font-light max-w-xl">
             Got a question? We&apos;ve probably answered it below. If not, reach out directly.
           </p>
         </div>
@@ -63,7 +63,7 @@ export default function FAQPage() {
                 </button>
                 {open === i && (
                   <div className="pb-6">
-                    <p className="text-[#F4EFE6]/50 text-sm leading-relaxed">{faq.a}</p>
+                    <p className="text-[#F4EFE6]/75 text-sm leading-relaxed">{faq.a}</p>
                   </div>
                 )}
               </div>
@@ -80,7 +80,7 @@ export default function FAQPage() {
           >
             Still Have a Question?
           </h2>
-          <p className="text-[#F4EFE6]/50 text-base max-w-sm mx-auto mb-8">
+          <p className="text-[#F4EFE6]/75 text-base max-w-sm mx-auto mb-8">
             Get in touch with the {loc.name} team directly.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

@@ -5,6 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { getLocation } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
+import ExperienceList from "@/components/ExperienceList";
+import { getExperience } from "@/lib/experience";
+import WeekCalendar from "@/components/WeekCalendar";
 import EventCarousel, { type EventCard } from "@/components/EventCarousel";
 
 export default async function LocationHome({
@@ -43,22 +46,6 @@ export default async function LocationHome({
     } as Record<string, EventCard[]>
   )[loc.slug] ?? [];
 
-  const features = [
-    {
-      title: loc.stats[0].value + " Big Screens",
-      body: `Every major game. Every sport. ${loc.stats[0].value} screens across the room so you never miss a moment, wherever you're sitting.`,
-      image: "/big-screens.png" as string | undefined,
-    },
-    {
-      title: loc.slug === "vancouver" ? "12+ Beers on Tap" : "Ice-Cold Draught",
-      body:
-        loc.slug === "vancouver"
-          ? "Twelve taps, always rotating. Ask your server what's pouring tonight."
-          : "Draught pints, craft cans, and a cocktail list built for long nights.",
-      image: loc.slug === "vancouver" ? "/beers-on-tap.jpg" : undefined,
-    },
-  ];
-
   const googleMapsUrls: Record<string, string> = {
     adelaide: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.2!2d-79.3897!3d43.6488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b34d2e5ab4a5b%3A0x1a2b3c4d5e6f7a8b!2s250%20Adelaide%20St%20W%2C%20Toronto%2C%20ON!5e0!3m2!1sen!2sca!4v1700000000001",
     danforth: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.2!2d-79.3523!3d43.6783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b33ef7c2a3d0f%3A0x2b3c4d5e6f7a8b9c!2s526%20Danforth%20Ave%2C%20Toronto%2C%20ON!5e0!3m2!1sen!2sca!4v1700000000002",
@@ -69,7 +56,7 @@ export default async function LocationHome({
     if (color === "red")   return "border border-[#C8102E] text-[#101010]";
     if (color === "gold")  return "bg-[#F2B035] text-[#101010]";
     if (color === "green") return "border border-[#169B62] text-[#169B62]";
-    return "border border-white/20 text-[#F4EFE6]/40";
+    return "border border-white/20 text-[#F4EFE6]/70";
   };
 
   // Hero subtitle
@@ -109,7 +96,7 @@ export default async function LocationHome({
           className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6"
           style={{ paddingTop: "clamp(80px, 12vh, 110px)", paddingBottom: "clamp(60px, 10vh, 90px)" }}
         >
-          <p className="text-[#F4EFE6]/50 uppercase tracking-[0.3em] mb-5" style={{ fontSize: "clamp(9px, 0.8vw, 11px)" }}>
+          <p className="text-[#F4EFE6]/75 uppercase tracking-[0.3em] mb-5" style={{ fontSize: "clamp(9px, 0.8vw, 11px)" }}>
             {heroLabel}
           </p>
 
@@ -122,7 +109,7 @@ export default async function LocationHome({
 
           {loc.slug !== "vancouver" && (
             <p
-              className="text-[#F4EFE6]/65 max-w-md mb-10"
+              className="text-[#F4EFE6]/80 max-w-md mb-10"
               style={{ fontSize: "clamp(0.85rem, 1.4vw, 1rem)", lineHeight: 1.8 }}
             >
               {loc.heroTagline}
@@ -177,96 +164,21 @@ export default async function LocationHome({
 
         return (
           <section className="bg-[#082a1c] border-t border-white/10 py-16">
-            <div className="max-w-7xl mx-auto">
-              <FadeIn className="mb-10 flex items-end justify-between px-6">
-                <h2
-                  className="text-white"
-                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}
-                >
-                  This Week at Dublin Calling
-                </h2>
-              </FadeIn>
-              <div className="flex overflow-x-auto snap-x snap-mandatory pb-3 lg:grid lg:grid-cols-7 lg:overflow-visible lg:pb-0 lg:snap-none gap-px bg-white/10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {week.map((day, di) => (
-                  <div
-                    key={day.dayName}
-                    className={`flex flex-col gap-3 p-5 shrink-0 snap-start w-[72vw] sm:w-60 lg:w-auto${di === 0 ? " ml-6 lg:ml-0" : ""}${di === week.length - 1 ? " mr-6 lg:mr-0" : ""} ${day.isToday ? "bg-[#0a1f14]" : "bg-[#082a1c]"}`}
-                  >
-                    <div className="border-b border-white/15 pb-3">
-                      <p
-                        className={`text-[10px] uppercase tracking-[0.2em] ${day.isToday ? "text-[#F2B035]" : "text-white/60"}`}
-                        style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600 }}
-                      >
-                        {day.isToday ? "Today" : day.dayName}
-                      </p>
-                      <p className="text-white/70 text-xs mt-0.5">{day.dateLabel}</p>
-                    </div>
-                    {day.items.length === 0 ? (
-                      <p className="text-white/30 text-xs italic">No events</p>
-                    ) : (
-                      <ul className="flex flex-col gap-2 flex-1">
-                        {day.items.map((item) => (
-                          <li key={item} className="flex items-start gap-1.5">
-                            <span className="text-[#F2B035] shrink-0 mt-[3px]">·</span>
-                            <span className="text-white/85 text-xs leading-relaxed">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <FadeIn>
+              <WeekCalendar week={week} />
+            </FadeIn>
           </section>
         );
       })()}
 
 
-      {/* ── FEATURES — alternating rows ── */}
-      <section className="bg-[#0F5132] border-t border-white/10 py-20">
+      {/* ── THE EXPERIENCE — alternating rows ── */}
+      <section className="bg-[#0F5132] border-t border-white/10 py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <FadeIn className="mb-16">
-            <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em]">The Experience</p>
+          <FadeIn className="mb-10">
+            <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">The Experience</p>
           </FadeIn>
-
-          <div className="flex flex-col gap-16">
-            {features.map((feat, i) => (
-              <FadeIn
-                key={feat.title}
-                delay={i * 120}
-                className={`flex flex-col md:flex-row items-center gap-10 ${i % 2 === 1 ? "md:flex-row-reverse" : ""}`}
-              >
-                {/* Text side */}
-                <div className="flex flex-col gap-4 w-full md:w-[42%] shrink-0">
-                  <h3
-                    className="text-[#F4EFE6] leading-none"
-                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4.5vw, 4rem)", letterSpacing: "0.02em" }}
-                  >
-                    {feat.title}
-                  </h3>
-                  <p className="text-[#F4EFE6]/55 text-sm leading-relaxed max-w-xs">{feat.body}</p>
-                </div>
-
-                {/* Photo */}
-                {feat.image ? (
-                  <div className="relative w-full flex-1 overflow-hidden" style={{ height: "clamp(200px, 26vw, 320px)" }}>
-                    <Image src={feat.image} alt={feat.title} fill className="object-cover" />
-                  </div>
-                ) : (
-                  <div
-                    className="w-full flex-1 bg-[#101010] border border-white/10 flex flex-col items-center justify-center gap-3"
-                    style={{ height: "clamp(200px, 26vw, 320px)" }}
-                  >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" className="text-[#F4EFE6]/20">
-                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                      <circle cx="12" cy="13" r="4" />
-                    </svg>
-                    <p className="text-[#F4EFE6]/20 text-[10px] uppercase tracking-[0.25em]">Photo Coming Soon</p>
-                  </div>
-                )}
-              </FadeIn>
-            ))}
-          </div>
+          <ExperienceList items={getExperience(loc)} />
         </div>
       </section>
 
@@ -282,7 +194,7 @@ export default async function LocationHome({
               >
                 Book Your Group Night
               </h2>
-              <p className="mt-3 text-[#F4EFE6]/55 text-sm max-w-sm leading-relaxed">
+              <p className="mt-3 text-[#F4EFE6]/75 text-sm max-w-sm leading-relaxed">
                 Birthdays, corporate outings, post-game parties. Get in touch and we&apos;ll take care of everything.
               </p>
             </div>
@@ -299,43 +211,43 @@ export default async function LocationHome({
       {/* ── FIND US ── */}
       <section id="find-us" className="bg-[#0F5132] border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-16">
-          <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-12">Find Us</p>
+          <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em] mb-12">Find Us</p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
             {/* Contact */}
             <FadeIn className="flex flex-col gap-6" direction="left">
               <div>
-                <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-1">Address</p>
+                <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-1">Address</p>
                 <a
                   href={`https://maps.google.com/?q=${encodeURIComponent(loc.address)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors leading-relaxed"
+                  className="text-[#F4EFE6]/75 text-sm hover:text-[#F4EFE6] transition-colors leading-relaxed"
                 >
                   {loc.address}
                 </a>
               </div>
               <div>
-                <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-1">Phone</p>
-                <a href={`tel:${loc.phone}`} className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors">
+                <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-1">Phone</p>
+                <a href={`tel:${loc.phone}`} className="text-[#F4EFE6]/75 text-sm hover:text-[#F4EFE6] transition-colors">
                   {loc.phone}
                 </a>
               </div>
               <div>
-                <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-1">Email</p>
-                <a href={`mailto:${loc.email}`} className="text-[#F4EFE6]/60 text-sm hover:text-[#F4EFE6] transition-colors break-all">
+                <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-1">Email</p>
+                <a href={`mailto:${loc.email}`} className="text-[#F4EFE6]/75 text-sm hover:text-[#F4EFE6] transition-colors break-all">
                   {loc.email}
                 </a>
               </div>
               <div>
-                <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-2">Follow</p>
+                <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-2">Follow</p>
                 <div className="flex gap-5">
                   <a
                     href={loc.social.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#F4EFE6]/40 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors"
+                    className="text-[#F4EFE6]/70 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors"
                   >
                     Instagram
                   </a>
@@ -343,7 +255,7 @@ export default async function LocationHome({
                     href={loc.social.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#F4EFE6]/40 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors"
+                    className="text-[#F4EFE6]/70 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors"
                   >
                     Facebook
                   </a>
@@ -353,14 +265,14 @@ export default async function LocationHome({
 
             {/* Hours */}
             <FadeIn direction="none" delay={100}>
-              <p className="text-[#F4EFE6]/30 text-[10px] uppercase tracking-[0.2em] mb-6">Hours</p>
+              <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-6">Hours</p>
               <div className="flex flex-col">
                 {loc.hours.map((h, i) => (
                   <div
                     key={h.days}
                     className={`flex items-start justify-between py-3 ${i < loc.hours.length - 1 ? "border-b border-white/10" : ""}`}
                   >
-                    <span className="text-[#F4EFE6]/45 text-xs">{h.days}</span>
+                    <span className="text-[#F4EFE6]/75 text-xs">{h.days}</span>
                     <span className="text-[#F4EFE6]/70 text-xs text-right">{h.time}</span>
                   </div>
                 ))}

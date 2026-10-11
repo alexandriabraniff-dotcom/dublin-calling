@@ -7,11 +7,11 @@ function PhotoPlaceholder({ height = "clamp(200px, 28vw, 320px)" }: { height?: s
       className="w-full bg-[#101010] border border-white/10 flex flex-col items-center justify-center gap-3 shrink-0"
       style={{ height }}
     >
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" className="text-[#F4EFE6]/20">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" className="text-[#F4EFE6]/70">
         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
         <circle cx="12" cy="13" r="4" />
       </svg>
-      <p className="text-[#F4EFE6]/20 text-[10px] uppercase tracking-[0.25em]">Photo Coming Soon</p>
+      <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">Photo Coming Soon</p>
     </div>
   );
 }
@@ -81,7 +81,7 @@ export default async function GroupBookingsPage({
           >
             Group Bookings
           </h1>
-          <p className="text-[#F4EFE6]/50 text-lg font-light max-w-xl">
+          <p className="text-[#F4EFE6]/75 text-lg font-light max-w-xl">
             Bring the party here.
           </p>
         </div>
@@ -102,7 +102,7 @@ export default async function GroupBookingsPage({
           {/* Content right */}
           <div className="flex-1 px-8 py-14 md:px-14 flex flex-col justify-center gap-6">
             <div>
-              <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.25em] mb-3">Every Group Gets</p>
+              <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em] mb-3">Every Group Gets</p>
               <h2
                 className="text-[#F4EFE6] leading-none"
                 style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 5rem)", letterSpacing: "0.02em" }}
@@ -110,7 +110,7 @@ export default async function GroupBookingsPage({
                 The Full Dublin<br />Calling Treatment.
               </h2>
             </div>
-            <p className="text-[#F4EFE6]/55 text-sm leading-relaxed max-w-md">
+            <p className="text-[#F4EFE6]/75 text-sm leading-relaxed max-w-md">
               Get in touch before the day and we will have everything ready when you arrive. Reserved space, cold drinks, and all the games on the screens — exactly how you want it.
             </p>
             <ul className="flex flex-col gap-2.5 border-t border-white/10 pt-5">
@@ -123,7 +123,7 @@ export default async function GroupBookingsPage({
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <span className="shrink-0 mt-[7px] w-1 h-1 rounded-full bg-[#F2B035]" />
-                  <span className="text-[#F4EFE6]/65 text-sm leading-relaxed">{item}</span>
+                  <span className="text-[#F4EFE6]/80 text-sm leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
@@ -154,7 +154,7 @@ export default async function GroupBookingsPage({
 
                 {/* Content */}
                 <div className="bg-[#0F5132] p-6 flex flex-col gap-4 flex-1">
-                  <p className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-[0.2em]">{o.label}</p>
+                  <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em]">{o.label}</p>
                   <h3
                     className="text-[#F4EFE6] leading-tight"
                     style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.4rem, 2.5vw, 1.8rem)", letterSpacing: "0.02em" }}
@@ -168,14 +168,14 @@ export default async function GroupBookingsPage({
                     >
                       {o.highlight}
                     </span>
-                    <span className="text-[#F4EFE6]/35 text-[10px] uppercase tracking-wider">{o.highlightSub}</span>
+                    <span className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-wider">{o.highlightSub}</span>
                   </div>
-                  <p className="text-[#F4EFE6]/50 text-xs leading-relaxed">{o.desc}</p>
+                  <p className="text-[#F4EFE6]/75 text-xs leading-relaxed">{o.desc}</p>
                   <ul className="flex flex-col gap-2 border-t border-white/10 pt-4 flex-1">
                     {o.items.map((item) => (
                       <li key={item} className="flex items-start gap-2">
                         <span className="shrink-0 mt-[5px] w-1 h-1 rounded-full bg-[#F2B035]" />
-                        <span className="text-[#F4EFE6]/55 text-xs leading-relaxed">{item}</span>
+                        <span className="text-[#F4EFE6]/75 text-xs leading-relaxed">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -203,7 +203,7 @@ export default async function GroupBookingsPage({
             >
               Ready to Book<br />Your Group?
             </h2>
-            <p className="mt-3 text-[#F4EFE6]/55 text-sm max-w-sm leading-relaxed">
+            <p className="mt-3 text-[#F4EFE6]/75 text-sm max-w-sm leading-relaxed">
               Email us or call and we will get your group sorted. Include your date, group size, and what you are celebrating.
             </p>
             <div className="mt-4 flex flex-col gap-2">

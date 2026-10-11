@@ -38,6 +38,7 @@ export default function FadeIn({ children, className = "", delay = 0, direction 
   return (
     <div
       ref={ref}
+      data-fade
       className={className}
       style={{
         opacity: visible ? 1 : 0,

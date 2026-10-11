@@ -39,7 +39,7 @@ export default async function BookATablePage({
               className="text-[#F2B035] mb-4"
               style={{
                 fontFamily: "'Oswald', sans-serif",
-                fontSize: "0.65rem",
+                fontSize: "0.7rem",
                 fontWeight: 600,
                 letterSpacing: "0.3em",
               }}
@@ -57,7 +57,7 @@ export default async function BookATablePage({
             >
               Book a Table
             </h1>
-            <p className="text-[#F4EFE6]/50 text-sm max-w-md leading-relaxed">
+            <p className="text-[#F4EFE6]/75 text-sm max-w-md leading-relaxed">
               {loc.address}
             </p>
           </FadeIn>
@@ -70,10 +70,10 @@ export default async function BookATablePage({
           {booking.type === "opentable" ? (
             <FadeIn>
               <p
-                className="text-[#F4EFE6]/30 mb-6"
+                className="text-[#F4EFE6]/70 mb-6"
                 style={{
                   fontFamily: "'Oswald', sans-serif",
-                  fontSize: "0.6rem",
+                  fontSize: "0.7rem",
                   fontWeight: 600,
                   letterSpacing: "0.25em",
                 }}
@@ -95,10 +95,10 @@ export default async function BookATablePage({
           ) : (
             <FadeIn>
               <p
-                className="text-[#F4EFE6]/30 mb-6"
+                className="text-[#F4EFE6]/70 mb-6"
                 style={{
                   fontFamily: "'Oswald', sans-serif",
-                  fontSize: "0.6rem",
+                  fontSize: "0.7rem",
                   fontWeight: 600,
                   letterSpacing: "0.25em",
                 }}

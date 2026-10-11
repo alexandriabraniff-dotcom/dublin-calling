@@ -24,7 +24,7 @@ export default async function MenuPage({
           >
             Menu
           </h1>
-          <p className="text-[#F4EFE6]/50 text-lg font-light max-w-xl">
+          <p className="text-[#F4EFE6]/75 text-lg font-light max-w-xl">
             Pub classics done properly. Built for big nights and even better company.
           </p>
         </div>
@@ -36,7 +36,7 @@ export default async function MenuPage({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Food menu */}
             <div className="flex flex-col gap-4">
-              <p className="text-[#F2B035] text-[10px] uppercase tracking-[0.25em]" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600 }}>
+              <p className="text-[#F2B035] text-[11px] uppercase tracking-[0.25em]" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600 }}>
                 Food Menu
               </p>
               <div className="relative w-full border border-white/10">
@@ -52,7 +52,7 @@ export default async function MenuPage({
 
             {/* Drinks menu */}
             <div className="flex flex-col gap-4">
-              <p className="text-[#F2B035] text-[10px] uppercase tracking-[0.25em]" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600 }}>
+              <p className="text-[#F2B035] text-[11px] uppercase tracking-[0.25em]" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600 }}>
                 Drinks Menu
               </p>
               <div className="relative w-full border border-white/10">
@@ -67,7 +67,7 @@ export default async function MenuPage({
             </div>
           </div>
 
-          <p className="text-[#F4EFE6]/20 text-xs mt-10">
+          <p className="text-[#F4EFE6]/70 text-xs mt-10">
             Menu items and prices subject to change. Please inform your server of any dietary restrictions or allergies. All prices in CAD. Taxes extra.
           </p>
         </div>

@@ -44,8 +44,8 @@ export default function Footer({ location }: FooterProps) {
           {/* Col 1 — Navigate + Locations */}
           <div className="flex flex-col gap-3">
             <p
-              className="text-[#F4EFE6]/30 mb-1"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.25em" }}
+              className="text-[#F4EFE6]/70 mb-1"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
             >
               NAVIGATE
             </p>
@@ -53,15 +53,15 @@ export default function Footer({ location }: FooterProps) {
               <Link
                 key={link.href}
                 href={link.href === "" ? base : `${base}${link.href}`}
-                className="text-[#F4EFE6]/50 text-xs hover:text-[#F4EFE6] transition-colors"
+                className="text-[#F4EFE6]/75 text-xs hover:text-[#F4EFE6] transition-colors"
               >
                 {link.label}
               </Link>
             ))}
 
             <p
-              className="text-[#F4EFE6]/30 mt-5 mb-1"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.25em" }}
+              className="text-[#F4EFE6]/70 mt-5 mb-1"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
             >
               LOCATIONS
             </p>
@@ -76,7 +76,7 @@ export default function Footer({ location }: FooterProps) {
                 className={`text-xs transition-colors ${
                   loc.slug === location.slug
                     ? "text-[#F2B035]"
-                    : "text-[#F4EFE6]/50 hover:text-[#F4EFE6]"
+                    : "text-[#F4EFE6]/75 hover:text-[#F4EFE6]"
                 }`}
               >
                 {loc.label}
@@ -93,7 +93,7 @@ export default function Footer({ location }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="text-[#F4EFE6]/40 hover:text-[#F4EFE6] transition-colors"
+                className="text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
               >
                 <FacebookIcon />
               </a>
@@ -102,7 +102,7 @@ export default function Footer({ location }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="text-[#F4EFE6]/40 hover:text-[#F4EFE6] transition-colors"
+                className="text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
               >
                 <InstagramIcon />
               </a>
@@ -121,7 +121,7 @@ export default function Footer({ location }: FooterProps) {
             </Link>
 
             {/* Legal notice */}
-            <p className="text-[#F4EFE6]/25 text-[10px] leading-relaxed">
+            <p className="text-[#F4EFE6]/70 text-[11px] leading-relaxed">
               You must be of legal drinking age to purchase alcohol.<br />
               Valid Photo ID required.
             </p>
@@ -129,8 +129,8 @@ export default function Footer({ location }: FooterProps) {
             {/* Privacy */}
             <Link
               href={`/${location.slug}/privacy-policy`}
-              className="text-[#F4EFE6]/25 hover:text-[#F4EFE6]/50 transition-colors uppercase tracking-widest"
-              style={{ fontSize: "0.6rem" }}
+              className="text-[#F4EFE6]/70 hover:text-[#F4EFE6]/50 transition-colors uppercase tracking-widest"
+              style={{ fontSize: "0.7rem" }}
             >
               Privacy Policy
             </Link>
@@ -139,20 +139,20 @@ export default function Footer({ location }: FooterProps) {
           {/* Col 3 — Contact (right-aligned) */}
           <div className="flex flex-col gap-3 md:items-end md:text-right">
             <p
-              className="text-[#F4EFE6]/30 mb-1"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.25em" }}
+              className="text-[#F4EFE6]/70 mb-1"
+              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
             >
               CONTACT: {location.name.toUpperCase()}
             </p>
             <a
               href={`tel:${location.phone}`}
-              className="text-[#F4EFE6]/50 text-xs hover:text-[#F4EFE6] transition-colors"
+              className="text-[#F4EFE6]/75 text-xs hover:text-[#F4EFE6] transition-colors"
             >
               {location.phone}
             </a>
             <a
               href={`mailto:${location.email}`}
-              className="text-[#F4EFE6]/50 text-xs hover:text-[#F4EFE6] transition-colors break-all"
+              className="text-[#F4EFE6]/75 text-xs hover:text-[#F4EFE6] transition-colors break-all"
             >
               {location.email}
             </a>
@@ -160,7 +160,7 @@ export default function Footer({ location }: FooterProps) {
               href={`https://maps.google.com/?q=${encodeURIComponent(location.address)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#F4EFE6]/50 text-xs hover:text-[#F4EFE6] transition-colors leading-relaxed"
+              className="text-[#F4EFE6]/75 text-xs hover:text-[#F4EFE6] transition-colors leading-relaxed"
             >
               {location.address}
             </a>
@@ -168,8 +168,8 @@ export default function Footer({ location }: FooterProps) {
             {/* Hours */}
             <div className="mt-4 pt-4 border-t border-white/10 space-y-1.5 md:text-right">
               {location.hours.map((h) => (
-                <p key={h.days} className="text-xs text-[#F4EFE6]/35">
-                  <span className="text-[#F4EFE6]/25">{h.days}: </span>{h.time}
+                <p key={h.days} className="text-xs text-[#F4EFE6]/70">
+                  <span className="text-[#F4EFE6]/70">{h.days}: </span>{h.time}
                 </p>
               ))}
               </div>
@@ -200,8 +200,8 @@ export default function Footer({ location }: FooterProps) {
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between gap-2">
           <p
-            className="text-[#F4EFE6]/25 uppercase"
-            style={{ fontSize: "0.6rem", letterSpacing: "0.15em" }}
+            className="text-[#F4EFE6]/70 uppercase"
+            style={{ fontSize: "0.7rem", letterSpacing: "0.15em" }}
           >
             Dublin Calling &copy; {new Date().getFullYear()}. All rights reserved.
           </p>

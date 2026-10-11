@@ -36,8 +36,14 @@ export default async function LocationLayout({
 
   return (
     <div className="flex flex-col min-h-dvh">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-[#F2B035] focus:text-[#101010] focus:px-4 focus:py-2 focus:font-semibold focus:text-sm"
+      >
+        Skip to main content
+      </a>
       <Navbar location={loc.slug as LocationSlug} />
-      <main className="flex-1">{children}</main>
+      <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">{children}</main>
       <Footer location={loc} />
     </div>
   );

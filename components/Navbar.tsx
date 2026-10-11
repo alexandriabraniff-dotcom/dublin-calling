@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { LocationSlug } from "@/lib/locations";
 
 const LOCATION_LABELS: Record<LocationSlug, string> = {
@@ -38,6 +38,23 @@ export default function Navbar({ location }: { location: LocationSlug }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [locationOpen, setLocationOpen] = useState(false);
   const [logoSmall, setLogoSmall] = useState(false);
+  const locationRef = useRef<HTMLDivElement>(null);
+
+  // Escape closes open menus; clicking outside closes the location picker
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { setLocationOpen(false); setMenuOpen(false); }
+    };
+    const onClick = (e: MouseEvent) => {
+      if (locationRef.current && !locationRef.current.contains(e.target as Node)) setLocationOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, []);
 
   // Shrink the desktop logo once 85% of the hero (first section) has scrolled under the header
   useEffect(() => {
@@ -65,7 +82,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
 
   const linkClass = (href: string) =>
     `font-medium uppercase tracking-[0.15em] transition-colors whitespace-nowrap ${
-      isActive(href) ? "text-[#F2B035]" : "text-[#F4EFE6]/55 hover:text-[#F4EFE6]"
+      isActive(href) ? "text-[#F2B035]" : "text-[#F4EFE6]/75 hover:text-[#F4EFE6]"
     }`;
 
   return (
@@ -79,10 +96,14 @@ export default function Navbar({ location }: { location: LocationSlug }) {
         <div className="relative h-full flex items-center px-8 gap-4">
 
           {/* Far left — Location picker */}
-          <div className="relative shrink-0 z-10">
+          <div ref={locationRef} className="relative shrink-0 z-10">
             <button
+              type="button"
               onClick={() => setLocationOpen(!locationOpen)}
-              className="flex items-center gap-1 text-[#F4EFE6]/55 hover:text-[#F4EFE6] uppercase tracking-[0.12em] transition-colors"
+              aria-expanded={locationOpen}
+              aria-controls="location-menu"
+              aria-label={`Location: ${LOCATION_LABELS[location]}. Change location`}
+              className="flex items-center gap-1 py-2 text-[#F4EFE6]/75 hover:text-[#F4EFE6] uppercase tracking-[0.12em] transition-colors"
               style={{ fontSize: "clamp(10px, 0.85vw, 11px)" }}
             >
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -95,11 +116,12 @@ export default function Navbar({ location }: { location: LocationSlug }) {
               </svg>
             </button>
             {locationOpen && (
-              <div className="absolute left-0 top-full mt-2 w-52 bg-[#101010] border border-white/10 z-50">
+              <div id="location-menu" className="absolute left-0 top-full mt-2 w-52 bg-[#101010] border border-white/10 z-50">
                 {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map(s => (
                   <Link key={s} href={`/${s}`} onClick={() => setLocationOpen(false)}
+                    aria-current={s === location ? "page" : undefined}
                     className={`flex w-full px-4 py-3 uppercase tracking-[0.12em] transition-colors ${
-                      s === location ? "text-[#F2B035]" : "text-[#F4EFE6]/50 hover:text-[#F4EFE6] hover:bg-white/5"
+                      s === location ? "text-[#F2B035]" : "text-[#F4EFE6]/75 hover:text-[#F4EFE6] hover:bg-white/5"
                     }`}
                     style={{ fontSize: "11px" }}>
                     {LOCATION_LABELS[s]}
@@ -167,21 +189,24 @@ export default function Navbar({ location }: { location: LocationSlug }) {
             <Image src="/logo.png" alt="Dublin Calling" width={52} height={52} className="h-12 w-auto" priority />
           </Link>
           <button
+            type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
-            aria-label="Toggle menu"
+            className="p-2 -mr-2 text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
             <Hamburger open={menuOpen} />
           </button>
         </div>
 
         {menuOpen && (
-          <div className="bg-[#0F5132] border-t border-white/10" style={{ animation: "slideDown 0.2s ease forwards" }}>
+          <nav id="mobile-menu" aria-label="Main" className="bg-[#0F5132] border-t border-white/10" style={{ animation: "slideDown 0.2s ease forwards" }}>
             {allLinks.map(l => (
               <Link key={l.href} href={`${base}${l.href}`}
                 onClick={() => setMenuOpen(false)}
                 className={`flex items-center px-6 py-4 text-xs font-medium uppercase tracking-[0.18em] border-b border-white/8 transition-colors ${
-                  isActive(l.href) ? "text-[#F2B035]" : "text-[#F4EFE6]/55 hover:text-[#F4EFE6]"
+                  isActive(l.href) ? "text-[#F2B035]" : "text-[#F4EFE6]/75 hover:text-[#F4EFE6]"
                 }`}>
                 {l.label}
               </Link>
@@ -189,7 +214,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
             {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map(s => (
               <Link key={s} href={`/${s}`} onClick={() => setMenuOpen(false)}
                 className={`flex items-center gap-2 px-6 py-3.5 text-xs uppercase tracking-[0.15em] border-b border-white/8 transition-colors ${
-                  s === location ? "text-[#F2B035] font-semibold" : "text-[#F4EFE6]/40 hover:text-[#F4EFE6]"
+                  s === location ? "text-[#F2B035] font-semibold" : "text-[#F4EFE6]/70 hover:text-[#F4EFE6]"
                 }`}>
                 <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
@@ -206,7 +231,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
                 Book a Table
               </Link>
             </div>
-          </div>
+          </nav>
         )}
       </header>
     </>
