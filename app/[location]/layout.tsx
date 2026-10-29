@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import TonightBar from "@/components/TonightBar";
 import { getLocation, LOCATION_SLUGS } from "@/lib/locations";
 import type { LocationSlug } from "@/lib/locations";
 
@@ -42,6 +43,7 @@ export default async function LocationLayout({
       >
         Skip to main content
       </a>
+      <TonightBar location={loc} />
       <Navbar location={loc.slug as LocationSlug} />
       <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">{children}</main>
       <Footer location={loc} />

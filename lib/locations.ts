@@ -13,6 +13,7 @@ export interface ScheduleEvent {
   date: string;
   title: string;
   time?: string;
+  url?: string; // Admit One event page
 }
 
 // A repeating weekly listing for the "This Week" calendar. days: 0 = Sunday ... 6 = Saturday.
@@ -20,6 +21,7 @@ export interface WeeklyEvent {
   days: number[];
   title: string;
   time?: string;
+  url?: string; // Admit One event page
 }
 
 export interface Location {
@@ -384,7 +386,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     weekly: [
       { days: [2], title: "Music Bingo or Trivia (alternating)", time: "7:00 to 10:00 PM" },
       { days: [4], title: "Thursday Nights", time: "8:00 PM to 2:00 AM" },
-      { days: [5], title: "Ladies Night", time: "8:00 PM to late" },
+      { days: [5], title: "Ladies Night", time: "8:00 PM to late", url: "https://admitone.com/events/vancouver/community/party/ladies-night/RQMN6R?referral=website" },
       { days: [6], title: "Saturday Shenanigans", time: "10:00 PM to 3:00 AM" },
       { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
     ],
@@ -404,4 +406,10 @@ export default LOCATIONS;
 // Today's date as YYYY-MM-DD in the given IANA timezone
 export function todayIn(timezone: string): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+}
+
+// Listings for one date (YYYY-MM-DD): dated listings first, then the repeating weekly events
+export function listingsOn(schedule: ScheduleEvent[], weekly: WeeklyEvent[], iso: string): (ScheduleEvent | WeeklyEvent)[] {
+  const dow = new Date(Date.parse(iso + "T00:00:00Z")).getUTCDay();
+  return [...schedule.filter((e) => e.date === iso), ...weekly.filter((e) => e.days.includes(dow))];
 }

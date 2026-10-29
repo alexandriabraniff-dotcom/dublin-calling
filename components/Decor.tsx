@@ -5,7 +5,15 @@
    their own positions in gaps and edges). Purely decorative: hidden from assistive tech,
    not clickable, behind content unless `front`. */
 
-export type DecorName = "beers" | "shamrock" | "eight-ball" | "pennant";
+export type DecorName =
+  | "beers"
+  | "eight-ball"
+  | "football"
+  | "hockey"
+  | "basketball"
+  | "soccer-ball"
+  | "jersey"
+  | "foam-finger";
 
 export interface DecorSpot {
   name: DecorName;

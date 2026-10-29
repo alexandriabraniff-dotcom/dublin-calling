@@ -56,7 +56,7 @@ const EVENT_DATA: Record<
       day: "Fight Nights",
       name: "UFC Live",
       description:
-        "Every UFC card, every fight night, live on 20+ big screens. The atmosphere at Dublin Calling Adelaide on fight night is unmatched. Come early — best seats go fast.",
+        "Every UFC card, every fight night, live on 20+ big screens. The atmosphere at Dublin Calling Adelaide on fight night is unmatched. Come early, the best seats go fast.",
       details: [
         "Every card live",
         "20+ big screens",
@@ -67,10 +67,10 @@ const EVENT_DATA: Record<
       tagColor: "red",
     },
     {
-      day: "Sun to Fri, 4–6 PM",
+      day: "Sun to Fri, 4 to 6 PM",
       name: "Happy Hour",
       description:
-        "Six days a week, every week. Discounted draught, cocktails, and more — the perfect way to kick off your evening before the main event.",
+        "Six days a week, every week. Discounted draught, cocktails, and more. The perfect way to kick off your evening before the main event.",
       details: [
         "4:00 PM to 6:00 PM",
         "Discounted drinks all week",
@@ -86,7 +86,7 @@ const EVENT_DATA: Record<
       day: "Every Monday",
       name: "Pool Tournament",
       description:
-        "Open to all skill levels. Sign in by 7 PM and compete for bragging rights and prizes on our full-size tables. Whether you're a shark or a rookie — everyone's welcome.",
+        "Open to all skill levels. Sign in by 7 PM and compete for bragging rights and prizes on our full-size tables. Whether you're a shark or a rookie, everyone's welcome.",
       details: [
         "Sign in by 7:00 PM",
         "Open to all skill levels",
@@ -114,7 +114,7 @@ const EVENT_DATA: Record<
       day: "Fight Nights",
       name: "UFC Live",
       description:
-        "Every UFC card on our big screens. The energy at Dublin Calling Danforth on fight night is something else — come find out for yourself.",
+        "Every UFC card on our big screens. The energy at Dublin Calling Danforth on fight night is something else. Come find out for yourself.",
       details: [
         "Every card live on our big screens",
         "Come early for best seats",
@@ -124,7 +124,7 @@ const EVENT_DATA: Record<
       tagColor: "red",
     },
     {
-      day: "Sun to Fri, 4–6 PM",
+      day: "Sun to Fri, 4 to 6 PM",
       name: "Happy Hour",
       description:
         "Six days a week, every week. Discounted draught, cocktails, and more. The perfect way to start your evening at the Danforth.",
@@ -205,7 +205,7 @@ export default async function EventsPage({
 
       {/* ── THIS WEEK + date picker ── */}
       <section className="bg-[#082a1c] border-b border-white/10 py-16">
-        <WeekCalendar schedule={loc.schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} withPicker />
+        <WeekCalendar schedule={loc.schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} withPicker />
       </section>
 
       {/* ── EVENTS ── */}
@@ -287,7 +287,7 @@ export default async function EventsPage({
                     <ul className="flex flex-col gap-2.5 mb-9">
                       {event.details.map((d) => (
                         <li key={d} className="flex items-start gap-2.5 text-xs text-[#F4EFE6]/70">
-                          <span className="text-[#F2B035] mt-[1px] shrink-0">—</span>
+                          <span aria-hidden="true" className="text-[#F2B035] mt-[1px] shrink-0">•</span>
                           {d}
                         </li>
                       ))}

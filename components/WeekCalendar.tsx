@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useSnapCarousel, CarouselArrow, CarouselDots } from "@/components/carousel";
-import type { ScheduleEvent, WeeklyEvent } from "@/lib/locations";
+import { listingsOn, type ScheduleEvent, type WeeklyEvent } from "@/lib/locations";
 
 /* Dates are handled as YYYY-MM-DD strings in UTC so they never shift with the viewer's timezone */
 const DAY = 86400000;
@@ -12,52 +11,57 @@ const addDays = (iso: string, n: number) => toISO(toUTC(iso) + n * DAY);
 const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
   new Date(toUTC(iso)).toLocaleDateString("en-US", { ...opts, timeZone: "UTC" });
 
-/* "This Week" schedule: a centred 7-column grid on desktop, a swipeable row with
-   side gutters, arrows, a peeking next day and position dots below lg.
-   withPicker adds a "Choose a date" calendar pop-up to jump to other weeks.
-   Each day lists its dated listings first, then the repeating weekly events. */
+// Google Calendar "add event" link for a listing (all-day on that date; the time goes in the details)
+function calendarLink(iso: string, title: string, time: string | undefined, address: string) {
+  const q = new URLSearchParams({
+    action: "TEMPLATE",
+    text: `${title} at Dublin Calling`,
+    dates: `${iso.replaceAll("-", "")}/${addDays(iso, 1).replaceAll("-", "")}`,
+    details: time ? `${title}, ${time}` : title,
+    location: address,
+  });
+  return `https://calendar.google.com/calendar/render?${q}`;
+}
+
+/* "The Lineup": seven date tiles from the start day, then the chosen day's listings,
+   each with a Book Your Spot button and an add-to-calendar link.
+   withPicker adds a "Choose a date" calendar pop-up to jump to other weeks. */
 export default function WeekCalendar({
   schedule,
   weekly = [],
   today,
+  bookHref,
+  address,
   withPicker = false,
-  sectionBg = "#082a1c",
 }: {
   schedule: ScheduleEvent[];
   weekly?: WeeklyEvent[];
   today: string;
+  bookHref: string; // fallback for listings without their own Admit One link
+  address: string;
   withPicker?: boolean;
-  sectionBg?: string; // colour of the surrounding section, for the edge fade
 }) {
   const [start, setStart] = useState(today);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const { canPrev, canNext, active, stops, goTo, step } = useSnapCarousel(trackRef, 7);
+  const [selected, setSelected] = useState(today);
 
   const week = Array.from({ length: 7 }, (_, i) => {
     const date = addDays(start, i);
-    return {
-      date,
-      isToday: date === today,
-      dayName: fmt(date, { weekday: "long" }),
-      dateLabel: fmt(date, { month: "short", day: "numeric" }),
-      items: [
-        ...schedule.filter((e) => e.date === date),
-        ...weekly.filter((e) => e.days.includes(new Date(toUTC(date)).getUTCDay())),
-      ],
-    };
+    return { date, isToday: date === today, count: listingsOn(schedule, weekly, date).length };
   });
-  const labels = week.map((d) => (d.isToday ? "Today" : d.dayName));
+  const items = listingsOn(schedule, weekly, selected);
   const isThisWeek = start === today;
   const heading = isThisWeek ? "This Week at Dublin Calling" : `Week of ${fmt(start, { month: "long", day: "numeric" })}`;
+  const dayLabel =
+    selected === today ? "Tonight at Dublin Calling" : fmt(selected, { weekday: "long", month: "long", day: "numeric" });
 
   function jumpTo(iso: string) {
     setStart(iso);
-    trackRef.current?.scrollTo({ left: 0 });
+    setSelected(iso);
   }
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="px-6 mb-8 flex flex-col items-center gap-5 text-center">
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="mb-8 flex flex-col items-center gap-5 text-center">
         <h2
           className="text-white"
           aria-live="polite"
@@ -80,67 +84,90 @@ export default function WeekCalendar({
             )}
           </div>
         )}
-
-        <div className="flex items-center gap-3 lg:hidden">
-          <CarouselArrow dir="prev" label="Previous day" disabled={!canPrev} onClick={() => step(-1)} />
-          <p className="text-white/80 text-xs uppercase tracking-[0.2em] min-w-[9rem]" aria-live="polite">
-            {labels[active] ?? labels[0]}
-          </p>
-          <CarouselArrow dir="next" label="Next day" disabled={!canNext} onClick={() => step(1)} />
-        </div>
       </div>
 
-      <div className="relative">
-        <div
-          ref={trackRef}
-          role="region"
-          aria-label={`${heading}, scroll sideways for more days`}
-          tabIndex={0}
-          className="flex gap-3 overflow-x-auto snap-x snap-mandatory px-6 scroll-px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F2B035] lg:grid lg:grid-cols-7 lg:gap-px lg:bg-white/10 lg:mx-6 lg:px-0 lg:overflow-visible lg:snap-none"
-        >
-          {week.map((day) => (
-            <div
+      {/* Date tiles */}
+      <div role="group" aria-label="Choose a day" className="grid grid-cols-7 gap-1.5 sm:gap-3">
+        {week.map((day) => {
+          const on = day.date === selected;
+          const events = day.count === 0 ? "no events" : `${day.count} event${day.count === 1 ? "" : "s"}`;
+          return (
+            <button
               key={day.date}
-              data-card
-              className={`flex flex-col gap-3 p-5 shrink-0 snap-start w-[72vw] sm:w-60 lg:w-auto border border-white/15 lg:border-0 ${day.isToday ? "bg-[#0a1f14]" : "bg-[#082a1c]"}`}
+              type="button"
+              onClick={() => setSelected(day.date)}
+              aria-pressed={on}
+              aria-label={`${fmt(day.date, { weekday: "long", month: "long", day: "numeric" })}${day.isToday ? ", today" : ""}, ${events}`}
+              className={`flex flex-col items-center justify-center gap-0.5 sm:gap-1 py-3 sm:py-5 border-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2B035] ${
+                on ? "bg-[#F2B035] border-[#F2B035] text-[#101010]" : "border-white/25 text-white hover:border-[#F2B035]"
+              }`}
             >
-              <div className="border-b border-white/20 pb-3">
-                <h3
-                  className={`text-[11px] uppercase tracking-[0.2em] ${day.isToday ? "text-[#F2B035]" : "text-white/75"}`}
-                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600 }}
-                >
-                  {day.isToday ? "Today" : day.dayName}
-                </h3>
-                <p className="text-white/75 text-xs mt-0.5">{day.dateLabel}</p>
-              </div>
-              {day.items.length === 0 ? (
-                <p className="text-white/80 text-xs italic">No events currently</p>
-              ) : (
-                <ul className="flex flex-col gap-2 flex-1">
-                  {day.items.map((item) => (
-                    <li key={item.title + (item.time ?? "")} className="flex items-start gap-1.5">
-                      <span aria-hidden="true" className="text-[#F2B035] shrink-0 mt-[3px]">·</span>
-                      <span className="text-white/85 text-xs leading-relaxed">
-                        {item.title}
-                        {item.time && <>, {item.time}</>}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Edge fade while more days are off-screen */}
-        <div
-          aria-hidden="true"
-          className={`lg:hidden pointer-events-none absolute inset-y-0 right-0 w-12 transition-opacity ${canNext ? "opacity-100" : "opacity-0"}`}
-          style={{ background: `linear-gradient(to left, ${sectionBg}, transparent)` }}
-        />
+              <span className="text-[10px] sm:text-xs uppercase tracking-[0.12em]">
+                {day.isToday ? "Today" : fmt(day.date, { weekday: "short" })}
+              </span>
+              <span
+                className="leading-none"
+                style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.25rem, 3.4vw, 2.6rem)" }}
+              >
+                {fmt(day.date, { day: "2-digit" })}
+              </span>
+              <span aria-hidden="true" className={`w-1.5 h-1.5 rounded-full ${day.count ? (on ? "bg-[#101010]" : "bg-[#F2B035]") : "bg-transparent"}`} />
+            </button>
+          );
+        })}
       </div>
 
-      <CarouselDots stops={stops} active={active} goTo={goTo} labels={labels} groupLabel="Days this week" className="lg:hidden" />
+      {/* Listings for the chosen day */}
+      <div className="mt-8" aria-live="polite">
+        <p className="flex items-center gap-3 text-white/80 text-[11px] uppercase tracking-[0.25em] mb-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="14" rx="2" /><polyline points="8 22 12 18 16 22" />
+          </svg>
+          {dayLabel}
+        </p>
+        {items.length === 0 ? (
+          <p className="border-2 border-white/15 px-5 py-6 text-white/80 text-sm italic">No events currently</p>
+        ) : (
+          <ul className="flex flex-col gap-3">
+            {items.map((item, i) => (
+              <li
+                key={item.title + (item.time ?? "")}
+                className={`flex flex-col sm:flex-row sm:items-center gap-4 px-5 py-4 border-2 ${i === 0 ? "border-[#F2B035] bg-[#101010]/60" : "border-white/15 bg-[#101010]/30"}`}
+              >
+                <div className="flex-1 min-w-0">
+                  {item.time && <p className="text-[#F2B035] text-xs uppercase tracking-[0.15em] mb-1">{item.time}</p>}
+                  <p
+                    className="text-white uppercase"
+                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600, fontSize: "clamp(1rem, 1.6vw, 1.25rem)", letterSpacing: "0.04em" }}
+                  >
+                    {item.title}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <a
+                    href={item.url ?? bookHref}
+                    {...(item.url ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="btn flex-1 sm:flex-none min-h-11 inline-flex items-center justify-center px-6 bg-[#F2B035] text-[#101010] text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
+                  >
+                    Book Your Spot<span className="sr-only">: {item.title}{item.url ? " (opens Admit One in a new tab)" : ""}</span>
+                  </a>
+                  <a
+                    href={calendarLink(selected, item.title, item.time, address)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Add ${item.title} to Google Calendar (opens in a new tab)`}
+                    className="w-11 h-11 shrink-0 flex items-center justify-center border-2 border-white/40 text-white hover:border-[#F2B035] hover:text-[#F2B035] transition-colors"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><line x1="12" y1="14" x2="12" y2="18" /><line x1="10" y1="16" x2="14" y2="16" />
+                    </svg>
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

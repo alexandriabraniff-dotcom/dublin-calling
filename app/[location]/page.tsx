@@ -9,6 +9,7 @@ import DecorLayer from "@/components/Decor";
 import InstagramFeed from "@/components/InstagramFeed";
 import WeekCalendar from "@/components/WeekCalendar";
 import EventCarousel, { type EventCard } from "@/components/EventCarousel";
+import AboutSection from "@/components/AboutSection";
 
 export default async function LocationHome({
   params,
@@ -147,20 +148,23 @@ export default async function LocationHome({
       {/* ── THIS WEEK AT DUBLIN CALLING: calendar (dated + weekly events), then the event nights ── */}
       <section className="relative isolate overflow-x-clip bg-[#0F5132] border-t border-white/10 py-16">
         <DecorLayer spots={[
-          { name: "beers", x: 12.5, y: "80px", rotate: -8 },
-          { name: "pennant", x: 78, y: "112px", rotate: 6, scale: 1.15 },
+          { name: "football", x: 12.5, y: "80px", rotate: -12 },
+          { name: "hockey", x: 86, y: "96px", rotate: 6, scale: 1.1 },
         ]} mobileSpots={[
-          { name: "beers", x: 12, y: "26px", rotate: -8, scale: 0.8 },
-          { name: "pennant", x: 82, y: "calc(100% - 26px)", rotate: 6 },
+          { name: "football", x: 12, y: "26px", rotate: -12, scale: 0.75 },
+          { name: "hockey", x: 84, y: "calc(100% - 26px)", rotate: 6, scale: 0.85 },
         ]} />
         <FadeIn>
-          <WeekCalendar schedule={loc.schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} sectionBg="#0F5132" />
+          <WeekCalendar schedule={loc.schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} />
         </FadeIn>
         <FadeIn className="mt-16">
           <EventCarousel cards={eventCards} base={base} />
         </FadeIn>
       </section>
 
+
+      {/* ── ABOUT ── */}
+      <AboutSection location={loc} />
 
       {/* ── GROUP BOOKING CTA ── */}
       <FadeIn>

@@ -6,7 +6,7 @@ export interface ExperienceItem {
   image?: string;
 }
 
-// Shared by the homepage "The Experience" section and the About page
+// Rows in the homepage About section
 export function getExperience(loc: Location): ExperienceItem[] {
   const items: ExperienceItem[] = [
     {
@@ -28,7 +28,7 @@ export function getExperience(loc: Location): ExperienceItem[] {
     items.push(
       {
         title: "Never a Dull Moment",
-        body: "Waiting for the next UFC fight to start or halftime to wrap up? Rack up a game on our pool tables, test your power on the punching bag machines and more. There's always something to keep you busy between the big moments.",
+        body: "Waiting for the next UFC fight to start or halftime to wrap up? Rack up a game on our pool tables and more. There's always something to keep you busy between the big moments.",
       }
     );
   }
@@ -36,17 +36,13 @@ export function getExperience(loc: Location): ExperienceItem[] {
   return items;
 }
 
-// Extra rows shown on the About page only, after the shared Experience rows
+// Extra About rows, Vancouver only, after the shared rows
 export function getAboutExtras(loc: Location): ExperienceItem[] {
   if (loc.slug !== "vancouver") return [];
   return [
     {
-      title: "Three Floors, Three Experiences",
-      body: "Dublin Calling is a three-storey building, and every floor holds something new. Start the night with the game on the big screens, find your crew on another level, and keep the party moving as the night goes on. One address, three completely different experiences.",
-    },
-    {
-      title: "Live DJ on Every Floor",
-      body: "When the night picks up, every floor gets its own DJ. Three levels, three soundtracks, one big party on Granville Street. Find the floor that matches your mood, or keep moving between them all night long.",
+      title: "DJs & Live Music on Weekends",
+      body: "When the night picks up, Dublin Calling brings the party to Granville Street. With DJs spinning and live music every weekend, there's always a reason to hit the dance floor, sing along, and keep the good times going all night long.",
     },
   ];
 }
