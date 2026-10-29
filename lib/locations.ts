@@ -15,6 +15,13 @@ export interface ScheduleEvent {
   time?: string;
 }
 
+// A repeating weekly listing for the "This Week" calendar. days: 0 = Sunday ... 6 = Saturday.
+export interface WeeklyEvent {
+  days: number[];
+  title: string;
+  time?: string;
+}
+
 export interface Location {
   slug: LocationSlug;
   timezone: string;
@@ -37,6 +44,8 @@ export interface Location {
   uniqueFeature?: string;
   ageNote?: string;
   schedule: ScheduleEvent[];
+  weekly: WeeklyEvent[];
+  mapEmbed: string;
 }
 
 const LOCATIONS: Record<LocationSlug, Location> = {
@@ -145,6 +154,12 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     uniqueFeature: "Home of the Official Bills Backers Club",
     // Add dated listings here, e.g. { date: "2026-10-24", title: "Canucks vs Oilers", time: "7:00 PM" }
     schedule: [],
+    weekly: [
+      { days: [0], title: "Bills Backers Watch Party", time: "Game days" },
+      { days: [1], title: "Trivia Night", time: "7:00 PM" },
+      { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
+    ],
+    mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20250%20Adelaide%20St%20W%2C%20Toronto%2C%20ON&output=embed",
   },
 
   danforth: {
@@ -252,6 +267,12 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     uniqueFeature: "Monday Night Pool Tournaments",
     // Add dated listings here, e.g. { date: "2026-10-24", title: "Canucks vs Oilers", time: "7:00 PM" }
     schedule: [],
+    weekly: [
+      { days: [1], title: "Pool Tournament", time: "7:00 PM" },
+      { days: [2], title: "Trivia Night", time: "7:00 PM" },
+      { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
+    ],
+    mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20526%20Danforth%20Ave%2C%20Toronto%2C%20ON&output=embed",
   },
 
   vancouver: {
@@ -360,6 +381,14 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     ageNote: "19+ after 10PM",
     // Add dated listings here, e.g. { date: "2026-10-24", title: "Canucks vs Oilers", time: "7:00 PM" }
     schedule: [],
+    weekly: [
+      { days: [2], title: "Music Bingo or Trivia (alternating)", time: "7:00 to 10:00 PM" },
+      { days: [4], title: "Thursday Nights", time: "8:00 PM to 2:00 AM" },
+      { days: [5], title: "Ladies Night", time: "8:00 PM to late" },
+      { days: [6], title: "Saturday Shenanigans", time: "10:00 PM to 3:00 AM" },
+      { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
+    ],
+    mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20900%20Granville%20St%2C%20Vancouver%2C%20BC&output=embed",
   },
 };
 

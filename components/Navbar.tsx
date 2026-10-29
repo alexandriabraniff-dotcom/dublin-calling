@@ -20,7 +20,7 @@ const LEFT_LINKS = [
 
 const RIGHT_LINKS = [
   { href: "/group-bookings", label: "Group Bookings" },
-  { href: "#find-us",        label: "Find Us"        }, // homepage Find Us section, from any page
+  { href: "#find-us",        label: "Find Us"        }, // homepage footer (contact, hours and map), from any page
   { href: "/faq",            label: "FAQ"            },
 ];
 
@@ -75,6 +75,8 @@ export default function Navbar({ location }: { location: LocationSlug }) {
     };
   }, [pathname]);
   const base = `/${location}`;
+  // On the homepage the hero already shows the big logo below lg, so the header logo waits until the hero scrolls away
+  const hideMobileLogo = pathname === base && !logoSmall;
   const allLinks = [...LEFT_LINKS, ...RIGHT_LINKS];
 
   function isActive(href: string) {
@@ -186,7 +188,12 @@ export default function Navbar({ location }: { location: LocationSlug }) {
       {/* ── MOBILE ── */}
       <header className="lg:hidden sticky top-0 z-50 bg-[#0F5132] border-b border-white/10">
         <div className="flex items-center justify-between px-5 h-[60px]">
-          <Link href={base}>
+          <Link
+            href={base}
+            aria-hidden={hideMobileLogo || undefined}
+            tabIndex={hideMobileLogo ? -1 : undefined}
+            className={`transition-opacity duration-300 ${hideMobileLogo ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+          >
             <Image src="/logo.png" alt="Dublin Calling" width={52} height={52} className="h-12 w-auto" priority />
           </Link>
           <button

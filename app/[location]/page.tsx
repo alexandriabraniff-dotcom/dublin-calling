@@ -6,8 +6,6 @@ import Image from "next/image";
 import { getLocation, todayIn } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
 import DecorLayer from "@/components/Decor";
-import ExperienceList from "@/components/ExperienceList";
-import { getExperience } from "@/lib/experience";
 import InstagramFeed from "@/components/InstagramFeed";
 import WeekCalendar from "@/components/WeekCalendar";
 import EventCarousel, { type EventCard } from "@/components/EventCarousel";
@@ -47,12 +45,6 @@ export default async function LocationHome({
       ],
     } as Record<string, EventCard[]>
   )[loc.slug] ?? [];
-
-  const googleMapsUrls: Record<string, string> = {
-    adelaide: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.2!2d-79.3897!3d43.6488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b34d2e5ab4a5b%3A0x1a2b3c4d5e6f7a8b!2s250%20Adelaide%20St%20W%2C%20Toronto%2C%20ON!5e0!3m2!1sen!2sca!4v1700000000001",
-    danforth: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.2!2d-79.3523!3d43.6783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b33ef7c2a3d0f%3A0x2b3c4d5e6f7a8b9c!2s526%20Danforth%20Ave%2C%20Toronto%2C%20ON!5e0!3m2!1sen!2sca!4v1700000000002",
-    vancouver: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.8!2d-123.1219!3d49.2773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548673d3d8070513%3A0x3c4d5e6f7a8b9c0d!2s900%20Granville%20St%2C%20Vancouver%2C%20BC!5e0!3m2!1sen!2sca!4v1700000000003",
-  };
 
   const tagStyle = (color: "red" | "gold" | "green" | "default") => {
     if (color === "red")   return "border border-[#C8102E] text-[#101010]";
@@ -152,14 +144,7 @@ export default async function LocationHome({
 
       </section>
 
-      {/* ── EVENTS CARDS ── */}
-      <section className="bg-[#101010] py-14 border-b border-white/10">
-        <FadeIn>
-          <EventCarousel cards={eventCards} base={base} />
-        </FadeIn>
-      </section>
-
-      {/* ── THIS WEEK ── */}
+      {/* ── THIS WEEK AT DUBLIN CALLING: calendar (dated + weekly events), then the event nights ── */}
       <section className="relative isolate overflow-x-clip bg-[#0F5132] border-t border-white/10 py-16">
         <DecorLayer spots={[
           { name: "beers", x: 12.5, y: "80px", rotate: -8 },
@@ -169,50 +154,11 @@ export default async function LocationHome({
           { name: "pennant", x: 82, y: "calc(100% - 26px)", rotate: 6 },
         ]} />
         <FadeIn>
-          <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} sectionBg="#0F5132" />
+          <WeekCalendar schedule={loc.schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} sectionBg="#0F5132" />
         </FadeIn>
-      </section>
-
-
-      {/* ── THE EXPERIENCE — alternating rows ── */}
-      {/* Divider line between the calendar and The Experience (same style as the footer line) */}
-      <section className="relative isolate overflow-x-clip bg-[#0F5132] py-16">
-        <DecorLayer spots={[
-          { name: "shamrock", x: 33, y: "120px", rotate: 10 },
-          { name: "eight-ball", x: 89, y: "96px", rotate: -6 },
-        ]} mobileSpots={[
-          { name: "shamrock", x: 86, y: "78px", rotate: 10, scale: 0.9 },
-        ]} />
-        <div className="max-w-7xl mx-auto px-6 -mt-16 mb-16" aria-hidden="true">
-          <div className="border-t-2 border-[#F4EFE6]" />
-        </div>
-        <div className="max-w-7xl mx-auto px-6">
-          <FadeIn className="mb-10">
-            <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">The Experience</p>
-          </FadeIn>
-          <ExperienceList
-            items={getExperience(loc)}
-            decor={{
-              0: [
-                { name: "pennant", x: 5, y: "calc(100% + 25px)", rotate: -10, scale: 1.15 },
-                { name: "beers", x: 88, y: "calc(100% + 120px)", rotate: 8 },
-              ],
-              1: [{ name: "eight-ball", x: 48, y: "calc(100% + 55px)", rotate: 12 }],
-              2: [
-                { name: "shamrock", x: 23, y: "calc(100% + 80px)", rotate: -8, scale: 1.3 }, // runs into the gold section, which covers its bottom
-                { name: "pennant", x: 92, y: "calc(100% + 8px)", rotate: 8, scale: 1.6 }, // behind the photo, peeking out below and right
-              ],
-            }}
-            mobileDecor={{
-              0: [{ name: "beers", x: 86, y: "calc(100% + 24px)", rotate: 8, scale: 0.8 }],
-              1: [{ name: "eight-ball", x: 88, y: "calc(100% + 24px)", rotate: 12, scale: 0.7 }],
-              2: [
-                { name: "shamrock", x: 14, y: "calc(100% + 46px)", rotate: -8, scale: 0.9 },
-                { name: "pennant", x: 78, y: "calc(100% + 34px)", rotate: 8 },
-              ],
-            }}
-          />
-        </div>
+        <FadeIn className="mt-16">
+          <EventCarousel cards={eventCards} base={base} />
+        </FadeIn>
       </section>
 
 
@@ -248,96 +194,6 @@ export default async function LocationHome({
       {/* ── INSTAGRAM ── */}
       <InstagramFeed profileUrl={loc.social.instagram} locationName={loc.name} />
 
-      {/* ── FIND US ── */}
-      <section id="find-us" className="bg-[#0F5132] border-t border-white/10 scroll-mt-[72px]">
-        <div className="max-w-7xl mx-auto px-6 py-16">
-          <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em] mb-12">Find Us</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-
-            {/* Contact */}
-            <FadeIn className="flex flex-col gap-6" direction="left">
-              <div>
-                <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-1">Address</p>
-                <a
-                  href={`https://maps.google.com/?q=${encodeURIComponent(loc.address)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#F4EFE6]/75 text-sm hover:text-[#F4EFE6] transition-colors leading-relaxed"
-                >
-                  {loc.address}
-                </a>
-              </div>
-              <div>
-                <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-1">Phone</p>
-                <a href={`tel:${loc.phone}`} className="text-[#F4EFE6]/75 text-sm hover:text-[#F4EFE6] transition-colors">
-                  {loc.phone}
-                </a>
-              </div>
-              <div>
-                <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-1">Email</p>
-                <a href={`mailto:${loc.email}`} className="text-[#F4EFE6]/75 text-sm hover:text-[#F4EFE6] transition-colors break-all">
-                  {loc.email}
-                </a>
-              </div>
-              <div>
-                <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-2">Follow</p>
-                <div className="flex gap-5">
-                  <a
-                    href={loc.social.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#F4EFE6]/70 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors"
-                  >
-                    Instagram
-                  </a>
-                  <a
-                    href={loc.social.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#F4EFE6]/70 text-xs uppercase tracking-wider hover:text-[#F4EFE6] transition-colors"
-                  >
-                    Facebook
-                  </a>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Hours */}
-            <FadeIn direction="none" delay={100}>
-              <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-6">Hours</p>
-              <div className="flex flex-col">
-                {loc.hours.map((h, i) => (
-                  <div
-                    key={h.days}
-                    className={`flex items-start justify-between py-3 ${i < loc.hours.length - 1 ? "border-b border-white/10" : ""}`}
-                  >
-                    <span className="text-[#F4EFE6]/75 text-xs">{h.days}</span>
-                    <span className="text-[#F4EFE6]/70 text-xs text-right">{h.time}</span>
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
-
-            {/* Google Maps */}
-            <FadeIn direction="right" delay={150}>
-              <div className="w-full overflow-hidden" style={{ height: "280px" }}>
-                <iframe
-                  src={googleMapsUrls[loc.slug]}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, filter: "grayscale(0.2) contrast(1.05)" }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title={`Dublin Calling ${loc.name} location`}
-                />
-              </div>
-            </FadeIn>
-
-          </div>
-        </div>
-      </section>
     </>
   );
 }

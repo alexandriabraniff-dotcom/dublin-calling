@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Location } from "@/lib/locations";
+import FooterMap from "@/components/FooterMap";
 
 const NAV_LINKS = [
   { href: "", label: "Home" },
@@ -190,7 +191,10 @@ export default function Footer({ location }: FooterProps) {
   const base = `/${location.slug}`;
 
   return (
-    <footer className="bg-[#0F5132] border-t-2 border-[#F2B035]">
+    <footer id="find-us" className="bg-[#0F5132] border-t-2 border-[#F2B035] scroll-mt-[72px]">
+      {/* ── MAP (homepage only) ── */}
+      <FooterMap location={location} />
+
       {/* ── MOBILE FOOTER (below md) ── */}
       <MobileFooter location={location} base={base} />
 

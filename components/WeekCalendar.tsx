@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useSnapCarousel, CarouselArrow, CarouselDots } from "@/components/carousel";
-import type { ScheduleEvent } from "@/lib/locations";
+import type { ScheduleEvent, WeeklyEvent } from "@/lib/locations";
 
 /* Dates are handled as YYYY-MM-DD strings in UTC so they never shift with the viewer's timezone */
 const DAY = 86400000;
@@ -14,14 +14,17 @@ const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
 
 /* "This Week" schedule: a centred 7-column grid on desktop, a swipeable row with
    side gutters, arrows, a peeking next day and position dots below lg.
-   withPicker adds a "Choose a date" calendar pop-up to jump to other weeks. */
+   withPicker adds a "Choose a date" calendar pop-up to jump to other weeks.
+   Each day lists its dated listings first, then the repeating weekly events. */
 export default function WeekCalendar({
   schedule,
+  weekly = [],
   today,
   withPicker = false,
   sectionBg = "#082a1c",
 }: {
   schedule: ScheduleEvent[];
+  weekly?: WeeklyEvent[];
   today: string;
   withPicker?: boolean;
   sectionBg?: string; // colour of the surrounding section, for the edge fade
@@ -37,7 +40,10 @@ export default function WeekCalendar({
       isToday: date === today,
       dayName: fmt(date, { weekday: "long" }),
       dateLabel: fmt(date, { month: "short", day: "numeric" }),
-      items: schedule.filter((e) => e.date === date),
+      items: [
+        ...schedule.filter((e) => e.date === date),
+        ...weekly.filter((e) => e.days.includes(new Date(toUTC(date)).getUTCDay())),
+      ],
     };
   });
   const labels = week.map((d) => (d.isToday ? "Today" : d.dayName));

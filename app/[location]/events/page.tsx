@@ -205,7 +205,7 @@ export default async function EventsPage({
 
       {/* ── THIS WEEK + date picker ── */}
       <section className="bg-[#082a1c] border-b border-white/10 py-16">
-        <WeekCalendar schedule={loc.schedule} today={todayIn(loc.timezone)} withPicker />
+        <WeekCalendar schedule={loc.schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} withPicker />
       </section>
 
       {/* ── EVENTS ── */}
@@ -295,7 +295,7 @@ export default async function EventsPage({
                     )}
                   </div>
 
-                  {/* CTAs */}
+                  {/* CTA: Admit One event page when there is one (Admit One comes before other booking platforms) */}
                   <div className="flex flex-wrap gap-3">
                     {event.ticketUrl ? (
                       <a
@@ -309,20 +309,21 @@ export default async function EventsPage({
                           padding: "0.75rem 2rem",
                         }}
                       >
-                        Get Tickets
+                        Book Your Spot<span className="sr-only"> (opens Admit One in a new tab)</span>
                       </a>
-                    ) : null}
-                    <Link
-                      href={`${base}/book-a-table`}
-                      className="btn inline-block border border-white/20 text-[#F4EFE6]/75 uppercase tracking-[0.15em] hover:border-white/40 hover:text-[#F4EFE6] transition-colors"
-                      style={{
-                        fontFamily: "'Oswald', sans-serif",
-                        fontSize: "clamp(11px, 1vw, 13px)",
-                        padding: "0.75rem 2rem",
-                      }}
-                    >
-                      Book a Table
-                    </Link>
+                    ) : (
+                      <Link
+                        href={`${base}/book-a-table`}
+                        className="btn inline-block bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
+                        style={{
+                          fontFamily: "'Oswald', sans-serif",
+                          fontSize: "clamp(11px, 1vw, 13px)",
+                          padding: "0.75rem 2rem",
+                        }}
+                      >
+                        Book Your Spot
+                      </Link>
+                    )}
                   </div>
                 </div>
 
