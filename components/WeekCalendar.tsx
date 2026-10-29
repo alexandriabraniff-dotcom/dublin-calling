@@ -38,7 +38,7 @@ export default function WeekCalendar({
       <div className="mb-8 flex flex-col items-center gap-5 text-center">
         <h2
           className="text-white"
-          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}
+          style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}
         >
           {heading}
         </h2>
@@ -65,7 +65,7 @@ export default function WeekCalendar({
               </span>
               <span
                 className="leading-none"
-                style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.25rem, 3.4vw, 2.6rem)" }}
+                style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.25rem, 3.4vw, 2.6rem)" }}
               >
                 {fmt(day.date, { day: "2-digit" })}
               </span>
@@ -98,13 +98,13 @@ export default function WeekCalendar({
                   <div className="flex-1 min-w-0 flex items-center gap-4">
                     {team && <TeamIcon logo={team.logo} name={team.name} />}
                     <div className="min-w-0">
-                      <p className={`flex flex-wrap items-center gap-x-3 text-xs uppercase tracking-[0.15em] mb-1 ${team ? "text-white" : "text-[#F2B035]"}`}>
+                      <p className={`font-text flex flex-wrap items-center gap-x-3 text-xs uppercase tracking-[0.08em] mb-1 ${team ? "text-white" : "text-[#F2B035]"}`}>
                         {item.time && <span>{item.time}</span>}
                         {"bigScreen" in item && item.bigScreen && <span className="text-white/85">On the big screen</span>}
                       </p>
                       <p
                         className="text-white uppercase"
-                        style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600, fontSize: "clamp(1rem, 1.6vw, 1.25rem)", letterSpacing: "0.04em" }}
+                        style={{ fontFamily: "var(--font-label)", fontWeight: 600, fontSize: "clamp(1rem, 1.6vw, 1.25rem)", letterSpacing: "0.04em" }}
                       >
                         {item.title}
                       </p>

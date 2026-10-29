@@ -65,7 +65,7 @@ export default function FAQPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <h2
             className="text-[#F4EFE6] mb-4"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+            style={{ fontFamily: "var(--font-label)", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
             Still Have a Question?
           </h2>
@@ -76,14 +76,14 @@ export default function FAQPage() {
             <a
               href={`tel:${loc.phone}`}
               className="btn inline-flex items-center px-7 py-3 bg-[#101010] border border-white/15 text-[#F4EFE6] hover:border-[#F2B035] transition-colors"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.2em" }}
+              style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.2em" }}
             >
               {loc.phone}
             </a>
             <a
               href={`mailto:${loc.email}`}
               className="btn inline-flex items-center px-7 py-3 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}
+              style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}
             >
               {loc.email}
             </a>

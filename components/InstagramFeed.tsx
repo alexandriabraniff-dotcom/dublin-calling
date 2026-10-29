@@ -55,7 +55,7 @@ export default async function InstagramFeed({ profileUrl, locationName }: { prof
             <h2
               id="instagram-heading"
               className="leading-none text-[#F4EFE6] group-hover:text-[#F2B035] transition-colors"
-              style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.75rem, 3vw, 2.75rem)", letterSpacing: "0.02em" }}
+              style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.75rem, 3vw, 2.75rem)", letterSpacing: "0.02em" }}
             >
               @{handle}
             </h2>
@@ -72,7 +72,7 @@ export default async function InstagramFeed({ profileUrl, locationName }: { prof
           target="_blank"
           rel="noopener noreferrer"
           className="btn self-start sm:self-auto inline-flex items-center gap-2 px-8 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.12em] uppercase hover:bg-[#e0a020] transition-colors"
-          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+          style={{ fontFamily: "var(--font-label)", fontWeight: 700 }}
         >
           <InstagramIcon size={16} />
           Follow Us<span className="sr-only"> on Instagram (opens in a new tab)</span>

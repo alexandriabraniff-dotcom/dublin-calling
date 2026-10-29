@@ -17,7 +17,7 @@ export default function AboutSection({ location }: { location: Location }) {
             <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">About Us</p>
             <h2
               className="text-[#F2B035] leading-none"
-              style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)" }}
+              style={{ fontFamily: "var(--font-label)", fontWeight: 700, letterSpacing: "0.02em", fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)" }}
             >
               Party Pub &amp; Kitchen.
             </h2>

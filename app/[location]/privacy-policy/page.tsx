@@ -17,7 +17,7 @@ export default async function PrivacyPolicyPage({
     <section className="bg-white py-16">
       <div className="max-w-3xl mx-auto px-6 sm:px-8">
         <p className="text-[#0F5132] text-xs uppercase tracking-[0.25em] mb-4">Updated: May 31, 2024</p>
-        <h2 className="text-[#0F5132] mb-10" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.6rem, 4vw, 2.4rem)", letterSpacing: "0.02em" }}>
+        <h2 className="text-[#0F5132] mb-10" style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.6rem, 4vw, 2.4rem)", letterSpacing: "0.02em" }}>
           THE MRG GROUP PRIVACY STATEMENT
         </h2>
 
@@ -33,7 +33,7 @@ export default async function PrivacyPolicyPage({
           </p>
 
           <div>
-            <h2 className="text-[#0F5132] mb-3" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "1rem", letterSpacing: "0.1em" }}>
+            <h2 className="text-[#0F5132] mb-3" style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "1rem", letterSpacing: "0.1em" }}>
               WHAT&apos;S IN THIS PRIVACY POLICY?
             </h2>
             <ul className="flex flex-col gap-1 pl-4 list-disc marker:text-[#0F5132]">
@@ -244,7 +244,7 @@ export default async function PrivacyPolicyPage({
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-3 border-t border-[#0F5132]/10 pt-6">
-      <h2 className="text-[#0F5132]" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "1rem", letterSpacing: "0.1em" }}>
+      <h2 className="text-[#0F5132]" style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "1rem", letterSpacing: "0.1em" }}>
         {title}
       </h2>
       {children}

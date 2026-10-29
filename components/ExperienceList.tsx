@@ -31,7 +31,7 @@ export default function ExperienceList({
           <div className="flex flex-col gap-4 w-full md:flex-1">
             <h3
               className="text-[#F2B035] leading-none"
-              style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.4rem)", letterSpacing: "0.02em" }}
+              style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.4rem)", letterSpacing: "0.02em" }}
             >
               {item.title}
             </h3>

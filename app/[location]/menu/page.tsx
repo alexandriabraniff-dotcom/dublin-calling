@@ -65,7 +65,7 @@ export default async function MenuPage({
           label: "Happy Hour",
           content: (
             <div className="border-2 border-[#F2B035] bg-[#0F5132] px-6 py-12 text-center">
-              <h2 className="text-[#F2B035] uppercase font-bold tracking-[0.2em] text-3xl" style={{ fontFamily: "'Oswald', sans-serif" }}>Happy Hour</h2>
+              <h2 className="text-[#F2B035] uppercase font-bold tracking-[0.2em] text-3xl" style={{ fontFamily: "var(--font-label)" }}>Happy Hour</h2>
               <p className="mt-3 text-[#F4EFE6] text-lg">{loc.happyHour}</p>
               <p className="mt-2 text-[#F4EFE6]/80 text-sm">Ask your server about this week&apos;s happy hour drinks and bites.</p>
             </div>

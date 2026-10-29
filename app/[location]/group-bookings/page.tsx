@@ -38,7 +38,7 @@ export default async function GroupBookingsPage({
               <div className="flex flex-col gap-5 md:flex-1">
                 <h2
                   className="text-[#F4EFE6] leading-none"
-                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.2rem)", letterSpacing: "0.02em" }}
+                  style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.2rem)", letterSpacing: "0.02em" }}
                 >
                   {t.title}
                 </h2>

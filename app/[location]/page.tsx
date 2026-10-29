@@ -77,7 +77,7 @@ export default async function LocationHome({
 
           <h1
             className="text-[#F4EFE6] leading-[1.0] mb-5"
-            style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.8rem, 9vw, 6rem)", letterSpacing: "0.02em" }}
+            style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(2.8rem, 9vw, 6rem)", letterSpacing: "0.02em" }}
           >
             {heroH1}
           </h1>
@@ -96,7 +96,7 @@ export default async function LocationHome({
             <Link
               href={`${base}/events`}
               className="btn bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
+              style={{ fontFamily: "var(--font-label)", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
             >
               See Events
             </Link>
@@ -105,7 +105,7 @@ export default async function LocationHome({
               target="_blank"
               rel="noopener noreferrer"
               className="btn border border-[#F4EFE6]/30 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
+              style={{ fontFamily: "var(--font-label)", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
             >
               Book a Table
             </a>
@@ -143,7 +143,7 @@ export default async function LocationHome({
             <div>
               <h2
                 className="text-[#101010] leading-tight"
-                style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "0.02em" }}
+                style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "0.02em" }}
               >
                 Book Your Group Night
               </h2>

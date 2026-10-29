@@ -19,7 +19,7 @@ export default async function TonightBar({ location }: { location: Location }) {
           <span key={i} className="flex items-center gap-1.5">
             <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#0F5132]" />
             {item.title}
-            {item.time && <span className="text-[#101010]/75">{item.time}</span>}
+            {item.time && <span className="font-text text-[#101010]/75">{item.time}</span>}
           </span>
         ))}
       </Link>

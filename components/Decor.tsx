@@ -13,7 +13,9 @@ export type DecorName =
   | "basketball"
   | "soccer-ball"
   | "jersey"
-  | "foam-finger";
+  | "foam-finger"
+  | "mma-gloves"
+  | "baseball-bat";
 
 export interface DecorSpot {
   name: DecorName;

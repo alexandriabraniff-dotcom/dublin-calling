@@ -424,8 +424,19 @@ export function todayIn(timezone: string): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
 }
 
-// Listings for one date (YYYY-MM-DD): dated listings first, then the repeating weekly events
+// Start of a listing time in minutes after midnight, e.g. "4:00 to 6:00 PM" -> 960 (no time -> last)
+function startMinutes(time?: string): number {
+  const m = time?.match(/(\d{1,2}):(\d{2})/);
+  if (!m) return 24 * 60;
+  const ampm = time!.slice(m.index).match(/\b(AM|PM)\b/i)?.[1].toUpperCase();
+  const h = (+m[1] % 12) + (ampm === "PM" ? 12 : 0);
+  return h * 60 + +m[2];
+}
+
+// Listings for one date (YYYY-MM-DD), dated and repeating weekly ones together, in start-time order
 export function listingsOn(schedule: ScheduleEvent[], weekly: WeeklyEvent[], iso: string): (ScheduleEvent | WeeklyEvent)[] {
   const dow = new Date(Date.parse(iso + "T00:00:00Z")).getUTCDay();
-  return [...schedule.filter((e) => e.date === iso), ...weekly.filter((e) => e.days.includes(dow))];
+  return [...schedule.filter((e) => e.date === iso), ...weekly.filter((e) => e.days.includes(dow))].sort(
+    (a, b) => startMinutes(a.time) - startMinutes(b.time),
+  );
 }

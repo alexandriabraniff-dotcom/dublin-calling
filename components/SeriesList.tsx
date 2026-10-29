@@ -4,6 +4,19 @@ import { useId, useState } from "react";
 import Image from "next/image";
 import type { Series, SeriesDate } from "@/lib/schedule";
 
+// Round logo for each filter (team and league logos from ESPN, Dublin Calling art otherwise)
+const espn = (path: string) => `https://a.espncdn.com/i/teamlogos/${path}.png`;
+const FILTER_ICONS: Record<string, string> = {
+  All: "/logo.png",
+  Leafs: espn("nhl/500/tor"),
+  Raptors: espn("nba/500/tor"),
+  "Blue Jays": espn("mlb/500/tor"),
+  NFL: espn("leagues/500/nfl"),
+  UFC: espn("leagues/500/ufc"),
+  "Games & Trivia": "/decor/eight-ball.webp",
+  Parties: "/decor/beers.webp",
+};
+
 const fmtDay = (iso: string, opts: Intl.DateTimeFormatOptions) =>
   new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { ...opts, timeZone: "UTC" });
 
@@ -17,20 +30,26 @@ export default function SeriesList({ series, categories }: { series: Series[]; c
 
   return (
     <div className="max-w-5xl mx-auto">
-      <div role="group" aria-label="Filter events" className="flex flex-wrap gap-2 mb-10">
+      <div role="group" aria-label="Filter events" className="flex flex-wrap justify-center sm:justify-start gap-x-3 gap-y-4 mb-10">
         {["All", ...present].map((c) => {
           const on = c === filter;
+          const icon = FILTER_ICONS[c];
           return (
             <button
               key={c}
               type="button"
               aria-pressed={on}
               onClick={() => setFilter(c)}
-              className={`min-h-11 px-5 border-2 text-xs font-semibold uppercase tracking-[0.15em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2B035] ${
-                on ? "bg-[#F2B035] border-[#F2B035] text-[#101010]" : "border-white/30 text-[#F4EFE6] hover:border-[#F2B035]"
-              }`}
+              className="group flex flex-col items-center gap-2 w-[76px] focus-visible:outline-none"
             >
-              {c}
+              <span
+                className={`w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden ring-offset-2 ring-offset-[#101010] transition-shadow group-focus-visible:ring-4 group-focus-visible:ring-[#F2B035] ${
+                  on ? "ring-4 ring-[#F2B035]" : "ring-2 ring-white/30 group-hover:ring-[#F2B035]/70"
+                }`}
+              >
+                {icon && <Image src={icon} alt="" width={64} height={64} className="w-[72%] h-[72%] object-contain" />}
+              </span>
+              <span className={`text-[11px] uppercase tracking-[0.1em] text-center leading-tight ${on ? "text-[#F2B035]" : "text-[#F4EFE6]/85"}`}>{c}</span>
             </button>
           );
         })}
@@ -73,7 +92,7 @@ function SeriesCard({ series: s }: { series: Series }) {
         <p className="text-[#F2B035] text-[11px] uppercase tracking-[0.25em]">{s.category}</p>
         <h2
           className="text-[#F4EFE6] leading-tight"
-          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.3rem, 2vw, 1.6rem)", letterSpacing: "0.02em" }}
+          style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.3rem, 2vw, 1.6rem)", letterSpacing: "0.02em" }}
         >
           {s.title}
         </h2>
@@ -82,7 +101,7 @@ function SeriesCard({ series: s }: { series: Series }) {
         <div className="border-t border-white/15 pt-3 flex flex-col sm:flex-row sm:items-center gap-3">
           <div className="flex-1">
             <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-1">{rest > 0 ? "Next date" : "Date"}</p>
-            <p className="text-[#F4EFE6] font-semibold">
+            <p className="font-text text-[#F4EFE6] font-semibold">
               {fmtDay(next.date, { weekday: "short", month: "short", day: "numeric" })} · {next.time}
               {next.label && <span className="text-[#F4EFE6]/80 font-normal"> · {next.label}</span>}
             </p>
@@ -122,7 +141,7 @@ function SeriesCard({ series: s }: { series: Series }) {
                   <ul>
                     {m.dates.map((d) => (
                       <li key={d.url + d.date} className="flex items-center gap-3 px-4 py-2.5 border-b border-white/10 last:border-b-0">
-                        <span className="flex-1 text-sm text-[#F4EFE6]">
+                        <span className="font-text flex-1 text-sm text-[#F4EFE6]">
                           {fmtDay(d.date, { weekday: "short", month: "short", day: "numeric" })} · {d.time}
                           {d.label && <span className="text-[#F4EFE6]/75"> · {d.label}</span>}
                         </span>

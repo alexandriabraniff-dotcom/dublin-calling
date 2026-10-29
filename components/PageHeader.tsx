@@ -16,7 +16,7 @@ export default function PageHeader({
       <div className="max-w-5xl mx-auto">
         <p
           className="text-[#F2B035] mb-3 uppercase"
-          style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.3em" }}
+          style={{ fontFamily: "var(--font-label)", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.3em" }}
         >
           {location}
           <span aria-hidden="true">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
@@ -25,7 +25,7 @@ export default function PageHeader({
         </p>
         <h1
           className="text-[#F4EFE6] leading-none"
-          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2.2rem, 5vw, 3.5rem)", letterSpacing: "0.02em" }}
+          style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(2.2rem, 5vw, 3.5rem)", letterSpacing: "0.02em" }}
         >
           {title}
         </h1>

@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { addDays, calendarLink, dayOfWeek, fmt } from "@/lib/dates";
+import { addDays, calendarLink, fmt } from "@/lib/dates";
 import { listingsOn, type ScheduleEvent, type WeeklyEvent } from "@/lib/locations";
 import DatePicker from "@/components/DatePicker";
 import TeamIcon from "@/components/TeamIcon";
 
 type Listing = ScheduleEvent | WeeklyEvent;
 
-const condensed = { fontFamily: "'Oswald', sans-serif" } as const;
-const sundayOf = (iso: string) => addDays(iso, -dayOfWeek(iso));
+const condensed = { fontFamily: "var(--font-label)" } as const;
 
-/* Events page calendar, after the current dublincalling.com one: a Sunday to Saturday week with
-   Today / previous / next / pick-a-date controls. Desktop shows all seven days as columns of event
+/* Events page calendar, after the current dublincalling.com one: seven days starting today (so
+   it moves on by itself every day and never shows past days), with Today / previous / next /
+   pick-a-date controls. Desktop shows all seven days as columns of event
    tiles; phones get a row of day numbers and the chosen day's tiles. Each tile has the time, a
    book (arrow) or add-to-calendar icon, the title and a More info drop-down. */
 export default function EventsCalendar({
@@ -28,21 +28,22 @@ export default function EventsCalendar({
   bookHref: string;
   address: string;
 }) {
-  const [weekStart, setWeekStart] = useState(sundayOf(today));
+  const [weekStart, setWeekStart] = useState(today);
   const [selected, setSelected] = useState(today);
 
   const days = Array.from({ length: 7 }, (_, i) => {
     const date = addDays(weekStart, i);
-    return { date, isToday: date === today, past: date < today, items: listingsOn(schedule, weekly, date) };
+    return { date, isToday: date === today, items: listingsOn(schedule, weekly, date) };
   });
-  const isThisWeek = weekStart === sundayOf(today);
+  const isThisWeek = weekStart === today;
   const heading = isThisWeek ? "This Week at Dublin Calling" : `Week of ${fmt(weekStart, { month: "long", day: "numeric" })}`;
   const range = `${fmt(weekStart, { weekday: "short", month: "short", day: "numeric" })} to ${fmt(addDays(weekStart, 6), { weekday: "short", month: "short", day: "numeric" })}`;
   const chosen = days.find((d) => d.date === selected) ?? days[0];
 
-  function goWeek(start: string, pick?: string) {
-    setWeekStart(start);
-    setSelected(pick ?? (start === sundayOf(today) ? today : start));
+  function goWeek(start: string) {
+    const from = start < today ? today : start; // never before today
+    setWeekStart(from);
+    setSelected(from);
   }
 
   const ctrl =
@@ -57,7 +58,7 @@ export default function EventsCalendar({
         </h2>
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <div className="flex items-center gap-2 sm:gap-3">
-            <button type="button" onClick={() => goWeek(sundayOf(today))} disabled={isThisWeek} className={`${ctrl} text-xs font-semibold uppercase tracking-[0.12em]`}>
+            <button type="button" onClick={() => goWeek(today)} disabled={isThisWeek} className={`${ctrl} text-xs font-semibold uppercase tracking-[0.12em]`}>
               Today
             </button>
             <button type="button" onClick={() => goWeek(addDays(weekStart, -7))} disabled={isThisWeek} aria-label="Previous week" className={ctrl}>
@@ -71,14 +72,14 @@ export default function EventsCalendar({
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </button>
           </div>
-          <DatePicker today={today} selected={weekStart} onPick={(iso) => goWeek(sundayOf(iso), iso)} />
+          <DatePicker today={today} selected={weekStart} onPick={(iso) => goWeek(iso)} />
         </div>
       </div>
 
       {/* Desktop: the whole week */}
       <div className="hidden lg:grid grid-cols-7 gap-3">
         {days.map((d) => (
-          <div key={d.date} className={d.past ? "opacity-80" : ""}>
+          <div key={d.date}>
             <DayHeader date={d.date} isToday={d.isToday} />
             <ul className="flex flex-col gap-2 mt-3">
               {d.items.length === 0 ? (
@@ -145,7 +146,7 @@ function Tile({ item, date, bookHref, address }: { item: Listing; date: string; 
   return (
     <li className={`p-3 ${team ? "" : "bg-white/[0.07]"}`} style={team ? { backgroundColor: team.color } : undefined}>
       <div className="flex items-start justify-between gap-2">
-        <p className="text-white/85 text-xs uppercase tracking-[0.08em]">{item.time ?? ""}</p>
+        <p className="font-text text-white/85 text-xs uppercase tracking-[0.04em]">{item.time ?? ""}</p>
         {url ? (
           <a href={url} target="_blank" rel="noopener noreferrer" aria-label={`Book ${item.title} (opens Admit One in a new tab)`} className="-m-2 p-2 text-white hover:text-[#F2B035]">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>

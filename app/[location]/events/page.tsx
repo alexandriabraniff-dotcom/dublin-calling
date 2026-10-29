@@ -242,7 +242,7 @@ export default async function EventsPage({
                     <span
                       data-tag={event.tag}
                       className="text-[#F4EFE6]/6 font-black uppercase before:content-[attr(data-tag)]"
-                      style={{ fontFamily: "'Oswald', sans-serif", fontSize: "6rem", letterSpacing: "0.05em" }}
+                      style={{ fontFamily: "var(--font-label)", fontSize: "6rem", letterSpacing: "0.05em" }}
                       aria-hidden
                     />
                   </div>
@@ -256,7 +256,7 @@ export default async function EventsPage({
                       <span
                         className={`inline-block px-2.5 py-0.5 uppercase tracking-widest ${tagStyle(event.tagColor)}`}
                         style={{
-                          fontFamily: "'Oswald', sans-serif",
+                          fontFamily: "var(--font-label)",
                           fontSize: "0.7rem",
                           fontWeight: 700,
                         }}
@@ -265,7 +265,7 @@ export default async function EventsPage({
                       </span>
                       <span
                         className="text-[#F4EFE6]/70 uppercase tracking-[0.18em]"
-                        style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem" }}
+                        style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem" }}
                       >
                         {event.day}
                       </span>
@@ -275,7 +275,7 @@ export default async function EventsPage({
                     <h2
                       className="text-[#F4EFE6] mb-4"
                       style={{
-                        fontFamily: "'Oswald', sans-serif",
+                        fontFamily: "var(--font-label)",
                         fontWeight: 700,
                         fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
                         letterSpacing: "0.02em",
@@ -314,7 +314,7 @@ export default async function EventsPage({
                         rel="noopener noreferrer"
                         className="btn inline-block bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
                         style={{
-                          fontFamily: "'Oswald', sans-serif",
+                          fontFamily: "var(--font-label)",
                           fontSize: "clamp(11px, 1vw, 13px)",
                           padding: "0.75rem 2rem",
                         }}
@@ -326,7 +326,7 @@ export default async function EventsPage({
                         href={`${base}/book-a-table`}
                         className="btn inline-block bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
                         style={{
-                          fontFamily: "'Oswald', sans-serif",
+                          fontFamily: "var(--font-label)",
                           fontSize: "clamp(11px, 1vw, 13px)",
                           padding: "0.75rem 2rem",
                         }}

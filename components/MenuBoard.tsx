@@ -4,7 +4,7 @@ import type { MenuItem, MenuSection } from "@/lib/menus";
 /* A printed-menu look in real text (good for SEO): cream paper, the logo up top, spaced green
    section titles between gold rules, item names with dotted leaders to gold prices. */
 
-const condensed = { fontFamily: "'Oswald', sans-serif" } as const;
+const condensed = { fontFamily: "var(--font-label)" } as const;
 
 function Item({ item }: { item: MenuItem }) {
   return (
@@ -17,7 +17,7 @@ function Item({ item }: { item: MenuItem }) {
         {item.price && (
           <>
             <span aria-hidden="true" className="flex-1 min-w-4 border-b-2 border-dotted border-[#B07A12]/60 translate-y-[-3px]" />
-            <span className="text-[#8A5A00] font-bold tabular-nums whitespace-nowrap text-[15px] md:text-base" style={condensed}>
+            <span className="font-text text-[#8A5A00] font-bold tabular-nums whitespace-nowrap text-[15px] md:text-base">
               {item.price}
             </span>
           </>
@@ -41,7 +41,7 @@ function Section({ section }: { section: MenuSection }) {
       {section.items.length > 0 && <ul>{section.items.map((it) => <Item key={it.name} item={it} />)}</ul>}
       {section.groups?.map((g) => (
         <div key={g.label} className="break-inside-avoid">
-          <p className="text-center text-[#0F5132] italic font-bold text-xl mt-2 mb-2" style={condensed}>
+          <p className="font-title text-center text-[#0F5132] text-2xl mt-2 mb-2">
             {g.label}
           </p>
           <ul>{g.items.map((it) => <Item key={it.name} item={it} />)}</ul>

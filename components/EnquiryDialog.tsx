@@ -130,7 +130,7 @@ export default function EnquiryDialog({
         onClick={open}
         aria-haspopup="dialog"
         className="btn block w-full sm:w-auto text-center px-10 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F4EFE6]"
-        style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+        style={{ fontFamily: "var(--font-label)", fontWeight: 700 }}
       >
         Get in Touch<span className="sr-only"> about a {type.title.toLowerCase()}</span>
       </button>
@@ -148,7 +148,7 @@ export default function EnquiryDialog({
                 <h2
                   id={titleId}
                   className="text-[#F4EFE6] leading-tight"
-                  style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.5rem, 4vw, 2rem)", letterSpacing: "0.02em" }}
+                  style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.5rem, 4vw, 2rem)", letterSpacing: "0.02em" }}
                 >
                   {type.formTitle}
                 </h2>
@@ -168,7 +168,7 @@ export default function EnquiryDialog({
 
             {status === "sent" || status === "mailto" ? (
               <div className="px-5 sm:px-8 py-10 flex flex-col gap-4" role="status">
-                <p className="text-[#F2B035] text-xl" style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}>
+                <p className="text-[#F2B035] text-xl" style={{ fontFamily: "var(--font-label)", fontWeight: 700 }}>
                   {status === "sent" ? "Thanks, we've got it!" : "Almost there!"}
                 </p>
                 <p className="text-[#F4EFE6]/85 text-base leading-relaxed">
@@ -214,7 +214,7 @@ export default function EnquiryDialog({
                     type="submit"
                     disabled={status === "sending"}
                     className="btn px-10 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] disabled:opacity-60 transition-colors"
-                    style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700 }}
+                    style={{ fontFamily: "var(--font-label)", fontWeight: 700 }}
                   >
                     {status === "sending" ? "Sending..." : "Send Enquiry"}
                   </button>

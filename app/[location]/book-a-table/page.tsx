@@ -43,7 +43,7 @@ export default async function BookATablePage({
               <p
                 className="text-[#F4EFE6]/70 mb-6"
                 style={{
-                  fontFamily: "'Oswald', sans-serif",
+                  fontFamily: "var(--font-label)",
                   fontSize: "0.7rem",
                   fontWeight: 600,
                   letterSpacing: "0.25em",
@@ -68,7 +68,7 @@ export default async function BookATablePage({
               <p
                 className="text-[#F4EFE6]/70 mb-6"
                 style={{
-                  fontFamily: "'Oswald', sans-serif",
+                  fontFamily: "var(--font-label)",
                   fontSize: "0.7rem",
                   fontWeight: 600,
                   letterSpacing: "0.25em",

@@ -36,7 +36,7 @@ const LOCATIONS = [
   { slug: "vancouver", label: "Vancouver" },
 ];
 
-const labelStyle = { fontFamily: "'Oswald', sans-serif", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.25em" } as const;
+const labelStyle = { fontFamily: "var(--font-label)", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.25em" } as const;
 
 function PhoneIcon() {
   return (
@@ -89,7 +89,7 @@ function MobileFooter({ location, base }: { location: Location; base: string }) 
       </div>
 
       {/* Contact */}
-      <h2 className="text-[#F2B035] mt-10 mb-4 uppercase" style={labelStyle}>
+      <h2 className="font-label text-[#F2B035] mt-10 mb-4 uppercase" style={labelStyle}>
         Dublin Calling {location.name}
       </h2>
       <div className="w-full flex flex-col gap-3">
@@ -111,7 +111,7 @@ function MobileFooter({ location, base }: { location: Location; base: string }) 
       {/* Hours, in the logo's double gold frame */}
       <div className="w-full mt-8 border-4 border-[#F2B035] p-[3px]">
         <div className="border-2 border-[#F2B035] px-5 py-5">
-          <h2 className="text-[#F2B035] mb-3 uppercase" style={labelStyle}>
+          <h2 className="font-label text-[#F2B035] mb-3 uppercase" style={labelStyle}>
             Hours
           </h2>
           <dl className="flex flex-col gap-2 text-sm">
@@ -128,7 +128,7 @@ function MobileFooter({ location, base }: { location: Location; base: string }) 
       {/* Links */}
       <div className="w-full grid grid-cols-2 gap-6 mt-10 text-left">
         <nav aria-label="Footer">
-          <h2 className="text-[#F2B035] mb-2 uppercase" style={labelStyle}>
+          <h2 className="font-label text-[#F2B035] mb-2 uppercase" style={labelStyle}>
             Navigate
           </h2>
           <ul className="flex flex-col">
@@ -142,7 +142,7 @@ function MobileFooter({ location, base }: { location: Location; base: string }) 
           </ul>
         </nav>
         <nav aria-label="Locations">
-          <h2 className="text-[#F2B035] mb-2 uppercase" style={labelStyle}>
+          <h2 className="font-label text-[#F2B035] mb-2 uppercase" style={labelStyle}>
             Locations
           </h2>
           <ul className="flex flex-col">
@@ -206,7 +206,7 @@ export default function Footer({ location }: FooterProps) {
           <div className="flex flex-col gap-3">
             <p
               className="text-[#F4EFE6]/80 mb-1"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
+              style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
             >
               NAVIGATE
             </p>
@@ -222,7 +222,7 @@ export default function Footer({ location }: FooterProps) {
 
             <p
               className="text-[#F4EFE6]/80 mt-5 mb-1"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
+              style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
             >
               LOCATIONS
             </p>
@@ -301,7 +301,7 @@ export default function Footer({ location }: FooterProps) {
           <div className="flex flex-col gap-3 md:items-end md:text-right">
             <p
               className="text-[#F4EFE6]/80 mb-1"
-              style={{ fontFamily: "'Oswald', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
+              style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
             >
               CONTACT: {location.name.toUpperCase()}
             </p>

@@ -100,21 +100,24 @@ export default function Navbar({ location }: { location: LocationSlug }) {
 
           {/* Far left — Location picker */}
           <div ref={locationRef} className="relative shrink-0 z-10">
+            {/* Clear, boxed location switch so visitors notice which venue they're viewing */}
             <button
               type="button"
               onClick={() => setLocationOpen(!locationOpen)}
               aria-expanded={locationOpen}
               aria-controls="location-menu"
               aria-label={`Location: ${LOCATION_LABELS[location]}. Change location`}
-              className="flex items-center gap-1 py-2 text-[#F4EFE6]/75 hover:text-[#F4EFE6] uppercase tracking-[0.12em] transition-colors"
-              style={{ fontSize: "clamp(10px, 0.85vw, 11px)" }}
+              className="flex items-center gap-2 border-2 border-[#F2B035] px-3 py-1.5 text-left text-[#F4EFE6] hover:bg-[#F2B035] hover:text-[#101010] transition-colors"
             >
-              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className="shrink-0">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
               </svg>
-              {LOCATION_LABELS[location]}
-              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
-                className={`transition-transform ${locationOpen ? "rotate-180" : ""}`}>
+              <span className="flex flex-col leading-tight">
+                <span className="text-[10px] uppercase tracking-[0.18em] opacity-80">Location</span>
+                <span className="uppercase tracking-[0.08em] font-bold" style={{ fontSize: "clamp(11px, 0.95vw, 13px)" }}>{LOCATION_LABELS[location]}</span>
+              </span>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
+                className={`shrink-0 transition-transform ${locationOpen ? "rotate-180" : ""}`} aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -196,16 +199,29 @@ export default function Navbar({ location }: { location: LocationSlug }) {
           >
             <Image src="/logo.png" alt="Dublin Calling" width={52} height={52} className="h-12 w-auto" priority />
           </Link>
-          <button
-            type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="p-3 -mr-3 text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-          >
-            <Hamburger open={menuOpen} />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              aria-label={`Location: ${LOCATION_LABELS[location]}. Change location`}
+              className="flex items-center gap-1.5 border-2 border-[#F2B035] px-2.5 py-1.5 text-[#F4EFE6] text-[11px] uppercase tracking-[0.1em] font-bold"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              {LOCATION_LABELS[location]}
+            </button>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="p-3 -mr-3 text-[#F4EFE6]/70 hover:text-[#F4EFE6] transition-colors"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+            >
+              <Hamburger open={menuOpen} />
+            </button>
+          </div>
         </div>
 
         {menuOpen && (
