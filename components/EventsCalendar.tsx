@@ -144,7 +144,7 @@ function Tile({ item, date, bookHref, address }: { item: Listing; date: string; 
   const info = "info" in item ? item.info : undefined;
   const url = item.url;
   return (
-    <li className={`p-3 ${team ? "" : "bg-white/[0.07]"}`} style={team ? { backgroundColor: team.color } : undefined}>
+    <li className={`p-3 ${team?.color ? "" : "bg-white/[0.07]"}`} style={team?.color ? { backgroundColor: team.color } : undefined}>
       <div className="flex items-start justify-between gap-2">
         <p className="font-text text-white/85 text-xs uppercase tracking-[0.04em]">{item.time ?? ""}</p>
         {url ? (

@@ -17,7 +17,7 @@ export interface ScheduleEvent {
   time?: string;
   url?: string; // Admit One event page
   bigScreen?: boolean; // a game on the screens (from ESPN) rather than an Admit One event
-  team?: { name: string; logo: string; color: string }; // featured team night: icon + team colour
+  team?: { name: string; logo: string; color?: string }; // round logo; followed teams also get their colour
   info?: string; // short description for "More info"
 }
 
@@ -289,7 +289,8 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
     ],
     mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20526%20Danforth%20Ave%2C%20Toronto%2C%20ON&output=embed",
-    teams: TORONTO_TEAMS, // Admit One node for Danforth still to confirm
+    admitOneNodeId: "6a676533dd7a4bead76b39b3", // from dublincalling.com/danforth/events
+    teams: TORONTO_TEAMS,
   },
 
   vancouver: {
@@ -406,7 +407,9 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
     ],
     mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20900%20Granville%20St%2C%20Vancouver%2C%20BC&output=embed",
-    teams: [{ key: "canucks", league: "NHL", name: "Canucks", path: "hockey/nhl/teams/van", logo: logo("nhl", "van"), color: "#00205B" }],
+    // Same games as Toronto (in Pacific time) plus the Canucks. Admit One node for Vancouver still to come from MRG
+    // (Canucks listed first so a Leafs at Canucks night reads "Canucks vs Leafs" here)
+    teams: [{ key: "canucks", league: "NHL", name: "Canucks", path: "hockey/nhl/teams/van", logo: logo("nhl", "van"), color: "#00205B" }, ...TORONTO_TEAMS],
   },
 };
 

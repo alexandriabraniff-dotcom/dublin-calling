@@ -1,5 +1,5 @@
 import { getAdmitOneEvents, type AdmitOneEvent } from "@/lib/admitone";
-import { getGames, type Game } from "@/lib/espn";
+import { getGames, LEAGUES, type Game } from "@/lib/espn";
 import type { Location, ScheduleEvent } from "@/lib/locations";
 
 /* Live schedule for a location: Admit One events (with their Book Your Spot links) plus every
@@ -50,7 +50,7 @@ const localTime = (iso: string, tz: string) =>
 async function load(loc: Location): Promise<{ events: AdmitOneEvent[]; games: Game[] }> {
   const [events, games] = await Promise.all([
     loc.admitOneNodeId ? getAdmitOneEvents(loc.admitOneNodeId) : Promise.resolve([]),
-    loc.teams.length ? getGames(loc.teams) : Promise.resolve([]),
+    getGames(loc.teams, LEAGUES),
   ]);
   const now = Date.now() - 6 * 3600 * 1000; // keep tonight's games listed after they start
   return {
@@ -89,7 +89,7 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
         title: game?.title ?? (e.tag === "leafs" || e.tag === "raptors" ? SERIES_TITLES[e.tag] : e.title),
         url: d.url,
         // Team styling only when that team actually plays (a World Series night tagged "mlb" isn't a Jays game)
-        team: game || e.tag === "leafs" || e.tag === "raptors" ? teamInfo(loc, e.tag) : undefined,
+        team: game ? { name: game.title.split(":")[0], logo: game.logo, color: game.color } : e.tag === "leafs" || e.tag === "raptors" ? teamInfo(loc, e.tag) : undefined,
         info: e.description ? shorten(e.description) : undefined,
         start: d.start,
       });
@@ -102,7 +102,15 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
     // e.g. a Bills game on a night with an "NFL Season Event": book through that event
     const league = g.title.split(":")[0];
     const host = rows.find((r) => r.date === date && r.url && r.title.toUpperCase().includes(league));
-    rows.push({ date, time: localTime(g.start, tz), title: g.title, url: host?.url, bigScreen: true, team: teamInfo(loc, g.team), start: g.start });
+    rows.push({
+      date,
+      time: localTime(g.start, tz),
+      title: g.title,
+      url: host?.url,
+      bigScreen: true,
+      team: { name: g.title.split(":")[0], logo: g.logo, color: g.color },
+      start: g.start,
+    });
   }
 
   rows.sort((a, b) => a.start.localeCompare(b.start));

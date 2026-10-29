@@ -92,13 +92,13 @@ export default function WeekCalendar({
               return (
                 <li
                   key={item.title + (item.time ?? "")}
-                  className={`flex flex-col sm:flex-row sm:items-center gap-4 px-5 py-4 border-2 ${team ? "border-white/25" : "border-white/15 bg-[#101010]/30"}`}
-                  style={team ? { backgroundColor: team.color } : undefined}
+                  className={`flex flex-col sm:flex-row sm:items-center gap-4 px-5 py-4 border-2 ${team?.color ? "border-white/25" : "border-white/15 bg-[#101010]/30"}`}
+                  style={team?.color ? { backgroundColor: team.color } : undefined}
                 >
                   <div className="flex-1 min-w-0 flex items-center gap-4">
                     {team && <TeamIcon logo={team.logo} name={team.name} />}
                     <div className="min-w-0">
-                      <p className={`font-text flex flex-wrap items-center gap-x-3 text-xs uppercase tracking-[0.08em] mb-1 ${team ? "text-white" : "text-[#F2B035]"}`}>
+                      <p className={`font-text flex flex-wrap items-center gap-x-3 text-xs uppercase tracking-[0.08em] mb-1 ${team?.color ? "text-white" : "text-[#F2B035]"}`}>
                         {item.time && <span>{item.time}</span>}
                         {"bigScreen" in item && item.bigScreen && <span className="text-white/85">On the big screen</span>}
                       </p>
