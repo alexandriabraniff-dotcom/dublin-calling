@@ -3,11 +3,13 @@
 import { useId, useState } from "react";
 import Image from "next/image";
 import type { Series, SeriesDate } from "@/lib/schedule";
+import TeamIcon from "@/components/TeamIcon";
 
 // Round logo for each filter (team and league logos from ESPN, Dublin Calling art otherwise)
 const espn = (path: string) => `https://a.espncdn.com/i/teamlogos/${path}.png`;
 const FILTER_ICONS: Record<string, string> = {
   All: "/logo.png",
+  Canucks: espn("nhl/500/van"),
   Leafs: espn("nhl/500/tor"),
   Raptors: espn("nba/500/tor"),
   "Blue Jays": espn("mlb/500/tor"),
@@ -16,6 +18,10 @@ const FILTER_ICONS: Record<string, string> = {
   "Games & Trivia": "/decor/eight-ball.webp",
   Parties: "/decor/beers.webp",
 };
+
+// Admit One links open in a new tab; the fallback booking page stays on the site
+const external = (url: string) => (/^https?:/.test(url) ? ({ target: "_blank", rel: "noopener noreferrer" } as const) : {});
+const newTab = (url: string) => (/^https?:/.test(url) ? " (opens Admit One in a new tab)" : "");
 
 const fmtDay = (iso: string, opts: Intl.DateTimeFormatOptions) =>
   new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { ...opts, timeZone: "UTC" });
@@ -85,7 +91,13 @@ function SeriesCard({ series: s }: { series: Series }) {
     <article className="border border-white/10 bg-[#0a0a0a] grid grid-cols-1 md:grid-cols-[320px_minmax(0,1fr)]">
       {/* Whole artwork, never cropped: letterboxed on the dark panel */}
       <div className="relative aspect-video md:self-start bg-[#101010]">
-        {s.image && <Image src={s.image} alt="" fill sizes="(min-width: 768px) 320px, 100vw" className="object-contain" />}
+        {s.image ? (
+          <Image src={s.image} alt="" fill sizes="(min-width: 768px) 320px, 100vw" className="object-contain" />
+        ) : s.logo ? (
+          <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: s.color }}>
+            <TeamIcon logo={s.logo} name="" size={110} />
+          </div>
+        ) : null}
       </div>
 
       <div className="p-5 md:p-6 flex flex-col gap-3">
@@ -111,11 +123,10 @@ function SeriesCard({ series: s }: { series: Series }) {
           ) : (
             <a
               href={next.url}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...external(next.url)}
               className="btn min-h-11 inline-flex items-center justify-center px-6 bg-[#F2B035] text-[#101010] text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
             >
-              Book Your Spot<span className="sr-only">: {s.title}, {fmtDay(next.date, { month: "long", day: "numeric" })} (opens Admit One in a new tab)</span>
+              Book Your Spot<span className="sr-only">: {s.title}, {fmtDay(next.date, { month: "long", day: "numeric" })}{newTab(next.url)}</span>
             </a>
           )}
         </div>
@@ -150,11 +161,10 @@ function SeriesCard({ series: s }: { series: Series }) {
                         ) : (
                           <a
                             href={d.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            {...external(d.url)}
                             className="min-h-11 min-w-11 inline-flex items-center justify-end text-[#F2B035] text-xs font-semibold uppercase tracking-[0.12em] underline underline-offset-4 hover:text-[#F4EFE6]"
                           >
-                            Book<span className="sr-only"> {fmtDay(d.date, { month: "long", day: "numeric" })} (opens Admit One in a new tab)</span>
+                            Book<span className="sr-only"> {fmtDay(d.date, { month: "long", day: "numeric" })}{newTab(d.url)}</span>
                           </a>
                         )}
                       </li>

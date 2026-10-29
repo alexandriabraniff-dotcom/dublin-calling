@@ -96,80 +96,85 @@ export default function Navbar({ location }: { location: LocationSlug }) {
         className="hidden lg:block sticky top-0 z-50 bg-[#0F5132] border-b border-white/10 overflow-visible"
         style={{ height: "72px" }}
       >
-        <div className="relative h-full flex items-center px-8 gap-4">
+        {/* Three columns: equal 1fr sides around the logo gap, so the logo sits dead centre and
+            Events / Group Bookings are the same distance from it */}
+        <div className="relative h-full grid grid-cols-[1fr_auto_1fr] items-center px-8">
 
-          {/* Far left — Location picker */}
-          <div ref={locationRef} className="relative shrink-0 z-10">
-            {/* Clear, boxed location switch so visitors notice which venue they're viewing */}
-            <button
-              type="button"
-              onClick={() => setLocationOpen(!locationOpen)}
-              aria-expanded={locationOpen}
-              aria-controls="location-menu"
-              aria-label={`Location: ${LOCATION_LABELS[location]}. Change location`}
-              className="flex items-center gap-2 border-2 border-[#F2B035] px-3 py-1.5 text-left text-[#F4EFE6] hover:bg-[#F2B035] hover:text-[#101010] transition-colors"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className="shrink-0">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-              </svg>
-              <span className="flex flex-col leading-tight">
-                <span className="text-[10px] uppercase tracking-[0.18em] opacity-80">Location</span>
-                <span className="uppercase tracking-[0.08em] font-bold" style={{ fontSize: "clamp(11px, 0.95vw, 13px)" }}>{LOCATION_LABELS[location]}</span>
-              </span>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
-                className={`shrink-0 transition-transform ${locationOpen ? "rotate-180" : ""}`} aria-hidden="true">
-                <polyline points="6 9 12 15 18 9"/>
-              </svg>
-            </button>
-            {locationOpen && (
-              <div id="location-menu" className="absolute left-0 top-full mt-2 w-52 bg-[#101010] border border-white/10 z-50">
-                {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map(s => (
-                  <Link key={s} href={`/${s}`} onClick={() => setLocationOpen(false)}
-                    aria-current={s === location ? "page" : undefined}
-                    className={`flex w-full px-4 py-3 uppercase tracking-[0.12em] transition-colors ${
-                      s === location ? "text-[#F2B035]" : "text-[#F4EFE6]/75 hover:text-[#F4EFE6] hover:bg-white/5"
-                    }`}
-                    style={{ fontSize: "11px" }}>
-                    {LOCATION_LABELS[s]}
-                  </Link>
-                ))}
-              </div>
-            )}
+          {/* Left: location picker, then the left links hugging the logo */}
+          <div className="flex items-center justify-between gap-4 min-w-0">
+            <div ref={locationRef} className="relative shrink-0 z-10">
+              {/* Clear, boxed location switch so visitors notice which venue they're viewing */}
+              <button
+                type="button"
+                onClick={() => setLocationOpen(!locationOpen)}
+                aria-expanded={locationOpen}
+                aria-controls="location-menu"
+                aria-label={`Location: ${LOCATION_LABELS[location]}. Change location`}
+                className="flex items-center gap-2 border-2 border-[#F2B035] px-3 py-1.5 text-left text-[#F4EFE6] hover:bg-[#F2B035] hover:text-[#101010] transition-colors"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className="shrink-0">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span className="flex flex-col leading-tight">
+                  <span className="text-[10px] uppercase tracking-[0.18em] opacity-80">Location</span>
+                  <span className="uppercase tracking-[0.08em] font-bold" style={{ fontSize: "clamp(11px, 0.95vw, 13px)" }}>{LOCATION_LABELS[location]}</span>
+                </span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
+                  className={`shrink-0 transition-transform ${locationOpen ? "rotate-180" : ""}`} aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+              {locationOpen && (
+                <div id="location-menu" className="absolute left-0 top-full mt-2 w-52 bg-[#101010] border border-white/10 z-50">
+                  {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map(s => (
+                    <Link key={s} href={`/${s}`} onClick={() => setLocationOpen(false)}
+                      aria-current={s === location ? "page" : undefined}
+                      className={`flex w-full px-4 py-3 uppercase tracking-[0.12em] transition-colors ${
+                        s === location ? "text-[#F2B035]" : "text-[#F4EFE6]/75 hover:text-[#F4EFE6] hover:bg-white/5"
+                      }`}
+                      style={{ fontSize: "11px" }}>
+                      {LOCATION_LABELS[s]}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <nav className="flex items-center gap-8 pr-10">
+              {LEFT_LINKS.map(l => (
+                <Link key={l.href} href={`${base}${l.href}`}
+                  className={linkClass(l.href)}
+                  style={{ fontSize: "clamp(10px, 0.85vw, 12px)" }}>
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
           </div>
 
-          {/* Left nav — flex-1, right-aligned toward logo */}
-          <nav className="flex-1 flex items-center justify-end gap-8 pr-6">
-            {LEFT_LINKS.map(l => (
-              <Link key={l.href} href={`${base}${l.href}`}
-                className={linkClass(l.href)}
-                style={{ fontSize: "clamp(10px, 0.85vw, 12px)" }}>
-                {l.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Logo gap: matches the logo width */}
+          <div style={{ width: "clamp(100px, 13vw, 150px)" }} />
 
-          {/* Logo gap — matches logo width so left/right navs balance */}
-          <div className="shrink-0" style={{ width: "clamp(100px, 13vw, 150px)" }} />
+          {/* Right: the right links hugging the logo, then Book a Table */}
+          <div className="flex items-center justify-between gap-4 min-w-0">
+            <nav className="flex items-center gap-8 pl-10">
+              {RIGHT_LINKS.map(l => (
+                <Link key={l.href} href={`${base}${l.href}`}
+                  className={linkClass(l.href)}
+                  style={{ fontSize: "clamp(10px, 0.85vw, 12px)" }}>
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
 
-          {/* Right nav — flex-1, left-aligned away from logo */}
-          <nav className="flex-1 flex items-center justify-start gap-8 pl-6">
-            {RIGHT_LINKS.map(l => (
-              <Link key={l.href} href={`${base}${l.href}`}
-                className={linkClass(l.href)}
-                style={{ fontSize: "clamp(10px, 0.85vw, 12px)" }}>
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Far right — Book a Table */}
-          <Link
-            href={`${base}/book-a-table`}
-            className="shrink-0 bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
-            style={{ fontSize: "clamp(10px, 0.85vw, 12px)", padding: "0.45rem 1.2rem" }}
-          >
-            Book a Table
-          </Link>
+            {/* Far right — Book a Table */}
+            <Link
+              href={`${base}/book-a-table`}
+              className="shrink-0 bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
+              style={{ fontSize: "clamp(10px, 0.85vw, 12px)", padding: "0.45rem 1.2rem" }}
+            >
+              Book a Table
+            </Link>
+          </div>
 
           {/* Centre logo — absolutely positioned, overflows below */}
           <div className="absolute inset-x-0 flex justify-center pointer-events-none" style={{ top: "6px" }}>

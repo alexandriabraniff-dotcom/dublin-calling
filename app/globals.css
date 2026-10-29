@@ -18,6 +18,22 @@
   --font-text-stack: var(--font-text), "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Tonight bar: each listing rises in from below, holds, then rises away (TonightTicker, 3.5 s each) */
+@keyframes tickerCycle {
+  0% { transform: translateY(100%); opacity: 0; }
+  12%, 88% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 0; }
+}
+@keyframes tickerEnter {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.ticker-item { animation: tickerCycle 3.5s ease-in-out both; }
+.ticker-enter { animation: tickerEnter 0.4s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .ticker-item, .ticker-enter { animation: none; }
+}
+
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }

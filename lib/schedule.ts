@@ -19,6 +19,8 @@ export interface Series {
   title: string;
   description: string;
   image?: string;
+  logo?: string; // team series without a poster: shown as the team logo on the team colour
+  color?: string;
   category: string; // filter chip on the events page
   dates: SeriesDate[]; // upcoming only, soonest first
 }
@@ -30,7 +32,10 @@ const SERIES_TITLES: Record<string, string> = {
   mlb: "Blue Jays & MLB at Dublin Calling",
 };
 
-const CATEGORY_ORDER = ["Leafs", "Raptors", "Blue Jays", "NFL", "UFC", "Games & Trivia", "Parties"];
+const CATEGORY_ORDER = ["Canucks", "Leafs", "Raptors", "Blue Jays", "NFL", "UFC", "Games & Trivia", "Parties"];
+
+// Filter category for each followed team's own series (locations without an Admit One feed)
+const TEAM_CATEGORY: Record<string, string> = { canucks: "Canucks", leafs: "Leafs", raptors: "Raptors", mlb: "Blue Jays", bills: "NFL" };
 
 function category(tag: string, title: string): string {
   if (tag === "leafs") return "Leafs";
@@ -117,10 +122,12 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
   return rows.map((r) => ({ date: r.date, time: r.time, title: r.title, url: r.url, bigScreen: r.bigScreen, team: r.team, info: r.info }));
 }
 
-/* Admit One events grouped into series for the events page, with a filter category each */
+/* Series cards for the events page, with a filter category each: Admit One events grouped by
+   series, or (no Admit One feed yet) the location's weekly nights plus each followed team's games */
 export async function getSeries(loc: Location): Promise<Series[]> {
   const { events, games } = await load(loc);
   const tz = loc.timezone;
+  if (events.length === 0) return fallbackSeries(loc, games);
   const groups = new Map<string, Series & { first: string; starts: string[] }>();
 
   for (const e of events) {
@@ -161,3 +168,55 @@ export async function getSeries(loc: Location): Promise<Series[]> {
 }
 
 export const SERIES_CATEGORIES = CATEGORY_ORDER;
+
+const byCategory = (a: Series, b: Series) => CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category);
+
+function fallbackSeries(loc: Location, games: Game[]): Series[] {
+  const tz = loc.timezone;
+  const today = localDate(new Date().toISOString(), tz);
+  const book = `/${loc.slug}/book-a-table`;
+  const out: Series[] = [];
+
+  // Weekly nights with a poster: the next eight weeks of dates
+  for (const w of loc.weekly) {
+    if (!w.image) continue;
+    const dates: SeriesDate[] = [];
+    for (let i = 0; i < 56; i++) {
+      const d = new Date(Date.parse(today + "T12:00:00Z") + i * 86400000);
+      if (!w.days.includes(d.getUTCDay())) continue;
+      dates.push({ date: d.toISOString().slice(0, 10), time: w.time ?? "", label: "", url: w.url ?? book, soldOut: false });
+    }
+    out.push({
+      key: w.title,
+      title: w.title,
+      description: w.about ?? "",
+      image: w.image,
+      category: /trivia|bingo|pool|darts/i.test(w.title) ? "Games & Trivia" : "Parties",
+      dates,
+    });
+  }
+
+  // Each followed team's games (a Leafs at Canucks night belongs to both teams' cards)
+  const sides = (g: Game) => g.title.split(": ")[1]?.split(" vs ") ?? [];
+  for (const t of loc.teams) {
+    const mine = games.filter((g) => g.team === t.key || sides(g).some((n) => n.includes(t.name)));
+    if (!mine.length) continue;
+    out.push({
+      key: t.key,
+      title: `${t.name} Games at Dublin Calling`,
+      description: `Every ${t.name} game live on the big screens with the sound on.`,
+      logo: t.logo,
+      color: t.color,
+      category: TEAM_CATEGORY[t.key] ?? t.league,
+      dates: mine.map((g) => ({
+        date: localDate(g.start, tz),
+        time: localTime(g.start, tz),
+        label: `vs ${sides(g).find((n) => !n.includes(t.name)) ?? sides(g)[1]}`,
+        url: book,
+        soldOut: false,
+      })),
+    });
+  }
+
+  return out.sort(byCategory);
+}

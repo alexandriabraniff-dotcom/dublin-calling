@@ -27,6 +27,9 @@ export interface WeeklyEvent {
   title: string;
   time?: string;
   url?: string; // Admit One event page
+  // With a poster, the event also gets a card on the events page when the location has no Admit One feed
+  image?: string;
+  about?: string;
 }
 
 export interface Location {
@@ -400,10 +403,23 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     // Add dated listings here, e.g. { date: "2026-10-24", title: "Canucks vs Oilers", time: "7:00 PM" }
     schedule: [],
     weekly: [
-      { days: [2], title: "Music Bingo or Trivia (alternating)", time: "7:00 to 10:00 PM" },
-      { days: [4], title: "Thursday Nights", time: "8:00 PM to 2:00 AM" },
-      { days: [5], title: "Ladies Night", time: "8:00 PM to late", url: "https://admitone.com/events/vancouver/community/party/ladies-night/RQMN6R?referral=website" },
-      { days: [6], title: "Saturday Shenanigans", time: "10:00 PM to 3:00 AM" },
+      {
+        days: [2],
+        title: "Music Bingo or Trivia (alternating)",
+        time: "7:00 to 10:00 PM",
+        image: "/event-trivia-tuesdays.jpg",
+        about: "Every other Tuesday it's music bingo, and the weeks between it's trivia on the main floor. Grab a table and bring your crew.",
+      },
+      { days: [4], title: "Thursday Nights", time: "8:00 PM to 2:00 AM", image: "/event-thursday-nights.jpg", about: "Kick off the weekend early with DJs, drink specials and the big screens on." },
+      {
+        days: [5],
+        title: "Ladies Night",
+        time: "8:00 PM to late",
+        url: "https://admitone.com/events/vancouver/community/party/ladies-night/RQMN6R?referral=website",
+        image: "/event-ladies-night.jpg",
+        about: "Every Friday on Granville Street. Grab the girls, grab a table, and stay for the party.",
+      },
+      { days: [6], title: "Saturday Shenanigans", time: "10:00 PM to 3:00 AM", image: "/event-saturday-shenanigans.jpg", about: "Three floors, late nights and the best party on Granville Street, open until 3 AM." },
       { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
     ],
     mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20900%20Granville%20St%2C%20Vancouver%2C%20BC&output=embed",
