@@ -1,5 +1,8 @@
+import DecorLayer from "@/components/Decor";
+
 /* One header style for every inner page (everything except the homepage),
-   based on the Events page: gold location label, title, optional short line. */
+   based on the Events page: gold location label, title, optional short line,
+   and the MMA gloves + baseball and bat drawings in the open space on the right. */
 export default function PageHeader({
   location,
   label,
@@ -12,7 +15,14 @@ export default function PageHeader({
   subtitle?: string;
 }) {
   return (
-    <section className="bg-[#0F5132] border-b border-white/10 pt-14 pb-10 md:pt-16 md:pb-12 px-6">
+    <section className="relative isolate overflow-x-clip bg-[#0F5132] border-b border-white/10 pt-14 pb-10 md:pt-16 md:pb-12 px-6">
+      <DecorLayer
+        spots={[
+          { name: "baseball-bat", x: 76, y: "55%", rotate: -14, scale: 0.95 },
+          { name: "mma-gloves", x: 91, y: "50%", rotate: 8, scale: 0.85 },
+        ]}
+        mobileSpots={[{ name: "mma-gloves", x: 87, y: "38px", rotate: 8, scale: 0.55 }]}
+      />
       <div className="max-w-5xl mx-auto">
         <p
           className="text-[#F2B035] mb-3 uppercase"

@@ -22,7 +22,7 @@ export default function TonightTicker({ items }: { items: { title: string; time?
   const item = items[i % items.length];
 
   return (
-    <div className="flex-1 min-w-0 flex items-center gap-2" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div className="w-full sm:w-auto flex-1 min-w-0 flex items-center gap-2" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <ul className="sr-only">
         {items.map((it, n) => (
           <li key={n}>

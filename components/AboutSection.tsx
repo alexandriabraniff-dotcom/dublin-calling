@@ -48,7 +48,10 @@ export default function AboutSection({ location }: { location: Location }) {
               { name: "foam-finger", x: 50, y: "calc(100% + 80px)", rotate: 10, scale: 0.8 },
             ],
             1: [{ name: "soccer-ball", x: 94, y: "calc(100% + 40px)", rotate: -8, scale: 0.85 }],
-            2: [{ name: "jersey", x: 8, y: "calc(100% + 30px)", rotate: 8, scale: 0.9 }],
+            2: [
+              { name: "jersey", x: 8, y: "calc(100% + 30px)", rotate: 8, scale: 0.9 },
+              { name: "baseball-bat", x: 50, y: "-60px", rotate: -12, scale: 0.85 },
+            ],
           }}
           mobileDecor={{
             0: [{ name: "foam-finger", x: 86, y: "calc(100% + 24px)", rotate: 10, scale: 0.6 }],

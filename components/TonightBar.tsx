@@ -12,8 +12,9 @@ export default async function TonightBar({ location }: { location: Location }) {
 
   return (
     <div className="bg-[#F4EFE6] text-[#101010]">
-      <div className="max-w-7xl mx-auto px-5 lg:px-8 min-h-9 py-1.5 flex items-center gap-4 text-[11px] uppercase tracking-[0.15em]">
-        <Link href={`/${location.slug}/events`} className="shrink-0 font-semibold hover:underline underline-offset-4">
+      {/* Phones: the label on its own line so tonight's listing gets the full width */}
+      <div className="max-w-7xl mx-auto px-5 lg:px-8 min-h-9 py-1.5 flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-4 text-[11px] uppercase tracking-[0.15em]">
+        <Link href={`/${location.slug}/events`} className="shrink-0 self-center font-semibold hover:underline underline-offset-4">
           What&apos;s happening tonight?
         </Link>
         <TonightTicker items={tonight.map((t) => ({ title: t.title, time: t.time }))} />
