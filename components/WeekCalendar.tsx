@@ -135,7 +135,10 @@ export default function WeekCalendar({
                 className={`flex flex-col sm:flex-row sm:items-center gap-4 px-5 py-4 border-2 ${i === 0 ? "border-[#F2B035] bg-[#101010]/60" : "border-white/15 bg-[#101010]/30"}`}
               >
                 <div className="flex-1 min-w-0">
-                  {item.time && <p className="text-[#F2B035] text-xs uppercase tracking-[0.15em] mb-1">{item.time}</p>}
+                  <p className="flex flex-wrap items-center gap-x-3 text-[#F2B035] text-xs uppercase tracking-[0.15em] mb-1">
+                    {item.time && <span>{item.time}</span>}
+                    {"bigScreen" in item && item.bigScreen && <span className="text-white/80">On the big screen</span>}
+                  </p>
                   <p
                     className="text-white uppercase"
                     style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 600, fontSize: "clamp(1rem, 1.6vw, 1.25rem)", letterSpacing: "0.04em" }}

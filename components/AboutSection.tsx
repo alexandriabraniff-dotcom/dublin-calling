@@ -12,8 +12,11 @@ export default function AboutSection({ location }: { location: Location }) {
     <section id="about" className="relative isolate overflow-x-clip bg-[#101010] border-t border-white/10 py-16 md:py-20 scroll-mt-[72px]">
       <DecorLayer mobileSpots={[{ name: "basketball", x: 88, y: "34px", rotate: -10, scale: 0.6 }]} />
       <div className="max-w-7xl mx-auto px-6">
-        <FadeIn className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12 mb-16 md:mb-20">
-          <div className="flex flex-col gap-4 md:gap-5 w-full md:flex-1">
+        <FadeIn className="flex flex-col gap-6 max-w-3xl mx-auto mb-16 md:mb-20">
+          <GoldFrame className="w-full aspect-[16/10] order-first">
+            <Image src="/group-social.jpg" alt={`A crowd out together at Dublin Calling ${location.name}`} fill sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
+          </GoldFrame>
+          <div className="flex flex-col gap-4 md:gap-5 w-full">
             <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.25em]">About Us</p>
             <h2
               className="text-[#F2B035] leading-none"
@@ -34,20 +37,17 @@ export default function AboutSection({ location }: { location: Location }) {
               </p>
             </div>
           </div>
-          <GoldFrame className="w-full md:w-[42%] shrink-0 aspect-[16/10]">
-            <Image src="/group-social.jpg" alt={`A crowd out together at Dublin Calling ${location.name}`} fill sizes="(min-width: 768px) 42vw, 100vw" className="object-cover" />
-          </GoldFrame>
         </FadeIn>
 
         <ExperienceList
           items={[...getExperience(location), ...getAboutExtras(location)]}
           decor={{
             0: [
-              { name: "basketball", x: 50, y: "-64px", rotate: -10, scale: 0.75 }, // between Our Story and the first row
-              { name: "foam-finger", x: 94, y: "calc(100% + 40px)", rotate: 10, scale: 0.8 },
+              { name: "basketball", x: 12, y: "30%", rotate: -10, scale: 0.9 },
+              { name: "foam-finger", x: 88, y: "75%", rotate: 10, scale: 0.85 },
             ],
-            1: [{ name: "soccer-ball", x: 8, y: "calc(100% + 40px)", rotate: -8, scale: 0.85 }],
-            2: [{ name: "jersey", x: 92, y: "calc(100% + 30px)", rotate: 8, scale: 0.9 }],
+            1: [{ name: "soccer-ball", x: 12, y: "65%", rotate: -8, scale: 0.85 }],
+            2: [{ name: "jersey", x: 88, y: "40%", rotate: 8, scale: 0.9 }],
           }}
           mobileDecor={{
             0: [{ name: "foam-finger", x: 86, y: "calc(100% + 24px)", rotate: 10, scale: 0.6 }],

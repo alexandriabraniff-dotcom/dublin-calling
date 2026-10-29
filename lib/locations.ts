@@ -1,3 +1,5 @@
+import type { Team } from "@/lib/espn";
+
 export type LocationSlug = "adelaide" | "danforth" | "vancouver";
 
 export interface Event {
@@ -14,6 +16,7 @@ export interface ScheduleEvent {
   title: string;
   time?: string;
   url?: string; // Admit One event page
+  bigScreen?: boolean; // a game on the screens (from ESPN) rather than an Admit One event
 }
 
 // A repeating weekly listing for the "This Week" calendar. days: 0 = Sunday ... 6 = Saturday.
@@ -48,7 +51,16 @@ export interface Location {
   schedule: ScheduleEvent[];
   weekly: WeeklyEvent[];
   mapEmbed: string;
+  admitOneNodeId?: string; // Admit One organization node: events and Book Your Spot links
+  teams: Team[]; // teams whose games are listed automatically (ESPN)
 }
+
+const TORONTO_TEAMS: Team[] = [
+  { key: "leafs", league: "NHL", name: "Leafs", path: "hockey/nhl/teams/tor" },
+  { key: "raptors", league: "NBA", name: "Raptors", path: "basketball/nba/teams/tor" },
+  { key: "mlb", league: "MLB", name: "Blue Jays", path: "baseball/mlb/teams/tor" },
+  { key: "bills", league: "NFL", name: "Bills", path: "football/nfl/teams/buf" },
+];
 
 const LOCATIONS: Record<LocationSlug, Location> = {
   adelaide: {
@@ -156,11 +168,9 @@ const LOCATIONS: Record<LocationSlug, Location> = {
     uniqueFeature: "Home of the Official Bills Backers Club",
     // Add dated listings here, e.g. { date: "2026-10-24", title: "Canucks vs Oilers", time: "7:00 PM" }
     schedule: [],
-    weekly: [
-      { days: [0], title: "Bills Backers Watch Party", time: "Game days" },
-      { days: [1], title: "Trivia Night", time: "7:00 PM" },
-      { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
-    ],
+    weekly: [{ days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" }],
+    admitOneNodeId: "6a676533dd7a4bead76b39b1",
+    teams: TORONTO_TEAMS,
     mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20250%20Adelaide%20St%20W%2C%20Toronto%2C%20ON&output=embed",
   },
 
@@ -275,6 +285,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
     ],
     mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20526%20Danforth%20Ave%2C%20Toronto%2C%20ON&output=embed",
+    teams: TORONTO_TEAMS, // Admit One node for Danforth still to confirm
   },
 
   vancouver: {
@@ -391,6 +402,7 @@ const LOCATIONS: Record<LocationSlug, Location> = {
       { days: [0, 1, 2, 3, 4, 5], title: "Happy Hour", time: "4:00 to 6:00 PM" },
     ],
     mapEmbed: "https://www.google.com/maps?q=Dublin%20Calling%2C%20900%20Granville%20St%2C%20Vancouver%2C%20BC&output=embed",
+    teams: [{ key: "canucks", league: "NHL", name: "Canucks", path: "hockey/nhl/teams/van" }],
   },
 };
 

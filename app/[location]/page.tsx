@@ -10,6 +10,7 @@ import InstagramFeed from "@/components/InstagramFeed";
 import WeekCalendar from "@/components/WeekCalendar";
 import EventCarousel, { type EventCard } from "@/components/EventCarousel";
 import AboutSection from "@/components/AboutSection";
+import { getLiveSchedule } from "@/lib/schedule";
 
 export default async function LocationHome({
   params,
@@ -21,6 +22,7 @@ export default async function LocationHome({
   if (!loc) notFound();
 
   const base = `/${loc.slug}`;
+  const schedule = [...loc.schedule, ...(await getLiveSchedule(loc))];
 
   // Event cards
   const eventCards: EventCard[] = (
@@ -155,7 +157,7 @@ export default async function LocationHome({
           { name: "hockey", x: 84, y: "calc(100% - 26px)", rotate: 6, scale: 0.85 },
         ]} />
         <FadeIn>
-          <WeekCalendar schedule={loc.schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} />
+          <WeekCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} />
         </FadeIn>
         <FadeIn className="mt-16">
           <EventCarousel cards={eventCards} base={base} />

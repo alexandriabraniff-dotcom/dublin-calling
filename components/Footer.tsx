@@ -6,7 +6,7 @@ import FooterMap from "@/components/FooterMap";
 const NAV_LINKS = [
   { href: "", label: "Home" },
   { href: "#about", label: "About" },
-  { href: "/menu", label: "Menu" },
+  { href: "/menu", label: "Menus" },
   { href: "/events", label: "Events" },
   { href: "/group-bookings", label: "Group Bookings" },
   { href: "/faq", label: "FAQ" },

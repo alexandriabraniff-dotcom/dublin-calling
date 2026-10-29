@@ -14,7 +14,7 @@ const LOCATION_LABELS: Record<LocationSlug, string> = {
 
 const LEFT_LINKS = [
   { href: "#about",  label: "About"  }, // homepage About section
-  { href: "/menu",   label: "Menu"   },
+  { href: "/menu",   label: "Menus"  },
   { href: "/events", label: "Events" },
 ];
 

@@ -24,15 +24,6 @@ export function getExperience(loc: Location): ExperienceItem[] {
     },
   ];
 
-  if (loc.slug === "vancouver") {
-    items.push(
-      {
-        title: "Never a Dull Moment",
-        body: "Waiting for the next UFC fight to start or halftime to wrap up? Rack up a game on our pool tables and more. There's always something to keep you busy between the big moments.",
-      }
-    );
-  }
-
   return items;
 }
 

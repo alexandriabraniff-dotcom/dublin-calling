@@ -7,6 +7,8 @@ import PageHeader from "@/components/PageHeader";
 import { getLocation, todayIn } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
 import WeekCalendar from "@/components/WeekCalendar";
+import SeriesList from "@/components/SeriesList";
+import { getLiveSchedule, getSeries, SERIES_CATEGORIES } from "@/lib/schedule";
 
 type TagColor = "red" | "gold" | "green" | "default";
 
@@ -197,6 +199,9 @@ export default async function EventsPage({
 
   const base = `/${loc.slug}`;
   const events = EVENT_DATA[loc.slug] ?? [];
+  // Live from Admit One where the location is connected; the hand-written cards otherwise
+  const [series, live] = await Promise.all([getSeries(loc), getLiveSchedule(loc)]);
+  const schedule = [...loc.schedule, ...live];
 
   return (
     <>
@@ -205,10 +210,15 @@ export default async function EventsPage({
 
       {/* ── THIS WEEK + date picker ── */}
       <section className="bg-[#082a1c] border-b border-white/10 py-16">
-        <WeekCalendar schedule={loc.schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} withPicker />
+        <WeekCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} withPicker />
       </section>
 
       {/* ── EVENTS ── */}
+      {series.length > 0 ? (
+        <section className="bg-[#101010] py-16 px-6">
+          <SeriesList series={series} categories={SERIES_CATEGORIES} />
+        </section>
+      ) : (
       <section className="bg-[#101010] py-16 px-6">
         <div className="max-w-5xl mx-auto flex flex-col gap-10">
           {events.map((event, i) => (
@@ -332,6 +342,7 @@ export default async function EventsPage({
           ))}
         </div>
       </section>
+      )}
     </>
   );
 }
