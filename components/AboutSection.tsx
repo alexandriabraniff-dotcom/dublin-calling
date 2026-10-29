@@ -3,7 +3,7 @@ import FadeIn from "@/components/FadeIn";
 import GoldFrame from "@/components/GoldFrame";
 import ExperienceList from "@/components/ExperienceList";
 import DecorLayer from "@/components/Decor";
-import { getExperience, getAboutExtras } from "@/lib/experience";
+import { getExperience } from "@/lib/experience";
 import type { Location } from "@/lib/locations";
 
 /* Homepage About section (replaces the old About page): Our Story, then the venue rows */
@@ -22,12 +22,12 @@ export default function AboutSection({ location }: { location: Location }) {
               Party Pub &amp; Kitchen.
             </h2>
             <div className="flex flex-col gap-4 max-w-xl">
-              <p className="text-[#F4EFE6]/80 text-base leading-relaxed">
+              <p className="text-white text-base leading-relaxed">
                 Dublin Calling is a Party Pub &amp; Kitchen built around one idea: a great night out should have
                 everything under one roof. Cold pints, live sports on big screens, food worth ordering, and a crowd
                 worth being around.
               </p>
-              <p className="text-[#F4EFE6]/80 text-base leading-relaxed">
+              <p className="text-white text-base leading-relaxed">
                 Part of The MRG Group family, we operate locations in Toronto and Vancouver, each with its own
                 character, its own regular crowd, and its own reason to come back. Whether you&apos;re here for the
                 game, the trivia, the happy hour, or just because it&apos;s Tuesday and you want a pint, this is your pub.
@@ -40,7 +40,7 @@ export default function AboutSection({ location }: { location: Location }) {
         </FadeIn>
 
         <ExperienceList
-          items={[...getExperience(location), ...getAboutExtras(location)]}
+          items={getExperience(location)}
           offset={1} // Our Story above has the write-up on the left, so the first row flips
           decor={{
             0: [

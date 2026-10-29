@@ -30,12 +30,12 @@ export default function ExperienceList({
           {/* Text side */}
           <div className="flex flex-col gap-4 w-full md:flex-1">
             <h3
-              className="text-[#F4EFE6] leading-none"
+              className="text-[#F2B035] leading-none"
               style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.4rem)", letterSpacing: "0.02em" }}
             >
               {item.title}
             </h3>
-            <p className="text-[#F4EFE6]/70 text-base md:text-lg leading-relaxed max-w-xl">{item.body}</p>
+            <p className="text-white text-base md:text-lg leading-relaxed max-w-xl">{item.body}</p>
           </div>
 
           {/* Photo */}

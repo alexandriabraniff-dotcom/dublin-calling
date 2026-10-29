@@ -36,7 +36,7 @@ export default function SeriesList({ series, categories }: { series: Series[]; c
         })}
       </div>
 
-      <ul className="flex flex-col gap-8">
+      <ul className="flex flex-col gap-5">
         {shown.map((s) => (
           <li key={s.key}>
             <SeriesCard series={s} />
@@ -63,22 +63,23 @@ function SeriesCard({ series: s }: { series: Series }) {
   }
 
   return (
-    <article className="border border-white/10 bg-[#0a0a0a] grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-      <div className="relative aspect-[2/1] md:aspect-[4/3] md:self-start bg-[#0F5132]">
-        {s.image && <Image src={s.image} alt="" fill sizes="(min-width: 768px) 400px, 100vw" className="object-cover" />}
+    <article className="border border-white/10 bg-[#0a0a0a] grid grid-cols-1 md:grid-cols-[320px_minmax(0,1fr)]">
+      {/* Whole artwork, never cropped: letterboxed on the dark panel */}
+      <div className="relative aspect-video md:self-start bg-[#101010]">
+        {s.image && <Image src={s.image} alt="" fill sizes="(min-width: 768px) 320px, 100vw" className="object-contain" />}
       </div>
 
-      <div className="p-6 md:p-8 flex flex-col gap-4">
+      <div className="p-5 md:p-6 flex flex-col gap-3">
         <p className="text-[#F2B035] text-[11px] uppercase tracking-[0.25em]">{s.category}</p>
         <h2
           className="text-[#F4EFE6] leading-tight"
-          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.5rem, 2.6vw, 2.1rem)", letterSpacing: "0.02em" }}
+          style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: "clamp(1.3rem, 2vw, 1.6rem)", letterSpacing: "0.02em" }}
         >
           {s.title}
         </h2>
-        {s.description && <p className="text-[#F4EFE6]/75 text-sm leading-relaxed line-clamp-3">{s.description}</p>}
+        {s.description && <p className="text-[#F4EFE6]/75 text-sm leading-relaxed line-clamp-2">{s.description}</p>}
 
-        <div className="border-t border-white/15 pt-4 flex flex-col sm:flex-row sm:items-center gap-4">
+        <div className="border-t border-white/15 pt-3 flex flex-col sm:flex-row sm:items-center gap-3">
           <div className="flex-1">
             <p className="text-[#F4EFE6]/70 text-[11px] uppercase tracking-[0.2em] mb-1">{rest > 0 ? "Next date" : "Date"}</p>
             <p className="text-[#F4EFE6] font-semibold">

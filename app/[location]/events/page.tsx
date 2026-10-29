@@ -6,7 +6,7 @@ import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 import { getLocation, todayIn } from "@/lib/locations";
 import FadeIn from "@/components/FadeIn";
-import WeekCalendar from "@/components/WeekCalendar";
+import EventsCalendar from "@/components/EventsCalendar";
 import SeriesList from "@/components/SeriesList";
 import { getLiveSchedule, getSeries, SERIES_CATEGORIES } from "@/lib/schedule";
 
@@ -210,7 +210,7 @@ export default async function EventsPage({
 
       {/* ── THIS WEEK + date picker ── */}
       <section className="bg-[#082a1c] border-b border-white/10 py-16">
-        <WeekCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} withPicker />
+        <EventsCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} />
       </section>
 
       {/* ── EVENTS ── */}

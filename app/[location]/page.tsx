@@ -8,7 +8,6 @@ import FadeIn from "@/components/FadeIn";
 import DecorLayer from "@/components/Decor";
 import InstagramFeed from "@/components/InstagramFeed";
 import WeekCalendar from "@/components/WeekCalendar";
-import EventCarousel, { type EventCard } from "@/components/EventCarousel";
 import AboutSection from "@/components/AboutSection";
 import { getLiveSchedule } from "@/lib/schedule";
 
@@ -23,38 +22,6 @@ export default async function LocationHome({
 
   const base = `/${loc.slug}`;
   const schedule = [...loc.schedule, ...(await getLiveSchedule(loc))];
-
-  // Event cards
-  const eventCards: EventCard[] = (
-    {
-      adelaide: [
-        { day: "Every Sunday",  name: "Bills Backers Watch Party", details: ["Official Buffalo Bills fan chapter", "Every game day", "Drink specials all game"],  tag: "NFL",    tagColor: "gold",    emoji: "🏈" },
-        { day: "Every Monday",  name: "Trivia Night",              details: ["Hosted by TriviaTO", "Doors at 7:00 PM", "Prizes for top table"],                  tag: "Weekly", tagColor: "default", emoji: "🧠" },
-        { day: "Fight Nights",  name: "UFC Live",                  details: ["Every card live", "20+ big screens", "Come early for best seats"],                  tag: "UFC",    tagColor: "red",     emoji: "🥊" },
-        { day: "Sun to Fri",    name: "Happy Hour",                details: ["4:00 PM to 6:00 PM", "Discounted drinks all week", "Draught, cocktails and more"],  tag: "Daily",  tagColor: "green",   emoji: "🍺" },
-      ],
-      danforth: [
-        { day: "Every Monday",  name: "Pool Tournament",   details: ["Sign in by 7:00 PM", "Open to all skill levels", "Prizes for winners"],            tag: "Weekly", tagColor: "default", emoji: "🎱" },
-        { day: "Every Tuesday", name: "Trivia Night",      details: ["Hosted by TriviaTO", "Main floor, 7:00 PM", "Prizes for top table"],               tag: "Weekly", tagColor: "default", emoji: "🧠" },
-        { day: "Fight Nights",  name: "UFC Live",          details: ["Every card live on our big screens", "Come early for best seats"],                  tag: "UFC",    tagColor: "red",     emoji: "🥊" },
-        { day: "Sun to Fri",    name: "Happy Hour",        details: ["4:00 PM to 6:00 PM", "Discounted drinks daily", "Draught, cocktails and more"],    tag: "Daily",  tagColor: "green",   emoji: "🍺" },
-      ],
-      vancouver: [
-        { day: "Bi-weekly Tuesdays, 7 to 10PM", name: "Music Bingo",          details: [], tag: "Event", tagColor: "gold", emoji: "🎵", image: "/event-music-bingo.jpg" },
-        { day: "Bi-weekly Tuesdays, 7 to 10PM", name: "Trivia Tuesdays",      details: [], tag: "Event", tagColor: "gold", emoji: "🧠", image: "/event-trivia-tuesdays.jpg" },
-        { day: "Every Thursday, 8PM to 2AM",    name: "Thursday Nights",      details: [], tag: "Event", tagColor: "gold", emoji: "🎧", image: "/event-thursday-nights.jpg" },
-        { day: "Every Friday, 8PM to Late",     name: "Ladies Night",         details: [], tag: "Event", tagColor: "gold", emoji: "👑", image: "/event-ladies-night.jpg" },
-        { day: "Every Saturday, 10PM to 3AM",   name: "Saturday Shenanigans", details: [], tag: "Event", tagColor: "gold", emoji: "☘️", image: "/event-saturday-shenanigans.jpg" },
-      ],
-    } as Record<string, EventCard[]>
-  )[loc.slug] ?? [];
-
-  const tagStyle = (color: "red" | "gold" | "green" | "default") => {
-    if (color === "red")   return "border border-[#C8102E] text-[#101010]";
-    if (color === "gold")  return "bg-[#F2B035] text-[#101010]";
-    if (color === "green") return "border border-[#169B62] text-[#169B62]";
-    return "border border-white/20 text-[#F4EFE6]/70";
-  };
 
   // Hero subtitle
   const heroLabel =
@@ -147,7 +114,7 @@ export default async function LocationHome({
 
       </section>
 
-      {/* ── THIS WEEK AT DUBLIN CALLING: calendar (dated + weekly events), then the event nights ── */}
+      {/* ── SPORTS AT DUBLIN CALLING: the Lineup (dated + weekly listings) ── */}
       <section className="relative isolate overflow-x-clip bg-[#0F5132] border-t border-white/10 py-16">
         <DecorLayer spots={[
           { name: "football", x: 12.5, y: "80px", rotate: -12 },
@@ -158,9 +125,6 @@ export default async function LocationHome({
         ]} />
         <FadeIn>
           <WeekCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} />
-        </FadeIn>
-        <FadeIn className="mt-16">
-          <EventCarousel cards={eventCards} base={base} />
         </FadeIn>
       </section>
 

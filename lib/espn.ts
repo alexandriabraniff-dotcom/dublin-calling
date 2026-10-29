@@ -8,6 +8,8 @@ export interface Team {
   league: string; // short label shown in titles, e.g. "NHL"
   name: string; // how the team reads in titles, e.g. "Leafs"
   path: string; // ESPN sport/league/team path, e.g. "hockey/nhl/teams/tor"
+  logo: string; // round icon in the Lineup and calendar
+  color: string; // team colour for featured listings
 }
 
 export interface Game {

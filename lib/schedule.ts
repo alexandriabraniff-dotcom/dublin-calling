@@ -64,7 +64,14 @@ function gameFor(games: Game[], tag: string, date: string, tz: string) {
   return games.find((g) => g.team === tag && localDate(g.start, tz) === date);
 }
 
-/* Dated listings for the This Week Lineup and the tonight bar, sorted by start time */
+const teamInfo = (loc: Location, key: string) => {
+  const t = loc.teams.find((x) => x.key === key);
+  return t ? { name: t.name, logo: t.logo, color: t.color } : undefined;
+};
+
+const shorten = (text: string, max = 220) => (text.length > max ? text.slice(0, text.lastIndexOf(" ", max)) + "..." : text);
+
+/* Dated listings for the Lineup, the events calendar and the tonight bar, sorted by start time */
 export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
   const { events, games } = await load(loc);
   const tz = loc.timezone;
@@ -76,7 +83,16 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
       const date = localDate(d.start, tz);
       const game = e.tag ? gameFor(games, e.tag, date, tz) : undefined;
       if (game) used.add(game);
-      rows.push({ date, time: localTime(d.start, tz), title: game?.title ?? (e.tag === "leafs" || e.tag === "raptors" ? SERIES_TITLES[e.tag] : e.title), url: d.url, start: d.start });
+      rows.push({
+        date,
+        time: localTime(d.start, tz),
+        title: game?.title ?? (e.tag === "leafs" || e.tag === "raptors" ? SERIES_TITLES[e.tag] : e.title),
+        url: d.url,
+        // Team styling only when that team actually plays (a World Series night tagged "mlb" isn't a Jays game)
+        team: game || e.tag === "leafs" || e.tag === "raptors" ? teamInfo(loc, e.tag) : undefined,
+        info: e.description ? shorten(e.description) : undefined,
+        start: d.start,
+      });
     }
   }
 
@@ -86,11 +102,11 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
     // e.g. a Bills game on a night with an "NFL Season Event": book through that event
     const league = g.title.split(":")[0];
     const host = rows.find((r) => r.date === date && r.url && r.title.toUpperCase().includes(league));
-    rows.push({ date, time: localTime(g.start, tz), title: g.title, url: host?.url, bigScreen: true, start: g.start });
+    rows.push({ date, time: localTime(g.start, tz), title: g.title, url: host?.url, bigScreen: true, team: teamInfo(loc, g.team), start: g.start });
   }
 
   rows.sort((a, b) => a.start.localeCompare(b.start));
-  return rows.map((r) => ({ date: r.date, time: r.time, title: r.title, url: r.url, bigScreen: r.bigScreen }));
+  return rows.map((r) => ({ date: r.date, time: r.time, title: r.title, url: r.url, bigScreen: r.bigScreen, team: r.team, info: r.info }));
 }
 
 /* Admit One events grouped into series for the events page, with a filter category each */
