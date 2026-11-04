@@ -21,7 +21,7 @@ export default async function GroupBookingsPage({
   return (
     <>
       {/* Header */}
-      <PageHeader location={loc.name} label="Group Bookings" title="Group Bookings" />
+      <PageHeader location={loc.name} label="Group Bookings" title="Group Bookings" page="group-bookings" subtitle={`Book a social event, team outing or private event for your group at Dublin Calling ${loc.name}, ${loc.address}.`} />
 
       {/* Booking types: photo + write-up + its own enquiry pop-up */}
       <section className="bg-[#101010] py-16">

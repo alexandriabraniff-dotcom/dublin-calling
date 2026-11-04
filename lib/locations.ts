@@ -1,4 +1,4 @@
-import type { Team } from "@/lib/espn";
+import type { Matchup, Team } from "@/lib/espn";
 
 export type LocationSlug = "adelaide" | "danforth" | "vancouver";
 
@@ -19,6 +19,7 @@ export interface ScheduleEvent {
   bigScreen?: boolean; // a game on the screens (from ESPN) rather than an Admit One event
   team?: { name: string; logo: string; color?: string }; // round logo; followed teams also get their colour
   info?: string; // short description for "More info"
+  matchup?: Matchup; // games: league logo + both teams' logos
 }
 
 // A repeating weekly listing for the "This Week" calendar. days: 0 = Sunday ... 6 = Saturday.

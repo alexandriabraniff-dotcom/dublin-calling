@@ -10,6 +10,7 @@ import InstagramFeed from "@/components/InstagramFeed";
 import WeekCalendar from "@/components/WeekCalendar";
 import AboutSection from "@/components/AboutSection";
 import { getLiveSchedule } from "@/lib/schedule";
+import { tableHref } from "@/lib/booking";
 
 export default async function LocationHome({
   params,
@@ -101,9 +102,7 @@ export default async function LocationHome({
               See Events
             </Link>
             <a
-              href={loc.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={tableHref(loc.slug)}
               className="btn border border-[#F4EFE6]/30 text-[#F4EFE6] font-semibold uppercase tracking-[0.12em] hover:border-[#F4EFE6]/60 hover:bg-white/5 transition-colors"
               style={{ fontFamily: "var(--font-label)", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
             >
@@ -124,7 +123,7 @@ export default async function LocationHome({
           { name: "hockey", x: 84, y: "calc(100% - 26px)", rotate: 6, scale: 0.85 },
         ]} />
         <FadeIn>
-          <WeekCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} />
+          <WeekCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={tableHref(loc.slug)} address={loc.address} />
         </FadeIn>
       </section>
 
@@ -145,7 +144,7 @@ export default async function LocationHome({
                 className="text-[#101010] leading-tight"
                 style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "0.02em" }}
               >
-                Book Your Group Night
+                Book Your Group&apos;s Night Out
               </h2>
               <p className="mt-3 text-[#101010]/85 text-sm max-w-sm leading-relaxed">
                 Birthdays, corporate outings, post-game parties. Get in touch and we&apos;ll take care of everything.

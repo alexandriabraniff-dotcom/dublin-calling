@@ -1,6 +1,7 @@
 import { getAdmitOneEvents, type AdmitOneEvent } from "@/lib/admitone";
 import { getGames, LEAGUES, type Game } from "@/lib/espn";
 import type { Location, ScheduleEvent } from "@/lib/locations";
+import { tableHref } from "@/lib/booking";
 
 /* Live schedule for a location: Admit One events (with their Book Your Spot links) plus every
    followed team's game from ESPN. A game that already has an Admit One date (same day, same
@@ -96,6 +97,7 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
         // Team styling only when that team actually plays (a World Series night tagged "mlb" isn't a Jays game)
         team: game ? { name: game.title.split(":")[0], logo: game.logo, color: game.color } : e.tag === "leafs" || e.tag === "raptors" ? teamInfo(loc, e.tag) : undefined,
         info: e.description ? shorten(e.description) : undefined,
+        matchup: game?.matchup,
         start: d.start,
       });
     }
@@ -114,12 +116,13 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
       url: host?.url,
       bigScreen: true,
       team: { name: g.title.split(":")[0], logo: g.logo, color: g.color },
+      matchup: g.matchup,
       start: g.start,
     });
   }
 
   rows.sort((a, b) => a.start.localeCompare(b.start));
-  return rows.map((r) => ({ date: r.date, time: r.time, title: r.title, url: r.url, bigScreen: r.bigScreen, team: r.team, info: r.info }));
+  return rows.map((r) => ({ date: r.date, time: r.time, title: r.title, url: r.url, bigScreen: r.bigScreen, team: r.team, info: r.info, matchup: r.matchup }));
 }
 
 /* Series cards for the events page, with a filter category each: Admit One events grouped by
@@ -174,7 +177,7 @@ const byCategory = (a: Series, b: Series) => CATEGORY_ORDER.indexOf(a.category) 
 function fallbackSeries(loc: Location, games: Game[]): Series[] {
   const tz = loc.timezone;
   const today = localDate(new Date().toISOString(), tz);
-  const book = `/${loc.slug}/book-a-table`;
+  const book = tableHref(loc.slug);
   const out: Series[] = [];
 
   // Weekly nights with a poster: the next eight weeks of dates

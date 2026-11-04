@@ -28,7 +28,7 @@ export default function FAQPage() {
     <>
 
       {/* Header */}
-      <PageHeader location={loc.name} label="FAQ" title="FAQ" subtitle="Got a question? We've probably answered it below. If not, reach out directly." />
+      <PageHeader location={loc.name} label="FAQ" title="FAQ" page="faq" subtitle={`Frequently asked questions about Dublin Calling ${loc.name}: hours, bookings, age policy and more. Got a question? We've probably answered it below. If not, reach out directly.`} />
 
       <section className="py-16 bg-[#101010]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">

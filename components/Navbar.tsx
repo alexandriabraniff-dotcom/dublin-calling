@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { LocationSlug } from "@/lib/locations";
+import { tableHref } from "@/lib/booking";
 
 const LOCATION_LABELS: Record<LocationSlug, string> = {
   adelaide: "Toronto, Adelaide",
@@ -38,7 +39,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [locationOpen, setLocationOpen] = useState(false);
-  const [logoSmall, setLogoSmall] = useState(false);
+  const [logoSmall, setLogoSmall] = useState(() => pathname !== `/${location}`);
   const locationRef = useRef<HTMLDivElement>(null);
 
   // Escape closes open menus; clicking outside closes the location picker
@@ -57,10 +58,13 @@ export default function Navbar({ location }: { location: LocationSlug }) {
     };
   }, []);
 
-  // Shrink the desktop logo once 85% of the hero (first section) has scrolled under the header
+  // The big logo is only for the homepage hero: it shrinks once 85% of the hero has scrolled
+  // under the header, and every other page shows the small logo from the start
+  const onHome = pathname === `/${location}`;
   useEffect(() => {
     const HEADER_H = 72;
     const update = () => {
+      if (!onHome) return setLogoSmall(true);
       const hero = document.querySelector("section");
       if (!hero) return setLogoSmall(window.scrollY > HEADER_H);
       const rect = hero.getBoundingClientRect();
@@ -73,7 +77,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
-  }, [pathname]);
+  }, [pathname, onHome]);
   const base = `/${location}`;
   // On the homepage the hero already shows the big logo below lg, so the header logo waits until the hero scrolls away
   const hideMobileLogo = pathname === base && !logoSmall;
@@ -168,7 +172,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
 
             {/* Far right — Book a Table */}
             <Link
-              href={`${base}/book-a-table`}
+              href={tableHref(location)}
               className="shrink-0 bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
               style={{ fontSize: "clamp(10px, 0.85vw, 12px)", padding: "0.45rem 1.2rem" }}
             >
@@ -253,7 +257,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
             ))}
             <div className="p-4">
               <Link
-                href={`${base}/book-a-table`}
+                href={tableHref(location)}
                 onClick={() => setMenuOpen(false)}
                 className="btn block w-full text-center py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs uppercase tracking-[0.15em]"
               >

@@ -31,11 +31,32 @@ export interface Game {
   title: string; // "NHL: Leafs vs Canucks"
   logo: string;
   color?: string; // followed teams only: their nights are shown in the team colour
+  matchup?: Matchup; // league + both teams' logos, so the calendar can show "NHL [logo] vs [logo]"
 }
+
+export interface Side {
+  name: string;
+  logo?: string;
+}
+
+export interface Matchup {
+  league: string; // "NHL"
+  leagueLogo: string;
+  away: Side;
+  home: Side;
+}
+
+// League logos for the followed teams' games (the league boards carry their own)
+export const LEAGUE_LOGOS: Record<string, string> = {
+  NHL: "https://a.espncdn.com/i/teamlogos/leagues/500/nhl.png",
+  NBA: "https://a.espncdn.com/i/teamlogos/leagues/500/nba.png",
+  MLB: "https://a.espncdn.com/i/teamlogos/leagues/500/mlb.png",
+  NFL: "https://a.espncdn.com/i/teamlogos/leagues/500/nfl.png",
+};
 
 interface RawCompetitor {
   homeAway?: string;
-  team?: { abbreviation?: string; shortDisplayName?: string; displayName?: string };
+  team?: { abbreviation?: string; shortDisplayName?: string; displayName?: string; logo?: string; logos?: { href?: string }[] };
 }
 
 interface RawEvent {
@@ -44,6 +65,11 @@ interface RawEvent {
   timeValid?: boolean;
   competitions?: { competitors?: RawCompetitor[] }[];
 }
+
+const sideOf = (c?: RawCompetitor): Side => ({
+  name: c?.team?.shortDisplayName ?? "",
+  logo: c?.team?.logo ?? c?.team?.logos?.[0]?.href,
+});
 
 const API = "https://site.api.espn.com/apis/site/v2/sports";
 
@@ -64,7 +90,11 @@ async function fetchTeamGames(team: Team): Promise<Game[]> {
     if (!e.id || !e.date || e.timeValid === false) continue;
     const opp = (e.competitions?.[0]?.competitors ?? []).find((c) => c.team?.abbreviation?.toUpperCase() !== abbr);
     if (!opp?.team?.shortDisplayName) continue;
-    out.push({ id: e.id, team: team.key, start: e.date, title: `${team.league}: ${team.name} vs ${opp.team.shortDisplayName}`, logo: team.logo, color: team.color });
+    const comps = e.competitions?.[0]?.competitors ?? [];
+    const away = comps.find((c) => c.homeAway === "away");
+    const home = comps.find((c) => c.homeAway === "home");
+    const matchup = away && home ? { league: team.league, leagueLogo: LEAGUE_LOGOS[team.league] ?? team.logo, away: sideOf(away), home: sideOf(home) } : undefined;
+    out.push({ id: e.id, team: team.key, start: e.date, title: `${team.league}: ${team.name} vs ${opp.team.shortDisplayName}`, logo: team.logo, color: team.color, matchup });
   }
   return out;
 }
@@ -82,14 +112,16 @@ async function fetchLeagueGames(league: League): Promise<Game[]> {
   for (const e of boards.flatMap((b) => b?.events ?? [])) {
     if (!e.id || !e.date || e.timeValid === false) continue;
     const comps = e.competitions?.[0]?.competitors ?? [];
-    const away = comps.find((c) => c.homeAway === "away")?.team;
-    const home = comps.find((c) => c.homeAway === "home")?.team;
+    const awayC = comps.find((c) => c.homeAway === "away");
+    const homeC = comps.find((c) => c.homeAway === "home");
+    const away = awayC?.team;
+    const home = homeC?.team;
     if (!away?.shortDisplayName || !home?.shortDisplayName) continue;
     const names = [away.displayName ?? "", home.displayName ?? ""];
     const bigClub = league.clubs?.some((c) => names.some((n) => n.includes(c)));
     const prime = league.primetime && easternHour(e.date) >= 19;
     if (!bigClub && !prime) continue;
-    out.push({ id: e.id, team: league.key, start: e.date, title: `${league.label}: ${away.shortDisplayName} vs ${home.shortDisplayName}`, logo: league.logo });
+    out.push({ id: e.id, team: league.key, start: e.date, title: `${league.label}: ${away.shortDisplayName} vs ${home.shortDisplayName}`, logo: league.logo, matchup: { league: league.label, leagueLogo: league.logo, away: sideOf(awayC), home: sideOf(homeC) } });
   }
   return out;
 }
@@ -102,7 +134,7 @@ async function fetchGames(teams: Team[], leagues: League[]): Promise<Game[]> {
 }
 
 // Schedules change rarely; refresh every 6 hours
-export const getGames = unstable_cache(fetchGames, ["espn-games-v2"], { revalidate: 21600 });
+export const getGames = unstable_cache(fetchGames, ["espn-games-v3"], { revalidate: 21600 });
 
 const BIG_ENGLISH = ["Arsenal", "Chelsea", "Liverpool", "Manchester City", "Manchester United", "Tottenham", "Newcastle", "Aston Villa"];
 

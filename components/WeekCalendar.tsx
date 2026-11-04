@@ -1,25 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { addDays, calendarLink, fmt } from "@/lib/dates";
+import { addDays, fmt } from "@/lib/dates";
 import { listingsOn, type ScheduleEvent, type WeeklyEvent } from "@/lib/locations";
 import TeamIcon from "@/components/TeamIcon";
 
 /* Homepage "Lineup": seven date tiles from today, then the chosen day's listings, each with
-   a Book Your Spot button and an add-to-calendar link. Team nights get the team's round logo
+   a calendar icon for booking a table (OpenTable once MRG sends the links). Team nights get the team's round logo
    and sit in the team colour; everything else shares one plain style. */
 export default function WeekCalendar({
   schedule,
   weekly = [],
   today,
   bookHref,
-  address,
 }: {
   schedule: ScheduleEvent[];
   weekly?: WeeklyEvent[];
   today: string;
-  bookHref: string; // fallback for listings without their own Admit One link
-  address: string;
+  bookHref: string; // book a table
+  address?: string;
 }) {
   const [selected, setSelected] = useState(today);
   const start = today;
@@ -110,26 +109,16 @@ export default function WeekCalendar({
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <a
-                      href={item.url ?? bookHref}
-                      {...(item.url ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                      className="btn flex-1 sm:flex-none min-h-11 inline-flex items-center justify-center px-6 bg-[#F2B035] text-[#101010] text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
-                    >
-                      Book Your Spot<span className="sr-only">: {item.title}{item.url ? " (opens Admit One in a new tab)" : ""}</span>
-                    </a>
-                    <a
-                      href={calendarLink(selected, item.title, item.time, address)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Add ${item.title} to Google Calendar (opens in a new tab)`}
-                      className="w-11 h-11 shrink-0 flex items-center justify-center border-2 border-white/60 text-white hover:border-[#F2B035] hover:text-[#F2B035] transition-colors"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                        <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><line x1="12" y1="14" x2="12" y2="18" /><line x1="10" y1="16" x2="14" y2="16" />
-                      </svg>
-                    </a>
-                  </div>
+                  <a
+                    href={bookHref}
+                    {...(bookHref.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    aria-label={`Book a table for ${item.title}`}
+                    className="self-end sm:self-auto w-11 h-11 shrink-0 flex items-center justify-center border-2 border-white/60 text-white hover:border-[#F2B035] hover:text-[#F2B035] transition-colors"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                  </a>
                 </li>
               );
             })}

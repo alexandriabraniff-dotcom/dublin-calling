@@ -24,14 +24,9 @@
   12%, 88% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(-100%); opacity: 0; }
 }
-@keyframes tickerEnter {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
 .ticker-item { animation: tickerCycle 3.5s ease-in-out both; }
-.ticker-enter { animation: tickerEnter 0.4s ease-out both; }
 @media (prefers-reduced-motion: reduce) {
-  .ticker-item, .ticker-enter { animation: none; }
+  .ticker-item { animation: none; }
 }
 
 @keyframes slideDown {

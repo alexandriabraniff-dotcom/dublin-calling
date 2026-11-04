@@ -1,23 +1,12 @@
 import { notFound } from "next/navigation";
 import PageHeader from "@/components/PageHeader";
 import { getLocation } from "@/lib/locations";
+import { OPENTABLE, OPENTABLE_WIDGET } from "@/lib/booking";
 import FadeIn from "@/components/FadeIn";
 
-const BOOKING: Record<string, { type: "opentable" | "tripleseat"; url: string }> = {
-  vancouver: {
-    type: "opentable",
-    url: "https://www.opentable.ca/widget/reservation/loader?rid=1400461&type=standard&theme=wide&color=1&dark=false&iframe=true&overlay=false&lang=en-CA&newtab=false&ot_source=Restaurant%20website",
-  },
-  adelaide: {
-    type: "tripleseat",
-    url: "https://themrggroup.tripleseat.com/dynamic_party_request/528",
-  },
-  danforth: {
-    type: "tripleseat",
-    url: "https://themrggroup.tripleseat.com/dynamic_party_request/528",
-  },
-};
-
+/* Table bookings are OpenTable only. With a location's OpenTable link set in lib/booking.ts the
+   Book a Table buttons go straight there; this page covers the time before that (Vancouver's
+   OpenTable widget, or a call-to-book note for the Toronto venues). */
 export default async function BookATablePage({
   params,
 }: {
@@ -27,68 +16,53 @@ export default async function BookATablePage({
   const loc = getLocation(slug);
   if (!loc) notFound();
 
-  const booking = BOOKING[loc.slug];
-  const base = `/${loc.slug}`;
+  const link = OPENTABLE[loc.slug];
+  const widget = OPENTABLE_WIDGET[loc.slug];
+  const btn =
+    "btn inline-flex items-center justify-center min-h-12 px-8 font-semibold uppercase tracking-[0.12em] text-xs transition-colors";
 
   return (
     <>
-      {/* Header */}
-      <PageHeader location={loc.name} label="Reservations" title="Book a Table" subtitle={loc.address} />
+      <PageHeader
+        location={loc.name}
+        label="Reservations"
+        title="Book a Table"
+        page="book"
+        subtitle={`Book a table at Dublin Calling ${loc.name}, ${loc.address}, with OpenTable.`}
+      />
 
-      {/* ── BOOKING WIDGET ── */}
       <section className="bg-[#101010] py-16 px-6 min-h-[50vh]">
         <div className="max-w-4xl mx-auto">
-          {booking.type === "opentable" ? (
-            <FadeIn>
-              <p
-                className="text-[#F4EFE6]/70 mb-6"
-                style={{
-                  fontFamily: "var(--font-label)",
-                  fontSize: "0.7rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.25em",
-                }}
-              >
-                RESERVATION REQUEST
-              </p>
+          <FadeIn>
+            {widget && !link ? (
               <div className="border border-white/10 overflow-hidden">
                 <iframe
-                  src={booking.url}
+                  src={widget}
                   width="100%"
                   height="600"
-                  frameBorder="0"
-                  title={`Dublin Calling ${loc.name} Reservations`}
+                  title={`Dublin Calling ${loc.name} reservations on OpenTable`}
                   className="w-full"
-                  style={{ minHeight: "550px", background: "white" }}
+                  style={{ minHeight: "550px", background: "white", border: 0 }}
                 />
               </div>
-            </FadeIn>
-          ) : (
-            <FadeIn>
-              <p
-                className="text-[#F4EFE6]/70 mb-6"
-                style={{
-                  fontFamily: "var(--font-label)",
-                  fontSize: "0.7rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.25em",
-                }}
-              >
-                RESERVATION REQUEST
-              </p>
-              <div className="border border-white/10 overflow-hidden">
-                <iframe
-                  src={booking.url}
-                  width="100%"
-                  height="900"
-                  frameBorder="0"
-                  title={`Dublin Calling ${loc.name} Booking`}
-                  className="w-full"
-                  style={{ minHeight: "900px", background: "white" }}
-                />
+            ) : (
+              <div className="flex flex-col items-center text-center gap-6">
+                <p className="text-[#F4EFE6]/85 max-w-md leading-relaxed">
+                  {link ? "Reserve your table on OpenTable." : "Online booking with OpenTable is coming soon. Give us a call and we'll save you a table."}
+                </p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  {link && (
+                    <a href={link} target="_blank" rel="noopener noreferrer" className={`${btn} bg-[#F2B035] text-[#101010] hover:bg-[#e0a020]`}>
+                      Book on OpenTable<span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  )}
+                  <a href={`tel:${loc.phone}`} className={`${btn} border-2 border-[#F2B035] text-[#F4EFE6] hover:bg-[#F2B035] hover:text-[#101010]`}>
+                    Call {loc.phone}
+                  </a>
+                </div>
               </div>
-            </FadeIn>
-          )}
+            )}
+          </FadeIn>
         </div>
       </section>
     </>

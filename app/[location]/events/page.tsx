@@ -9,6 +9,7 @@ import FadeIn from "@/components/FadeIn";
 import EventsCalendar from "@/components/EventsCalendar";
 import SeriesList from "@/components/SeriesList";
 import { getLiveSchedule, getSeries, SERIES_CATEGORIES } from "@/lib/schedule";
+import { tableHref } from "@/lib/booking";
 
 type TagColor = "red" | "gold" | "green" | "default";
 
@@ -197,7 +198,6 @@ export default async function EventsPage({
   const loc = getLocation(slug);
   if (!loc) notFound();
 
-  const base = `/${loc.slug}`;
   const events = EVENT_DATA[loc.slug] ?? [];
   // Live from Admit One where the location is connected; the hand-written cards otherwise
   const [series, live] = await Promise.all([getSeries(loc), getLiveSchedule(loc)]);
@@ -206,11 +206,11 @@ export default async function EventsPage({
   return (
     <>
       {/* Header */}
-      <PageHeader location={loc.name} label="Events" title="What's On" subtitle="Live sport, weekly events, and nights you won't forget." />
+      <PageHeader location={loc.name} label="Events" title="What's On" page="events" subtitle={`Live sport on the big screens, weekly events and nights you won't forget at Dublin Calling ${loc.name}.`} />
 
       {/* ── THIS WEEK + date picker ── */}
       <section className="bg-[#082a1c] border-b border-white/10 py-16">
-        <EventsCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={`${base}/book-a-table`} address={loc.address} />
+        <EventsCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={tableHref(loc.slug)} address={loc.address} />
       </section>
 
       {/* ── EVENTS ── */}
@@ -323,7 +323,7 @@ export default async function EventsPage({
                       </a>
                     ) : (
                       <Link
-                        href={`${base}/book-a-table`}
+                        href={tableHref(loc.slug)}
                         className="btn inline-block bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
                         style={{
                           fontFamily: "var(--font-label)",

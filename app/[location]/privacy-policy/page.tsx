@@ -13,7 +13,7 @@ export default async function PrivacyPolicyPage({
 
   return (
     <>
-    <PageHeader location={loc.name} label="Privacy" title="Privacy Policy" />
+    <PageHeader location={loc.name} label="Privacy" title="Privacy Policy" page="privacy" />
     <section className="bg-white py-16">
       <div className="max-w-3xl mx-auto px-6 sm:px-8">
         <p className="text-[#0F5132] text-xs uppercase tracking-[0.25em] mb-4">Updated: May 31, 2024</p>

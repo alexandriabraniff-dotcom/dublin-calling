@@ -30,6 +30,15 @@ function FacebookIcon() {
   );
 }
 
+// Same Resources list as the current dublincalling.com footer (local events follow the city)
+const resources = (city: string) => [
+  { href: "https://admitone.com/", label: "Browse Shows" },
+  { href: `https://admitone.com/events/${city.toLowerCase()}`, label: "Browse Local Events" },
+  { href: "https://access.admitone.com/login", label: "Sell Tickets Online" },
+  { href: "https://themrggroup.com/", label: "About The MRG Group" },
+  { href: "https://careers.themrggroup.com/", label: "Careers" },
+];
+
 const LOCATIONS = [
   { slug: "adelaide", label: "Toronto, Adelaide" },
   { slug: "danforth", label: "Toronto, Danforth" },
@@ -107,6 +116,7 @@ function MobileFooter({ location, base }: { location: Location; base: string }) 
         </a>
       </div>
       <p className="text-[#F4EFE6]/85 text-sm mt-4 leading-relaxed">{location.address}</p>
+      <FooterMap location={location} className="mt-5" />
 
       {/* Hours, in the logo's double gold frame */}
       <div className="w-full mt-8 border-4 border-[#F2B035] p-[3px]">
@@ -159,6 +169,21 @@ function MobileFooter({ location, base }: { location: Location; base: string }) 
             ))}
           </ul>
         </nav>
+        <nav aria-label="Resources" className="col-span-2">
+          <h2 className="font-label text-[#F2B035] mb-2 uppercase" style={labelStyle}>
+            Resources
+          </h2>
+          <ul className="grid grid-cols-2 gap-x-6">
+            {resources(location.city).map((r) => (
+              <li key={r.label}>
+                <a href={r.href} target="_blank" rel="noopener noreferrer" className="block py-2 text-[#F4EFE6]/90 text-sm hover:text-[#F2B035] transition-colors">
+                  {r.label}
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
 
       {/* Legal + MRG */}
@@ -192,9 +217,6 @@ export default function Footer({ location }: FooterProps) {
 
   return (
     <footer id="find-us" className="bg-[#0F5132] border-t-2 border-[#F2B035] scroll-mt-[72px]">
-      {/* ── MAP (homepage only) ── */}
-      <FooterMap location={location} />
-
       {/* ── MOBILE FOOTER (below md) ── */}
       <MobileFooter location={location} base={base} />
 
@@ -202,7 +224,8 @@ export default function Footer({ location }: FooterProps) {
       <div className="hidden md:block max-w-7xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-6 items-start">
 
-          {/* Col 1 — Navigate + Locations */}
+          {/* Col 1 — Navigate + Locations, and Resources beside them */}
+          <div className="grid grid-cols-2 gap-6">
           <div className="flex flex-col gap-3">
             <p
               className="text-[#F4EFE6]/80 mb-1"
@@ -243,6 +266,28 @@ export default function Footer({ location }: FooterProps) {
                 {loc.label}
               </Link>
             ))}
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <p
+              className="text-[#F4EFE6]/80 mb-1"
+              style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.25em" }}
+            >
+              RESOURCES
+            </p>
+            {resources(location.city).map((r) => (
+              <a
+                key={r.label}
+                href={r.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#F4EFE6]/85 text-xs hover:text-[#F4EFE6] transition-colors"
+              >
+                {r.label}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            ))}
+          </div>
           </div>
 
           {/* Col 2 — Social + Logo + Legal */}
@@ -334,6 +379,9 @@ export default function Footer({ location }: FooterProps) {
                 </p>
               ))}
               </div>
+
+            {/* Map (homepage only), a small square */}
+            <FooterMap location={location} className="mt-4" />
 
             {/* MRG Group logo */}
             <div className="mt-6 pt-5 border-t border-white/25 flex md:justify-end">
