@@ -10,7 +10,7 @@ import type { Location } from "@/lib/locations";
 export default function AboutSection({ location }: { location: Location }) {
   return (
     <section id="about" className="relative isolate overflow-x-clip bg-[#101010] border-t border-white/10 py-16 md:py-20 scroll-mt-[72px]">
-      <DecorLayer mobileSpots={[{ name: "basketball", x: 88, y: "34px", rotate: -10, scale: 0.6 }]} />
+      <DecorLayer mobileSpots={[{ name: "basketball", x: 88, y: "34px", rotate: -10 }]} />
       <div className="max-w-7xl mx-auto px-6">
         <FadeIn className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12 mb-16 md:mb-20">
           <div className="flex flex-col gap-4 md:gap-5 w-full md:flex-1">
@@ -44,18 +44,18 @@ export default function AboutSection({ location }: { location: Location }) {
           offset={1} // Our Story above has the write-up on the left, so the first row flips
           decor={{
             0: [
-              { name: "basketball", x: 50, y: "-64px", rotate: -10, scale: 0.75 }, // between Our Story and the first row
-              { name: "foam-finger", x: 50, y: "calc(100% + 80px)", rotate: 10, scale: 0.8 },
+              { name: "basketball", x: 50, y: "-64px", rotate: -10 }, // between Our Story and the first row
+              { name: "foam-finger", x: 50, y: "calc(100% + 80px)", rotate: 10 },
             ],
-            1: [{ name: "soccer-ball", x: 94, y: "calc(100% + 40px)", rotate: -8, scale: 0.85 }],
+            1: [{ name: "soccer-ball", x: 94, y: "calc(100% + 40px)", rotate: -8 }],
             2: [
-              { name: "jersey", x: 8, y: "calc(100% + 30px)", rotate: 8, scale: 0.9 },
-              { name: "baseball-bat", x: 50, y: "-60px", rotate: -12, scale: 0.85 },
+              { name: "jersey", x: 8, y: "calc(100% + 30px)", rotate: 8 },
+              { name: "baseball-bat", x: 50, y: "-60px", rotate: -12 },
             ],
           }}
           mobileDecor={{
-            0: [{ name: "foam-finger", x: 86, y: "calc(100% + 24px)", rotate: 10, scale: 0.6 }],
-            1: [{ name: "soccer-ball", x: 14, y: "calc(100% + 24px)", rotate: -8, scale: 0.55 }],
+            0: [{ name: "foam-finger", x: 86, y: "calc(100% + 24px)", rotate: 10 }],
+            1: [{ name: "soccer-ball", x: 14, y: "calc(100% + 24px)", rotate: -8 }],
           }}
         />
       </div>

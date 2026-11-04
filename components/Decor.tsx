@@ -1,9 +1,12 @@
-/* Decorative mono illustrations (from the Figma set) placed at the spots the client marked.
+/* Decorative illustrations (from the Figma set) placed at the spots the client marked.
    The layer spans the full screen width over its parent, so x is a % of the viewport and
    y is any CSS length relative to the parent (e.g. "50%" or "calc(100% + 40px)").
    `spots` show from md up; `mobileSpots` show below md (the layout stacks there, so they get
    their own positions in gaps and edges). Purely decorative: hidden from assistive tech,
-   not clickable, behind content unless `front`. */
+   not clickable, behind content unless `front`.
+
+   Every drawing is shown at the SAME visual size (client, 2026-11-04): each one covers the same
+   area whatever its shape, so a tall foam finger and a wide bat read as equally big. */
 
 export type DecorName =
   | "beers"
@@ -15,19 +18,54 @@ export type DecorName =
   | "jersey"
   | "foam-finger"
   | "mma-gloves"
-  | "baseball-bat";
+  | "baseball-bat"
+  | "burger"
+  | "wings";
+
+// width / height of each trimmed drawing in public/decor
+const ASPECT: Record<DecorName, number> = {
+  beers: 440 / 375,
+  "eight-ball": 440 / 439,
+  football: 440 / 363,
+  hockey: 440 / 382,
+  basketball: 436 / 440,
+  "soccer-ball": 1,
+  jersey: 426 / 440,
+  "foam-finger": 248 / 440,
+  "mma-gloves": 415 / 440,
+  "baseball-bat": 440 / 282,
+  burger: 440 / 388,
+  wings: 440 / 332,
+};
 
 export interface DecorSpot {
   name: DecorName;
   x: number; // centre, % of viewport width
   y: string; // centre, relative to the parent
   rotate?: number;
-  scale?: number; // 1 = default size
   front?: boolean; // sit in front of photos/frames like a sticker instead of behind content
 }
 
-const DESKTOP_SIZE = "clamp(110px, 12vw, 190px)";
-const MOBILE_SIZE = "clamp(84px, 26vw, 130px)";
+// The one size for every drawing: the side of a square with the same area
+export const DESKTOP_SIZE = "clamp(100px, 10vw, 150px)";
+export const MOBILE_SIZE = "clamp(64px, 19vw, 84px)";
+
+// Width for a drawing so its area matches a size x size square
+export const decorWidth = (name: DecorName, size: string) => `calc(${size} * ${Math.sqrt(ASPECT[name]).toFixed(3)})`;
+
+export function DecorImg({ name, size, rotate = 0, className = "" }: { name: DecorName; size: string; rotate?: number; className?: string }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/decor/${name}.webp`}
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      className={`h-auto select-none pointer-events-none opacity-80 ${className}`}
+      style={{ width: decorWidth(name, size), transform: `rotate(${rotate}deg)` }}
+    />
+  );
+}
 
 export default function DecorLayer({ spots = [], mobileSpots = [] }: { spots?: DecorSpot[]; mobileSpots?: DecorSpot[] }) {
   return (
@@ -45,20 +83,9 @@ function Layer({ spots, z, show, size }: { spots: DecorSpot[]; z: string; show: 
   return (
     <div aria-hidden="true" className={`${show} pointer-events-none absolute inset-y-0 left-1/2 w-screen -translate-x-1/2 ${z}`}>
       {spots.map((s, i) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={i}
-          src={`/decor/${s.name}.webp`}
-          alt=""
-          loading="lazy"
-          className="absolute h-auto select-none opacity-80"
-          style={{
-            left: `${s.x}%`,
-            top: s.y,
-            width: `calc(${size} * ${s.scale ?? 1})`,
-            transform: `translate(-50%, -50%) rotate(${s.rotate ?? 0}deg)`,
-          }}
-        />
+        <div key={i} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${s.x}%`, top: s.y }}>
+          <DecorImg name={s.name} size={size} rotate={s.rotate} />
+        </div>
       ))}
     </div>
   );

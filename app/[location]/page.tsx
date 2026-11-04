@@ -117,10 +117,10 @@ export default async function LocationHome({
       <section className="relative isolate overflow-x-clip bg-[#0F5132] border-t border-white/10 py-16">
         <DecorLayer spots={[
           { name: "football", x: 12.5, y: "80px", rotate: -12 },
-          { name: "hockey", x: 86, y: "96px", rotate: 6, scale: 1.1 },
+          { name: "hockey", x: 86, y: "96px", rotate: 6 },
         ]} mobileSpots={[
-          { name: "football", x: 12, y: "26px", rotate: -12, scale: 0.75 },
-          { name: "hockey", x: 84, y: "calc(100% - 26px)", rotate: 6, scale: 0.85 },
+          { name: "football", x: 12, y: "26px", rotate: -12 },
+          { name: "hockey", x: 84, y: "calc(100% - 26px)", rotate: 6 },
         ]} />
         <FadeIn>
           <WeekCalendar schedule={schedule} weekly={loc.weekly} today={todayIn(loc.timezone)} bookHref={tableHref(loc.slug)} address={loc.address} />
@@ -135,8 +135,8 @@ export default async function LocationHome({
       <FadeIn>
         <section className="relative isolate overflow-x-clip bg-[#F2B035] px-6 py-20">
           <DecorLayer
-            spots={[{ name: "beers", x: 63, y: "50%", rotate: -6, scale: 1.6 }]}
-            mobileSpots={[{ name: "beers", x: 84, y: "40px", rotate: -6, scale: 0.8 }]}
+            spots={[{ name: "beers", x: 63, y: "50%", rotate: -6 }]}
+            mobileSpots={[{ name: "beers", x: 84, y: "40px", rotate: -6 }]}
           />
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>

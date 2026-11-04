@@ -1,3 +1,5 @@
+import { DecorImg, DESKTOP_SIZE, MOBILE_SIZE, type DecorName } from "@/components/Decor";
+
 /* One header style for every inner page (everything except the homepage): gold location label
    and a centred title with an illustration on each side. Each page gets its own pair (Menus:
    burger + clinking beers, and so on). The subtitle is the page's write-up for search engines:
@@ -5,7 +7,7 @@
 
 export type HeaderPage = "menu" | "events" | "group-bookings" | "faq" | "book" | "privacy";
 
-const ICONS: Record<HeaderPage, [string, string]> = {
+const ICONS: Record<HeaderPage, [DecorName, DecorName]> = {
   menu: ["burger", "beers"],
   events: ["foam-finger", "hockey"],
   "group-bookings": ["wings", "eight-ball"],
@@ -14,16 +16,13 @@ const ICONS: Record<HeaderPage, [string, string]> = {
   privacy: ["mma-gloves", "baseball-bat"],
 };
 
-function Icon({ name, flip }: { name: string; flip?: boolean }) {
+// Same size as the drawings on the homepage (phone size below md)
+function Icon({ name, rotate }: { name: DecorName; rotate: number }) {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={`/decor/${name}.webp`}
-      alt=""
-      aria-hidden="true"
-      className="shrink-0 h-auto select-none pointer-events-none opacity-90"
-      style={{ width: "clamp(64px, 11vw, 150px)", transform: `rotate(${flip ? 8 : -8}deg)` }}
-    />
+    <span className="shrink-0">
+      <DecorImg name={name} size={DESKTOP_SIZE} rotate={rotate} className="hidden md:block" />
+      <DecorImg name={name} size={MOBILE_SIZE} rotate={rotate} className="md:hidden" />
+    </span>
   );
 }
 
@@ -44,7 +43,7 @@ export default function PageHeader({
   return (
     <section className="relative isolate overflow-x-clip bg-[#0F5132] border-b border-white/10 pt-10 pb-10 md:pt-12 md:pb-12 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto flex items-center justify-center gap-3 sm:gap-8 md:gap-12">
-        <Icon name={left} />
+        <Icon name={left} rotate={-8} />
         <div className="min-w-0 text-center">
           <p
             className="text-[#F2B035] mb-3 uppercase"
@@ -63,7 +62,7 @@ export default function PageHeader({
           </h1>
           {subtitle && <p className="sr-only">{subtitle}</p>}
         </div>
-        <Icon name={right} flip />
+        <Icon name={right} rotate={8} />
       </div>
     </section>
   );
