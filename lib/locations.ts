@@ -1,4 +1,4 @@
-import type { Matchup, Team } from "@/lib/espn";
+import type { Fight, Matchup, Team } from "@/lib/espn";
 
 export type LocationSlug = "adelaide" | "danforth" | "vancouver";
 
@@ -20,6 +20,7 @@ export interface ScheduleEvent {
   team?: { name: string; logo: string; color?: string }; // round logo; followed teams also get their colour
   info?: string; // short description for "More info"
   matchup?: Matchup; // games: league logo + both teams' logos
+  fight?: Fight; // UFC nights: the main event, for the face-off tile
 }
 
 // A repeating weekly listing for the "This Week" calendar. days: 0 = Sunday ... 6 = Saturday.

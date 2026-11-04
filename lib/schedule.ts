@@ -1,5 +1,5 @@
 import { getAdmitOneEvents, type AdmitOneEvent } from "@/lib/admitone";
-import { getGames, LEAGUES, type Game } from "@/lib/espn";
+import { getGames, getUfcCards, LEAGUES, type Game, type UfcCard } from "@/lib/espn";
 import type { Location, ScheduleEvent } from "@/lib/locations";
 import { tableHref } from "@/lib/booking";
 
@@ -53,15 +53,17 @@ const localDate = (iso: string, tz: string) =>
 const localTime = (iso: string, tz: string) =>
   new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit" }).format(new Date(iso));
 
-async function load(loc: Location): Promise<{ events: AdmitOneEvent[]; games: Game[] }> {
-  const [events, games] = await Promise.all([
+async function load(loc: Location): Promise<{ events: AdmitOneEvent[]; games: Game[]; cards: UfcCard[] }> {
+  const [events, games, cards] = await Promise.all([
     loc.admitOneNodeId ? getAdmitOneEvents(loc.admitOneNodeId) : Promise.resolve([]),
     getGames(loc.teams, LEAGUES),
+    getUfcCards(),
   ]);
   const now = Date.now() - 6 * 3600 * 1000; // keep tonight's games listed after they start
   return {
     events: events.map((e) => ({ ...e, dates: e.dates.filter((d) => Date.parse(d.start) >= now) })).filter((e) => e.dates.length),
     games: games.filter((g) => Date.parse(g.start) >= now),
+    cards,
   };
 }
 
@@ -79,8 +81,14 @@ const shorten = (text: string, max = 220) => (text.length > max ? text.slice(0, 
 
 /* Dated listings for the Lineup, the events calendar and the tonight bar, sorted by start time */
 export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
-  const { events, games } = await load(loc);
+  const { events, games, cards } = await load(loc);
   const tz = loc.timezone;
+  // A UFC night's card: same number ("UFC 334"), else a card on the same date
+  const cardFor = (title: string, date: string) => {
+    if (!/\bUFC\b/i.test(title)) return undefined;
+    const num = title.match(/UFC\s*(\d+)/i)?.[1];
+    return cards.find((c) => (num ? c.card.replace(/\s+/g, " ").toUpperCase() === `UFC ${num}` : c.start && localDate(c.start, tz) === date));
+  };
   const rows: (ScheduleEvent & { start: string })[] = [];
   const used = new Set<Game>();
 
@@ -98,6 +106,7 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
         team: game ? { name: game.title.split(":")[0], logo: game.logo, color: game.color } : e.tag === "leafs" || e.tag === "raptors" ? teamInfo(loc, e.tag) : undefined,
         info: e.description ? shorten(e.description) : undefined,
         matchup: game?.matchup,
+        fight: cardFor(e.title, date),
         start: d.start,
       });
     }
@@ -122,7 +131,7 @@ export async function getLiveSchedule(loc: Location): Promise<ScheduleEvent[]> {
   }
 
   rows.sort((a, b) => a.start.localeCompare(b.start));
-  return rows.map((r) => ({ date: r.date, time: r.time, title: r.title, url: r.url, bigScreen: r.bigScreen, team: r.team, info: r.info, matchup: r.matchup }));
+  return rows.map((r) => ({ date: r.date, time: r.time, title: r.title, url: r.url, bigScreen: r.bigScreen, team: r.team, info: r.info, matchup: r.matchup, fight: r.fight }));
 }
 
 /* Series cards for the events page, with a filter category each: Admit One events grouped by

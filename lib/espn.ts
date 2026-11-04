@@ -150,3 +150,55 @@ export const LEAGUES: League[] = [
     clubs: [...BIG_ENGLISH, "Real Madrid", "Barcelona", "Bayern", "Atlético", "Paris Saint-Germain", "Internazionale", "AC Milan", "Juventus", "Dortmund"],
   },
 ];
+
+/* UFC cards (for the fight-night tiles): the main event's two fighters with ESPN headshots.
+   ESPN names each card "UFC 334: Gane vs. Hokit" and lists the main event last. */
+export interface Fighter {
+  name: string; // last name as ESPN's card title has it, e.g. "Gane"
+  fullName: string;
+  headshot?: string;
+}
+
+export interface Fight {
+  card: string; // "UFC 334" or "UFC Fight Night"
+  a: Fighter;
+  b: Fighter;
+}
+
+export interface UfcCard extends Fight {
+  start: string; // ISO datetime of the main card
+}
+
+interface RawFightCompetitor {
+  id?: string;
+  athlete?: { displayName?: string; shortName?: string };
+}
+
+async function fetchUfcCards(): Promise<UfcCard[]> {
+  const days = Array.from({ length: 21 }, (_, i) => yyyymmdd(Date.now() + i * 86400000));
+  const boards = await Promise.all(
+    days.map((d) =>
+      getJson<{ events?: { id?: string; name?: string; date?: string; competitions?: { date?: string; competitors?: RawFightCompetitor[] }[] }[] }>(
+        `${API}/mma/ufc/scoreboard?dates=${d}`,
+      ),
+    ),
+  );
+  const seen = new Set<string>();
+  const out: UfcCard[] = [];
+  for (const e of boards.flatMap((b) => b?.events ?? [])) {
+    if (!e.id || seen.has(e.id) || !e.name) continue;
+    seen.add(e.id);
+    const [card, bout] = e.name.split(":").map((x) => x.trim());
+    const names = bout?.split(/\s+vs\.?\s+/i);
+    const main = e.competitions?.at(-1);
+    if (!card || names?.length !== 2 || !main?.competitors) continue;
+    const fighter = (last: string): Fighter => {
+      const c = main.competitors!.find((x) => x.athlete?.displayName?.toLowerCase().endsWith(last.toLowerCase()));
+      return { name: last, fullName: c?.athlete?.displayName ?? last, headshot: c?.id ? `https://a.espncdn.com/i/headshots/mma/players/full/${c.id}.png` : undefined };
+    };
+    out.push({ card, a: fighter(names[0]), b: fighter(names[1]), start: main.date ?? e.date ?? "" });
+  }
+  return out;
+}
+
+export const getUfcCards = unstable_cache(fetchUfcCards, ["espn-ufc-v1"], { revalidate: 21600 });
