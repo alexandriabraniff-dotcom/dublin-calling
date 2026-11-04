@@ -138,8 +138,29 @@ function DayHeader({ date, isToday }: { date: string; isToday: boolean }) {
   );
 }
 
-const HAPPY_HOUR_BG = "#7A2E12"; // deep copper ale, so the gold in the beers drawing pops
 const isHappyHour = (item: Listing) => /happy hour/i.test(item.title);
+const isUFC = (item: Listing) => /\bUFC\b/i.test(item.title);
+const isTrivia = (item: Listing) => /trivia|bingo/i.test(item.title);
+
+// Happy Hour: copper ale fading to amber, with the brand deck's halftone dots
+const HAPPY_HOUR_STYLE = {
+  backgroundColor: "#8A3A14",
+  backgroundImage:
+    "radial-gradient(rgba(242,176,53,0.22) 1.2px, transparent 1.6px), linear-gradient(160deg, #6E2610 0%, #A3501A 100%)",
+  backgroundSize: "9px 9px, 100% 100%",
+} as const;
+
+// Fight night: a faint octagon behind the belt
+function Octagon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 100 100" className="absolute inset-0 m-auto h-[85%] w-auto text-white/10 pointer-events-none">
+      <polygon points="30,3 70,3 97,30 97,70 70,97 30,97 3,70 3,30" fill="none" stroke="currentColor" strokeWidth="3" />
+    </svg>
+  );
+}
+
+// eslint-disable-next-line @next/next/no-img-element
+const Drawing = ({ name, h = "h-14" }: { name: string; h?: string }) => <img src={`/decor/${name}.webp`} alt="" className={`${h} w-auto mx-auto relative`} />;
 
 function Logo({ src, name, size = 28 }: { src?: string; name: string; size?: number }) {
   if (!src) return <span className="text-white text-[11px] font-semibold">{name}</span>;
@@ -157,7 +178,9 @@ function Tile({ item, bookHref }: { item: Listing; date: string; bookHref: strin
   const team = "team" in item ? item.team : undefined;
   const m = "matchup" in item ? item.matchup : undefined;
   const happy = isHappyHour(item);
-  const bg = happy ? HAPPY_HOUR_BG : team?.color;
+  const ufc = !happy && isUFC(item);
+  const trivia = !happy && !ufc && isTrivia(item);
+  const style = happy ? HAPPY_HOUR_STYLE : ufc ? { backgroundColor: "#101010" } : team?.color ? { backgroundColor: team.color } : undefined;
   const info = "info" in item ? item.info : "about" in item ? item.about : undefined;
   const text =
     info ??
@@ -165,10 +188,12 @@ function Tile({ item, bookHref }: { item: Listing; date: string; bookHref: strin
       ? "On the big screens with the sound on. Grab your crew and a table and catch every play."
       : happy
         ? "Drink and food specials to kick off the night. See the Happy Hour menu for what's on."
-        : undefined);
+        : ufc
+          ? "Every fight on the big screens with the sound on. Get here early for a good seat."
+          : undefined);
 
   return (
-    <li className={`p-3 ${bg ? "" : "bg-white/[0.07]"}`} style={bg ? { backgroundColor: bg } : undefined}>
+    <li className={`relative p-3 ${ufc ? "border-l-4 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
       <div className="flex items-start justify-between gap-2">
         <p className="font-text text-white/85 text-xs uppercase tracking-[0.04em]">{item.time ?? ""}</p>
         <a
@@ -183,9 +208,21 @@ function Tile({ item, bookHref }: { item: Listing; date: string; bookHref: strin
       <div className="mt-2">
         {happy ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/decor/beers.webp" alt="" className="h-14 w-auto mx-auto" />
+            <Drawing name="happy-hour" h="h-16" />
             <span className="sr-only">{item.title}</span>
+          </>
+        ) : ufc ? (
+          <div className="relative">
+            <Octagon />
+            <Drawing name="title-belt" h="h-12" />
+            <p className="relative mt-1 text-center text-white uppercase tracking-[0.08em] text-sm font-bold" style={{ fontFamily: "var(--font-label)" }}>
+              {item.title}
+            </p>
+          </div>
+        ) : trivia ? (
+          <>
+            <Drawing name="microphone" />
+            <p className="mt-1 text-center text-white text-xs font-semibold leading-snug">{item.title}</p>
           </>
         ) : m ? (
           <>

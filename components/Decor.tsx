@@ -20,7 +20,10 @@ export type DecorName =
   | "mma-gloves"
   | "baseball-bat"
   | "burger"
-  | "wings";
+  | "wings"
+  | "microphone"
+  | "happy-hour"
+  | "title-belt";
 
 // width / height of each trimmed drawing in public/decor
 const ASPECT: Record<DecorName, number> = {
@@ -34,8 +37,11 @@ const ASPECT: Record<DecorName, number> = {
   "foam-finger": 248 / 440,
   "mma-gloves": 415 / 440,
   "baseball-bat": 440 / 282,
-  burger: 440 / 388,
-  wings: 440 / 332,
+  burger: 385 / 440,
+  wings: 440 / 312,
+  microphone: 361 / 440,
+  "happy-hour": 440 / 410,
+  "title-belt": 440 / 258,
 };
 
 export interface DecorSpot {
