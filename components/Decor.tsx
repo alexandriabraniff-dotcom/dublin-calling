@@ -37,11 +37,11 @@ const ASPECT: Record<DecorName, number> = {
   "foam-finger": 248 / 440,
   "mma-gloves": 415 / 440,
   "baseball-bat": 440 / 282,
-  burger: 440 / 405,
-  wings: 440 / 288,
-  "happy-hour": 440 / 399,
-  lightbulb: 261 / 440,
-  "title-belt": 440 / 242,
+  burger: 440 / 386,
+  wings: 440 / 313,
+  "happy-hour": 440 / 417,
+  lightbulb: 196 / 440,
+  "title-belt": 440 / 253,
 };
 
 export interface DecorSpot {
