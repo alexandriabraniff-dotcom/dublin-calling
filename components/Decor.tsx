@@ -38,7 +38,7 @@ const ASPECT: Record<DecorName, number> = {
   "mma-gloves": 415 / 440,
   "baseball-bat": 440 / 282,
   burger: 385 / 440,
-  wings: 440 / 312,
+  wings: 440 / 416,
   microphone: 361 / 440,
   "happy-hour": 440 / 410,
   "title-belt": 440 / 258,
@@ -59,7 +59,8 @@ export const MOBILE_SIZE = "clamp(64px, 19vw, 84px)";
 // Width for a drawing so its area matches a size x size square
 export const decorWidth = (name: DecorName, size: string) => `calc(${size} * ${Math.sqrt(ASPECT[name]).toFixed(3)})`;
 
-export function DecorImg({ name, size, rotate = 0, className = "" }: { name: DecorName; size: string; rotate?: number; className?: string }) {
+// faded: the homepage drawings sit behind content at 80%; the page headers show them at full strength
+export function DecorImg({ name, size, rotate = 0, className = "", faded = true }: { name: DecorName; size: string; rotate?: number; className?: string; faded?: boolean }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -67,7 +68,7 @@ export function DecorImg({ name, size, rotate = 0, className = "" }: { name: Dec
       alt=""
       aria-hidden="true"
       loading="lazy"
-      className={`h-auto select-none pointer-events-none opacity-80 ${className}`}
+      className={`h-auto select-none pointer-events-none ${faded ? "opacity-80" : ""} ${className}`}
       style={{ width: decorWidth(name, size), transform: `rotate(${rotate}deg)` }}
     />
   );

@@ -20,8 +20,8 @@ const ICONS: Record<HeaderPage, [DecorName, DecorName]> = {
 function Icon({ name, rotate }: { name: DecorName; rotate: number }) {
   return (
     <span className="shrink-0">
-      <DecorImg name={name} size={DESKTOP_SIZE} rotate={rotate} className="hidden md:block" />
-      <DecorImg name={name} size={MOBILE_SIZE} rotate={rotate} className="md:hidden" />
+      <DecorImg name={name} size={DESKTOP_SIZE} rotate={rotate} faded={false} className="hidden md:block" />
+      <DecorImg name={name} size={MOBILE_SIZE} rotate={rotate} faded={false} className="md:hidden" />
     </span>
   );
 }
