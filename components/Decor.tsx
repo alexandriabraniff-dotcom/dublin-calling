@@ -37,10 +37,10 @@ const ASPECT: Record<DecorName, number> = {
   "foam-finger": 248 / 440,
   "mma-gloves": 415 / 440,
   "baseball-bat": 440 / 282,
-  burger: 440 / 386,
-  wings: 440 / 313,
-  "happy-hour": 440 / 417,
-  lightbulb: 196 / 440,
+  burger: 440 / 368,
+  wings: 440 / 355,
+  "happy-hour": 440 / 377,
+  lightbulb: 375 / 440,
   "title-belt": 440 / 253,
 };
 
