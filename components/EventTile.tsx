@@ -57,7 +57,7 @@ export default function EventTile({ item, bookHref }: { item: Listing; bookHref:
   return (
     <li className={`relative overflow-hidden ${ufc ? "border-2 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
       {trivia && <ChalkBubbles />}
-      {teamTile && <TeamTexture color={team!.color!} logo={m?.leagueLogo} />}
+      {teamTile && <TeamTexture color={team!.color!} logo={watermark(m)} />}
       <details className="group relative">
         <summary className="font-text list-none cursor-pointer block p-3 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#F2B035] [&::-webkit-details-marker]:hidden">
           <p className="font-text text-white/85 text-xs uppercase tracking-[0.04em] pr-8 min-h-4">{item.time ?? ""}</p>
@@ -209,6 +209,11 @@ function MatchupLogos({ m }: { m: Matchup }) {
 export type TextureStyle = "hardwood" | "halftone" | "mesh";
 export const TEAM_TEXTURE: TextureStyle = "hardwood";
 
+// What sits faintly under the team colour: the league logo, or a wordless version where the
+// logo repeats the league name already typed on the tile (NBA: just the player silhouette).
+const WATERMARKS: Record<string, string> = { NBA: "/decor/league/nba-silhouette.png" };
+const watermark = (m?: Matchup) => (m ? (WATERMARKS[m.league] ?? m.leagueLogo) : undefined);
+
 // logoPlace: where the league logo sits under the colour. Tiles: off the right edge. Homepage rows:
 // in the gap between the league name and the team logos (client 2026-11-04).
 const LOGO_PLACE = {
@@ -250,7 +255,7 @@ export function EventRow({ item, bookHref }: { item: Listing; bookHref: string }
   return (
     <li className={`relative overflow-hidden ${ufc ? "border-2 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
       {trivia && <ChalkBubbles />}
-      {teamTile && <TeamTexture color={team!.color!} logo={m?.leagueLogo} place="row" />}
+      {teamTile && <TeamTexture color={team!.color!} logo={watermark(m)} place="row" />}
       <details className="group relative">
         <summary className="font-text list-none cursor-pointer flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 px-4 sm:px-6 py-3 pr-16 sm:pr-20 min-h-24 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#F2B035] [&::-webkit-details-marker]:hidden">
           <p className="font-text shrink-0 sm:w-32 text-white/90 text-xs sm:text-sm uppercase tracking-[0.06em]">{item.time ?? ""}</p>
