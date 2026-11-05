@@ -209,7 +209,14 @@ function MatchupLogos({ m }: { m: Matchup }) {
 export type TextureStyle = "hardwood" | "halftone" | "mesh";
 export const TEAM_TEXTURE: TextureStyle = "hardwood";
 
-function TeamTexture({ color, logo, style = TEAM_TEXTURE }: { color: string; logo?: string; style?: TextureStyle }) {
+// logoPlace: where the league logo sits under the colour. Tiles: off the right edge. Homepage rows:
+// in the gap between the league name and the team logos (client 2026-11-04).
+const LOGO_PLACE = {
+  tile: "-right-5 h-[135%]",
+  row: "left-[14.5rem] sm:left-[17rem] -translate-x-1/2 h-[120%]", // phones: the open space right of the logos
+} as const;
+
+function TeamTexture({ color, logo, style = TEAM_TEXTURE, place = "tile" }: { color: string; logo?: string; style?: TextureStyle; place?: keyof typeof LOGO_PLACE }) {
   const pattern =
     style === "hardwood"
       ? // court planks: narrow boards with a little grain
@@ -223,7 +230,7 @@ function TeamTexture({ color, logo, style = TEAM_TEXTURE }: { color: string; log
     <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
       {logo && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={logo} alt="" className="absolute -right-5 top-1/2 -translate-y-1/2 h-[135%] w-auto max-w-none grayscale opacity-90" />
+        <img src={logo} alt="" className={`absolute top-1/2 -translate-y-1/2 w-auto max-w-none grayscale opacity-90 ${LOGO_PLACE[place]}`} />
       )}
       <div className="absolute inset-0" style={{ backgroundColor: color, opacity: 0.86 }} />
       <div className="absolute inset-0" style={{ backgroundImage: pattern, backgroundSize: size }} />
@@ -243,7 +250,7 @@ export function EventRow({ item, bookHref }: { item: Listing; bookHref: string }
   return (
     <li className={`relative overflow-hidden ${ufc ? "border-2 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
       {trivia && <ChalkBubbles />}
-      {teamTile && <TeamTexture color={team!.color!} logo={m?.leagueLogo} />}
+      {teamTile && <TeamTexture color={team!.color!} logo={m?.leagueLogo} place="row" />}
       <details className="group relative">
         <summary className="font-text list-none cursor-pointer flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 px-4 sm:px-6 py-3 pr-16 sm:pr-20 min-h-24 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#F2B035] [&::-webkit-details-marker]:hidden">
           <p className="font-text shrink-0 sm:w-32 text-white/90 text-xs sm:text-sm uppercase tracking-[0.06em]">{item.time ?? ""}</p>
