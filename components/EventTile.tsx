@@ -28,17 +28,16 @@ const CHALKBOARD_BG = {
    icon in the corner is for booking a table (OpenTable once MRG sends the links). Games show as
    the league name over team logo vs team logo, Happy Hour as a copper sign, trivia as a
    chalkboard with the light bulb, and UFC nights as card number, title belt and main event. */
-export default function EventTile({ item, bookHref }: { item: Listing; bookHref: string }) {
+// Everything a listing needs to be drawn, shared by the events-page tile and the homepage row
+function describe(item: Listing) {
   const team = "team" in item ? item.team : undefined;
   const m = "matchup" in item ? item.matchup : undefined;
   const fight = "fight" in item ? item.fight : undefined;
   const happy = isHappyHour(item);
   const ufc = !happy && isUFC(item);
   const trivia = !happy && !ufc && isTrivia(item);
-
   const style = happy ? HAPPY_HOUR_BG : trivia ? CHALKBOARD_BG : ufc ? UFC_BG : team?.color ? { backgroundColor: team.color } : undefined;
   const teamTile = !happy && !ufc && !trivia && !!team?.color;
-
   const info = "info" in item ? item.info : "about" in item ? item.about : undefined;
   const text =
     info ??
@@ -49,6 +48,11 @@ export default function EventTile({ item, bookHref }: { item: Listing; bookHref:
         : ufc
           ? "Every fight on the big screens with the sound on. Get here early for a good seat."
           : "Grab your crew and a table. See you there!");
+  return { team, m, fight, happy, ufc, trivia, style, teamTile, text };
+}
+
+export default function EventTile({ item, bookHref }: { item: Listing; bookHref: string }) {
+  const { team, m, fight, happy, ufc, trivia, style, teamTile, text } = describe(item);
 
   return (
     <li className={`relative overflow-hidden ${ufc ? "border-2 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
@@ -224,5 +228,82 @@ function TeamTexture({ color, logo, style = TEAM_TEXTURE }: { color: string; log
       <div className="absolute inset-0" style={{ backgroundColor: color, opacity: 0.86 }} />
       <div className="absolute inset-0" style={{ backgroundImage: pattern, backgroundSize: size }} />
     </div>
+  );
+}
+
+/* ── Homepage Lineup: the same listing as a full-width row ──
+   Same backgrounds, textures, artwork and click-to-open write-up as the events-page tile, laid
+   out sideways: time on the left, the artwork filling the row's height, the book-a-table icon
+   on the right. Rows stay compact (about 96px) with the artwork as big as that allows. */
+export function EventRow({ item, bookHref }: { item: Listing; bookHref: string }) {
+  const { team, m, fight, happy, ufc, trivia, style, teamTile, text } = describe(item);
+  const league = m ? (LEAGUE_NAMES[m.league] ?? m.league) : undefined;
+  const big = { ...label, fontWeight: 700, letterSpacing: "0.04em" } as const;
+
+  return (
+    <li className={`relative overflow-hidden ${ufc ? "border-2 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
+      {trivia && <ChalkBubbles />}
+      {teamTile && <TeamTexture color={team!.color!} logo={m?.leagueLogo} />}
+      <details className="group relative">
+        <summary className="font-text list-none cursor-pointer flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 px-4 sm:px-6 py-3 pr-16 sm:pr-20 min-h-24 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#F2B035] [&::-webkit-details-marker]:hidden">
+          <p className="font-text shrink-0 sm:w-32 text-white/90 text-xs sm:text-sm uppercase tracking-[0.06em]">{item.time ?? ""}</p>
+          <div className="flex-1 min-w-0 flex items-center gap-3 sm:gap-5">
+            {happy ? (
+              <>
+                <p className="shrink-0 text-[#F4EFE6] leading-none -rotate-[3deg]" style={{ ...script, fontSize: "clamp(1.6rem, 3vw, 2.3rem)", textShadow: "2px 2px 0 #3A1406" }}>
+                  Happy <span className="text-[#F2B035]">Hour</span>
+                </p>
+                <Drawing name="happy-hour" className="h-20 sm:h-24 w-auto max-w-[45%] object-contain -my-2" />
+              </>
+            ) : ufc ? (
+              <>
+                <p className="shrink-0 text-[#F2B035] uppercase text-sm sm:text-base tracking-[0.16em]" style={big}>{item.title}</p>
+                <Drawing name="title-belt" className="h-16 sm:h-20 w-auto max-w-[40%] object-contain -my-2" />
+                {fight && (
+                  <p className="min-w-0 text-white uppercase text-base sm:text-xl" style={big}>
+                    {fight.a.name} <span className="text-[#F2B035]">vs</span> {fight.b.name}
+                  </p>
+                )}
+              </>
+            ) : trivia ? (
+              <>
+                <p className="shrink-0 text-[#F4EFE6] uppercase leading-none" style={{ ...big, fontSize: "clamp(1.6rem, 3vw, 2.3rem)" }}>
+                  {/trivia/i.test(item.title) ? "Trivia" : "Bingo"}
+                </p>
+                <p className="min-w-0 text-[#F2B035] text-sm font-semibold leading-snug">{item.title}</p>
+                <Drawing name="lightbulb" className="h-20 sm:h-24 w-auto shrink-0 rotate-[10deg] -my-2 ml-auto" />
+              </>
+            ) : m ? (
+              <>
+                <span className="shrink-0 text-white uppercase text-xs sm:text-sm tracking-[0.12em] sm:w-36" style={big}>{league}</span>
+                <span aria-hidden="true" className="flex items-center gap-2 shrink-0">
+                  <Logo src={m.away.logo} name={m.away.name} size={52} />
+                  <span className="text-white text-xs font-semibold uppercase">vs</span>
+                  <Logo src={m.home.logo} name={m.home.name} size={52} />
+                </span>
+                <span className="hidden sm:block min-w-0 text-white uppercase text-base md:text-lg truncate" style={big}>
+                  {m.away.name} <span className="text-white/70">vs</span> {m.home.name}
+                </span>
+                <span className="sr-only sm:hidden">{`${league}: ${m.away.name} vs ${m.home.name}`}</span>
+              </>
+            ) : (
+              <p className="text-white uppercase text-base sm:text-lg" style={big}>{item.title}</p>
+            )}
+          </div>
+        </summary>
+        <p className="relative px-4 sm:px-6 sm:pl-[12.5rem] pb-4 pr-16 text-white/90 text-sm leading-relaxed max-w-4xl">
+          {fight && <span className="block font-semibold mb-1">{`Main event: ${fight.a.fullName} vs ${fight.b.fullName}`}</span>}
+          {text}
+        </p>
+      </details>
+      <a
+        href={bookHref}
+        {...(bookHref.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        aria-label={`Book a table for ${item.title}`}
+        className="absolute top-6 right-4 sm:right-5 w-11 h-11 flex items-center justify-center border-2 border-white/60 text-white hover:border-[#F2B035] hover:text-[#F2B035] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F2B035]"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+      </a>
+    </li>
   );
 }
