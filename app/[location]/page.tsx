@@ -135,7 +135,7 @@ export default async function LocationHome({
       <FadeIn>
         <section className="relative isolate overflow-x-clip bg-[#F2B035] px-6 py-20">
           <DecorLayer
-            spots={[{ name: "beers", x: 63, y: "50%", rotate: -6 }]}
+            spots={[{ name: "beers", x: 73, y: "50%", rotate: -6 }]}
             mobileSpots={[{ name: "beers", x: 84, y: "40px", rotate: -6 }]}
           />
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">

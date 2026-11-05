@@ -92,16 +92,18 @@ body {
   }
 }
 
-/* Brand type: DIN for body and small text (body above); Thyson caps for buttons, nav, labels
-   and anything set in capitals; the Selphia script for titles. */
-.uppercase, button, .btn, header a, nav a, summary, .font-label {
+/* Brand type (brand deck p.8): Thyson for headings, buttons, nav and labels; DIN for body and
+   small text (body above); the Selphia script ONLY as an accent/callout (.font-title), used
+   sparingly, e.g. "at Dublin Calling" beside a Thyson title. Client 2026-11-04: titles out of
+   the script. */
+.uppercase, button, .btn, header a, nav a, summary, .font-label, h1, h2, h3 {
   font-family: var(--font-label-stack);
 }
 /* Times, dates and prices stay in DIN: Thyson's small zero reads like an 8 */
 .font-text {
   font-family: var(--font-text-stack) !important;
 }
-h1:not(.font-label), h2:not(.font-label), h3:not(.font-label), .font-title {
+.font-title {
   font-family: var(--font-title-stack) !important;
   font-weight: 400 !important;
   text-transform: none !important;

@@ -28,7 +28,7 @@ export default function WeekCalendar({
     return { date, isToday: date === today, count: listingsOn(schedule, weekly, date).length };
   });
   const items = listingsOn(schedule, weekly, selected);
-  const heading = "Sports at Dublin Calling";
+  const heading = "Sports"; // + the script accent "at Dublin Calling"
   const dayLabel =
     selected === today ? "Tonight at Dublin Calling" : fmt(selected, { weekday: "long", month: "long", day: "numeric" });
 
@@ -39,7 +39,10 @@ export default function WeekCalendar({
           className="text-white"
           style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}
         >
-          {heading}
+          {heading}{" "}
+          <span className="font-title text-[#F2B035]" style={{ fontSize: "1.1em" }}>
+            at Dublin Calling
+          </span>
         </h2>
       </div>
 

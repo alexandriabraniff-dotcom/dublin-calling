@@ -34,7 +34,8 @@ export default function EventsCalendar({
     return { date, isToday: date === today, items: listingsOn(schedule, weekly, date) };
   });
   const isThisWeek = weekStart === today;
-  const heading = isThisWeek ? "Sports We're Watching at Dublin Calling" : `Week of ${fmt(weekStart, { month: "long", day: "numeric" })}`;
+  // Thyson title + the script accent "at Dublin Calling" (brand deck callout style)
+  const heading = isThisWeek ? "Sports We're Watching" : `Week of ${fmt(weekStart, { month: "long", day: "numeric" })}`;
   const range = `${fmt(weekStart, { weekday: "short", month: "short", day: "numeric" })} to ${fmt(addDays(weekStart, 6), { weekday: "short", month: "short", day: "numeric" })}`;
   const chosen = days.find((d) => d.date === selected) ?? days[0];
 
@@ -52,7 +53,10 @@ export default function EventsCalendar({
       {/* Header + week controls */}
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-8">
         <h2 className="text-white" aria-live="polite" style={{ ...condensed, fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}>
-          {heading}
+          {heading}{" "}
+          <span className="font-title text-[#F2B035]" style={{ fontSize: "1.1em" }}>
+            at Dublin Calling
+          </span>
         </h2>
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <div className="flex items-center gap-2 sm:gap-3">
