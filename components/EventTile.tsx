@@ -37,6 +37,7 @@ export default function EventTile({ item, bookHref }: { item: Listing; bookHref:
   const trivia = !happy && !ufc && isTrivia(item);
 
   const style = happy ? HAPPY_HOUR_BG : trivia ? CHALKBOARD_BG : ufc ? UFC_BG : team?.color ? { backgroundColor: team.color } : undefined;
+  const teamTile = !happy && !ufc && !trivia && !!team?.color;
 
   const info = "info" in item ? item.info : "about" in item ? item.about : undefined;
   const text =
@@ -52,9 +53,10 @@ export default function EventTile({ item, bookHref }: { item: Listing; bookHref:
   return (
     <li className={`relative overflow-hidden ${ufc ? "border-2 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
       {trivia && <ChalkBubbles />}
+      {teamTile && <TeamTexture color={team!.color!} logo={m?.leagueLogo} />}
       <details className="group relative">
-        <summary className="font-text list-none cursor-pointer block p-3 pr-10 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#F2B035] [&::-webkit-details-marker]:hidden">
-          <p className="font-text text-white/85 text-xs uppercase tracking-[0.04em]">{item.time ?? ""}</p>
+        <summary className="font-text list-none cursor-pointer block p-3 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#F2B035] [&::-webkit-details-marker]:hidden">
+          <p className="font-text text-white/85 text-xs uppercase tracking-[0.04em] pr-8 min-h-4">{item.time ?? ""}</p>
           <div className="mt-2">
             {happy ? (
               <HappyHour />
@@ -68,9 +70,6 @@ export default function EventTile({ item, bookHref }: { item: Listing; bookHref:
               <p className="text-white text-sm font-semibold leading-snug">{item.title}</p>
             )}
           </div>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true" className="absolute right-3 bottom-3 text-white/70 transition-transform group-open:rotate-180">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
         </summary>
         <p className="relative px-3 pb-3 text-white/90 text-xs leading-relaxed">
           {m && <span className="block font-semibold mb-1">{`${m.away.name} vs ${m.home.name}`}</span>}
@@ -92,22 +91,22 @@ export default function EventTile({ item, bookHref }: { item: Listing; bookHref:
 
 function Drawing({ name, className }: { name: string; className: string }) {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={`/decor/${name}.webp`} alt="" aria-hidden="true" className={`w-auto ${className}`} />;
+  return <img src={`/decor/${name}.webp`} alt="" aria-hidden="true" className={className} />;
 }
 
 /* ── Happy Hour: script "Happy Hour" sign on the left, the mug + clock drawing on the right ── */
 function HappyHour() {
   return (
-    <div className="flex items-center justify-between gap-1">
+    <div className="flex items-center gap-1">
       <p
-        className="shrink-0 text-[#F4EFE6] leading-[0.95] -rotate-[4deg]"
-        style={{ ...script, fontSize: "1.55rem", textShadow: "2px 2px 0 #3A1406" }}
+        className="shrink-0 text-[#F4EFE6] leading-[0.92] -rotate-[4deg]"
+        style={{ ...script, fontSize: "1.45rem", textShadow: "2px 2px 0 #3A1406" }}
       >
         Happy
         <br />
         <span className="text-[#F2B035]">Hour</span>
       </p>
-      <Drawing name="happy-hour" className="h-14 min-w-0 max-w-[58%] object-contain" />
+      <Drawing name="happy-hour" className="flex-1 min-w-0 w-full h-auto max-h-28 object-contain object-right -mr-1" />
     </div>
   );
 }
@@ -139,7 +138,7 @@ function Trivia({ title }: { title: string }) {
         <p className="text-[#F4EFE6] uppercase leading-none" style={{ ...label, fontWeight: 700, fontSize: "1.5rem", letterSpacing: "0.02em" }}>
           {word}
         </p>
-        <Drawing name="lightbulb" className="h-14 shrink-0 rotate-[10deg]" />
+        <Drawing name="lightbulb" className="h-20 w-auto shrink-0 rotate-[10deg] -mr-1" />
       </div>
       <p className="mt-1 text-[#F2B035] text-xs font-semibold leading-snug">{title}</p>
     </div>
@@ -160,9 +159,9 @@ function FaceOff({ fight, title }: { fight?: Fight; title: string }) {
   return (
     <div className="relative text-center">
       <p className="text-[#F2B035] uppercase text-xs tracking-[0.18em]" style={{ ...label, fontWeight: 700 }}>{title}</p>
-      <Drawing name="title-belt" className="h-12 mx-auto mt-2" />
+      <Drawing name="title-belt" className="block -mx-3 mt-1 w-[calc(100%+1.5rem)] max-w-none h-auto max-h-32 object-contain" />
       {fight && (
-        <p className="mt-2 text-white uppercase leading-tight text-sm" style={{ ...label, fontWeight: 700, letterSpacing: "0.04em" }}>
+        <p className="mt-1 text-white uppercase leading-tight text-sm" style={{ ...label, fontWeight: 700, letterSpacing: "0.04em" }}>
           {fight.a.name} <span className="text-[#F2B035]">vs</span> {fight.b.name}
         </p>
       )}
@@ -175,7 +174,7 @@ function Logo({ src, name, size = 28 }: { src?: string; name: string; size?: num
   if (!src) return <span className="text-white text-[11px] font-semibold">{name}</span>;
   return (
     <span className="shrink-0 rounded-full bg-white flex items-center justify-center overflow-hidden" style={{ width: size, height: size }}>
-      <Image src={src} alt="" width={size} height={size} className="w-[80%] h-[80%] object-contain" />
+      <Image src={src} alt="" width={size * 2} height={size * 2} className="w-[82%] h-[82%] object-contain" />
     </span>
   );
 }
@@ -191,13 +190,39 @@ function MatchupLogos({ m }: { m: Matchup }) {
         <span className="text-white uppercase text-xs tracking-[0.12em]" style={{ ...label, fontWeight: 700 }}>
           {league}
         </span>
-        <span className="flex items-center gap-1.5">
-          <Logo src={m.away.logo} name={m.away.name} size={32} />
+        <span className="flex items-center gap-1">
+          <Logo src={m.away.logo} name={m.away.name} size={46} />
           <span className="text-white text-[11px] font-semibold uppercase">vs</span>
-          <Logo src={m.home.logo} name={m.home.name} size={32} />
+          <Logo src={m.home.logo} name={m.home.name} size={46} />
         </span>
       </span>
       <span className="sr-only">{`${league}: ${m.away.name} vs ${m.home.name}`}</span>
     </>
+  );
+}
+
+/* ── Team-colour tiles (Raptors red, Leafs blue...): texture + the league logo under the colour ── */
+export type TextureStyle = "hardwood" | "halftone" | "mesh";
+export const TEAM_TEXTURE: TextureStyle = "hardwood";
+
+function TeamTexture({ color, logo, style = TEAM_TEXTURE }: { color: string; logo?: string; style?: TextureStyle }) {
+  const pattern =
+    style === "hardwood"
+      ? // court planks: narrow boards with a little grain
+        "repeating-linear-gradient(90deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 22px), repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 9px, rgba(0,0,0,0.05) 9px 15px, rgba(255,255,255,0.03) 15px 22px), linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.22))"
+      : style === "halftone"
+        ? "radial-gradient(rgba(0,0,0,0.28) 1.3px, transparent 1.8px), linear-gradient(160deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))"
+        : // jersey mesh
+          "radial-gradient(circle at 3px 3px, rgba(0,0,0,0.32) 1.4px, transparent 1.9px), radial-gradient(circle at 9px 9px, rgba(0,0,0,0.32) 1.4px, transparent 1.9px), linear-gradient(160deg, rgba(255,255,255,0.10), rgba(0,0,0,0.25))";
+  const size = style === "halftone" ? "8px 8px, 100% 100%" : style === "mesh" ? "12px 12px, 12px 12px, 100% 100%" : "22px 100%, 22px 100%, 100% 100%";
+  return (
+    <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+      {logo && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={logo} alt="" className="absolute -right-5 top-1/2 -translate-y-1/2 h-[135%] w-auto max-w-none grayscale opacity-90" />
+      )}
+      <div className="absolute inset-0" style={{ backgroundColor: color, opacity: 0.86 }} />
+      <div className="absolute inset-0" style={{ backgroundImage: pattern, backgroundSize: size }} />
+    </div>
   );
 }
