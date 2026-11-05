@@ -1,25 +1,27 @@
 import { DecorImg, DESKTOP_SIZE, MOBILE_SIZE, type DecorName } from "@/components/Decor";
 
 /* One header style for every inner page (everything except the homepage): gold location label
-   and a centred title with an illustration on each side. Each page gets its own pair (Menus:
-   burger + clinking beers, and so on). The subtitle is the page's write-up for search engines:
-   it stays in the HTML (and is read by screen readers) but isn't shown. */
+   and a centred title with approved illustrations beside it. Most pages get a pair; Menus and
+   Book a Table show the clinking beers on their own (client 2026-11-04: no food drawings), with
+   an invisible spacer on the left so the title stays centred. The subtitle is the page's
+   write-up for search engines: it stays in the HTML (and is read by screen readers) but isn't shown. */
 
 export type HeaderPage = "menu" | "events" | "group-bookings" | "faq" | "book" | "privacy";
 
-const ICONS: Record<HeaderPage, [DecorName, DecorName]> = {
-  menu: ["burger", "beers"],
+// [left, right]; left null = the right drawing on its own
+const ICONS: Record<HeaderPage, [DecorName | null, DecorName]> = {
+  menu: [null, "beers"],
   events: ["foam-finger", "hockey"],
-  "group-bookings": ["wings", "eight-ball"],
+  "group-bookings": ["jersey", "eight-ball"],
   faq: ["football", "soccer-ball"],
-  book: ["wings", "beers"],
+  book: [null, "beers"],
   privacy: ["mma-gloves", "baseball-bat"],
 };
 
 // Same size as the drawings on the homepage (phone size below md)
-function Icon({ name, rotate }: { name: DecorName; rotate: number }) {
+function Icon({ name, rotate, spacer }: { name: DecorName; rotate: number; spacer?: boolean }) {
   return (
-    <span className="shrink-0">
+    <span className={`shrink-0 ${spacer ? "invisible" : ""}`} aria-hidden="true">
       <DecorImg name={name} size={DESKTOP_SIZE} rotate={rotate} faded={false} className="hidden md:block" />
       <DecorImg name={name} size={MOBILE_SIZE} rotate={rotate} faded={false} className="md:hidden" />
     </span>
@@ -43,7 +45,7 @@ export default function PageHeader({
   return (
     <section className="relative isolate overflow-x-clip bg-[#0F5132] border-b border-white/10 pt-10 pb-10 md:pt-12 md:pb-12 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto flex items-center justify-center gap-3 sm:gap-8 md:gap-12">
-        <Icon name={left} rotate={-8} />
+        {left ? <Icon name={left} rotate={-8} /> : <Icon name={right} rotate={8} spacer />}
         <div className="min-w-0 text-center">
           <p
             className="text-[#F2B035] mb-3 uppercase"

@@ -26,8 +26,8 @@ const CHALKBOARD_BG = {
 
 /* One calendar listing. The whole tile is clickable and opens a short write-up; the calendar
    icon in the corner is for booking a table (OpenTable once MRG sends the links). Games show as
-   league logo + team logo vs team logo, Happy Hour as a copper sign, trivia as a chalkboard
-   with the light bulb, and UFC nights as a face-off of the main event. */
+   the league name over team logo vs team logo, Happy Hour as a copper sign, trivia as a
+   chalkboard with the light bulb, and UFC nights as card number, title belt and main event. */
 export default function EventTile({ item, bookHref }: { item: Listing; bookHref: string }) {
   const team = "team" in item ? item.team : undefined;
   const m = "matchup" in item ? item.matchup : undefined;
@@ -36,7 +36,7 @@ export default function EventTile({ item, bookHref }: { item: Listing; bookHref:
   const ufc = !happy && isUFC(item);
   const trivia = !happy && !ufc && isTrivia(item);
 
-  const style = happy ? HAPPY_HOUR_BG : trivia ? CHALKBOARD_BG : ufc ? { backgroundColor: "#101010" } : team?.color ? { backgroundColor: team.color } : undefined;
+  const style = happy ? HAPPY_HOUR_BG : trivia ? CHALKBOARD_BG : ufc ? UFC_BG : team?.color ? { backgroundColor: team.color } : undefined;
 
   const info = "info" in item ? item.info : "about" in item ? item.about : undefined;
   const text =
@@ -50,9 +50,8 @@ export default function EventTile({ item, bookHref }: { item: Listing; bookHref:
           : "Grab your crew and a table. See you there!");
 
   return (
-    <li className={`relative overflow-hidden ${ufc ? "border-l-4 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
+    <li className={`relative overflow-hidden ${ufc ? "border-2 border-[#C8102E]" : ""} ${style ? "" : "bg-white/[0.07]"}`} style={style}>
       {trivia && <ChalkBubbles />}
-      {ufc && <Octagon />}
       <details className="group relative">
         <summary className="font-text list-none cursor-pointer block p-3 pr-10 hover:bg-white/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#F2B035] [&::-webkit-details-marker]:hidden">
           <p className="font-text text-white/85 text-xs uppercase tracking-[0.04em]">{item.time ?? ""}</p>
@@ -96,19 +95,19 @@ function Drawing({ name, className }: { name: string; className: string }) {
   return <img src={`/decor/${name}.webp`} alt="" aria-hidden="true" className={`w-auto ${className}`} />;
 }
 
-/* ── Happy Hour: clock + pint with a script "Happy Hour" sign ── */
+/* ── Happy Hour: script "Happy Hour" sign on the left, the mug + clock drawing on the right ── */
 function HappyHour() {
   return (
-    <div className="flex flex-col items-center text-center">
-      <Drawing name="happy-hour" className="h-12" />
+    <div className="flex items-center justify-between gap-1">
       <p
-        className="mt-1 text-[#F4EFE6] leading-[0.95] -rotate-[4deg]"
-        style={{ ...script, fontSize: "1.65rem", textShadow: "2px 2px 0 #3A1406" }}
+        className="shrink-0 text-[#F4EFE6] leading-[0.95] -rotate-[4deg]"
+        style={{ ...script, fontSize: "1.55rem", textShadow: "2px 2px 0 #3A1406" }}
       >
         Happy
         <br />
         <span className="text-[#F2B035]">Hour</span>
       </p>
+      <Drawing name="happy-hour" className="h-14 min-w-0 max-w-[58%] object-contain" />
     </div>
   );
 }
@@ -147,52 +146,31 @@ function Trivia({ title }: { title: string }) {
   );
 }
 
-/* ── UFC: the main event as a face-off ── */
-function Octagon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 100 100" className="absolute inset-0 m-auto h-[90%] w-auto text-white/[0.08] pointer-events-none">
-      <polygon points="30,3 70,3 97,30 97,70 70,97 30,97 3,70 3,30" fill="none" stroke="currentColor" strokeWidth="3" />
-    </svg>
-  );
-}
-
-function Headshot({ src, name }: { src?: string; name: string }) {
-  return (
-    <span className="relative w-12 h-12 shrink-0 rounded-full overflow-hidden bg-[#2a2a2a] ring-2 ring-[#F2B035]">
-      {src ? (
-        <Image src={src} alt="" fill sizes="48px" className="object-cover object-top scale-125 translate-y-1" />
-      ) : (
-        <span className="absolute inset-0 flex items-center justify-center text-white font-bold">{name[0]}</span>
-      )}
-    </span>
-  );
-}
+/* ── UFC: card number, the approved title belt, then the main event "Name vs Name" ── */
+// Textured black: fine grain (SVG noise) over a soft spotlight, framed by the red border on the tile
+const UFC_BG = {
+  backgroundColor: "#0d0d0d",
+  backgroundImage: [
+    "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")",
+    "radial-gradient(ellipse at 50% 35%, rgba(255,255,255,0.07), transparent 65%)",
+  ].join(", "),
+} as const;
 
 function FaceOff({ fight, title }: { fight?: Fight; title: string }) {
-  if (!fight) {
-    return (
-      <div className="relative text-center">
-        <Drawing name="title-belt" className="h-10 mx-auto" />
-        <p className="mt-1 text-white uppercase tracking-[0.08em] text-sm font-bold" style={label}>{title}</p>
-      </div>
-    );
-  }
   return (
     <div className="relative text-center">
       <p className="text-[#F2B035] uppercase text-xs tracking-[0.18em]" style={{ ...label, fontWeight: 700 }}>{title}</p>
-      <div aria-hidden="true" className="mt-2 flex items-center justify-center gap-1.5">
-        <Headshot src={fight.a.headshot} name={fight.a.name} />
-        <span className="text-[#EF3B4F] text-sm font-bold uppercase" style={label}>vs</span>
-        <Headshot src={fight.b.headshot} name={fight.b.name} />
-      </div>
-      <p className="mt-2 text-white uppercase leading-tight text-sm" style={{ ...label, fontWeight: 700, letterSpacing: "0.04em" }}>
-        {fight.a.name} <span className="text-[#F2B035]">vs</span> {fight.b.name}
-      </p>
+      <Drawing name="title-belt" className="h-12 mx-auto mt-2" />
+      {fight && (
+        <p className="mt-2 text-white uppercase leading-tight text-sm" style={{ ...label, fontWeight: 700, letterSpacing: "0.04em" }}>
+          {fight.a.name} <span className="text-[#F2B035]">vs</span> {fight.b.name}
+        </p>
+      )}
     </div>
   );
 }
 
-/* ── Games: league logo, team logo vs team logo ── */
+/* ── Games: league name, team logo vs team logo ── */
 function Logo({ src, name, size = 28 }: { src?: string; name: string; size?: number }) {
   if (!src) return <span className="text-white text-[11px] font-semibold">{name}</span>;
   return (
@@ -202,18 +180,24 @@ function Logo({ src, name, size = 28 }: { src?: string; name: string; size?: num
   );
 }
 
+// League typed out (client: a league logo next to two team logos looked odd)
+const LEAGUE_NAMES: Record<string, string> = { EPL: "Premier League", UCL: "Champions League" };
+
 function MatchupLogos({ m }: { m: Matchup }) {
+  const league = LEAGUE_NAMES[m.league] ?? m.league;
   return (
     <>
-      <span aria-hidden="true" className="flex flex-wrap items-center justify-center gap-1">
-        <Logo src={m.leagueLogo} name={m.league} />
-        <span className="flex items-center gap-1">
-          <Logo src={m.away.logo} name={m.away.name} />
+      <span aria-hidden="true" className="flex flex-col items-center gap-1.5">
+        <span className="text-white uppercase text-xs tracking-[0.12em]" style={{ ...label, fontWeight: 700 }}>
+          {league}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <Logo src={m.away.logo} name={m.away.name} size={32} />
           <span className="text-white text-[11px] font-semibold uppercase">vs</span>
-          <Logo src={m.home.logo} name={m.home.name} />
+          <Logo src={m.home.logo} name={m.home.name} size={32} />
         </span>
       </span>
-      <span className="sr-only">{`${m.league}: ${m.away.name} vs ${m.home.name}`}</span>
+      <span className="sr-only">{`${league}: ${m.away.name} vs ${m.home.name}`}</span>
     </>
   );
 }

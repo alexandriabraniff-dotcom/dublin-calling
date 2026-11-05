@@ -1,18 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { stillToCome, type TonightItem } from "@/lib/tonight";
 
 /* Tonight's listings, one at a time: each slides up into the centre from below, holds, then
    slides away upward as the next comes in (one 3.5 s CSS cycle per listing; the next one starts
    when the cycle ends). Hovering or the pause button freezes the animation exactly where it is,
    and it carries on from there afterwards. Pausable (WCAG 2.2.2), stops for reduced motion,
-   and screen readers get the whole list instead of the animation. */
-export default function TonightTicker({ items }: { items: { title: string; time?: string }[] }) {
+   and screen readers get the whole list instead of the animation.
+   Listings that have already started (venue's own clock) are dropped, re-checked every minute;
+   once everything's done it says so and links to the week ahead. */
+export default function TonightTicker({
+  items: today,
+  initial,
+  date,
+  timezone,
+  eventsHref,
+}: {
+  items: TonightItem[];
+  initial: TonightItem[];
+  date: string;
+  timezone: string;
+  eventsHref: string;
+}) {
+  const [items, setItems] = useState(initial);
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const update = () => setItems(stillToCome(today, date, timezone));
+    update();
+    const id = setInterval(update, 60_000);
+    return () => clearInterval(id);
+  }, [today, date, timezone]);
+
   const moving = items.length > 1;
   const still = paused || hovered;
+
+  if (items.length === 0) {
+    return (
+      <p className="flex-1 min-w-0 text-center">
+        That&apos;s a wrap for today.{" "}
+        <Link href={eventsHref} className="font-semibold underline underline-offset-4">
+          See what&apos;s on this week
+        </Link>
+      </p>
+    );
+  }
 
   const item = items[i % items.length];
 

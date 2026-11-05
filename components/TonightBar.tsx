@@ -1,14 +1,19 @@
 import Link from "next/link";
 import { listingsOn, todayIn, type Location } from "@/lib/locations";
 import { getLiveSchedule } from "@/lib/schedule";
+import { stillToCome } from "@/lib/tonight";
 import TonightTicker from "@/components/TonightTicker";
 
 /* Thin bar above the header: "What's happening tonight?" stays put (and links to the events page)
-   while tonight's listings roll through one at a time beside it. Hidden when nothing is on. */
+   while the rest of today's listings roll through one at a time beside it. Anything that has
+   already started (by the venue's own clock) drops off, here and again in the browser every
+   minute. Hidden when nothing is on today at all. */
 export default async function TonightBar({ location }: { location: Location }) {
   const schedule = [...location.schedule, ...(await getLiveSchedule(location))];
-  const tonight = listingsOn(schedule, location.weekly, todayIn(location.timezone));
-  if (tonight.length === 0) return null;
+  const date = todayIn(location.timezone);
+  const today = listingsOn(schedule, location.weekly, date).map((t) => ({ title: t.title, time: t.time }));
+  if (today.length === 0) return null;
+  const initial = stillToCome(today, date, location.timezone);
 
   return (
     <div className="bg-[#F4EFE6] text-[#101010]">
@@ -17,7 +22,7 @@ export default async function TonightBar({ location }: { location: Location }) {
         <Link href={`/${location.slug}/events`} className="shrink-0 self-center font-semibold hover:underline underline-offset-4">
           What&apos;s happening tonight?
         </Link>
-        <TonightTicker items={tonight.map((t) => ({ title: t.title, time: t.time }))} />
+        <TonightTicker items={today} initial={initial} date={date} timezone={location.timezone} eventsHref={`/${location.slug}/events`} />
       </div>
     </div>
   );

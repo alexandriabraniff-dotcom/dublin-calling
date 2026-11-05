@@ -19,8 +19,6 @@ export type DecorName =
   | "foam-finger"
   | "mma-gloves"
   | "baseball-bat"
-  | "burger"
-  | "wings"
   | "happy-hour"
   | "title-belt"
   | "lightbulb";
@@ -37,8 +35,6 @@ const ASPECT: Record<DecorName, number> = {
   "foam-finger": 248 / 440,
   "mma-gloves": 415 / 440,
   "baseball-bat": 440 / 282,
-  burger: 440 / 368,
-  wings: 440 / 355,
   "happy-hour": 440 / 353,
   lightbulb: 375 / 440,
   "title-belt": 440 / 253,
