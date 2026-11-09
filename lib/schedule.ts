@@ -1,6 +1,6 @@
 import { getAdmitOneEvents, type AdmitOneEvent } from "@/lib/admitone";
 import { getGames, getUfcCards, LEAGUES, type Game, type UfcCard } from "@/lib/espn";
-import type { Location, ScheduleEvent } from "@/lib/locations";
+import { zoneFor, type Location, type ScheduleEvent } from "@/lib/locations";
 import { tableHref } from "@/lib/booking";
 
 /* Live schedule for a location: Admit One events (with their Book Your Spot links) plus every
@@ -49,9 +49,9 @@ function category(tag: string, title: string): string {
 }
 
 const localDate = (iso: string, tz: string) =>
-  new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(iso));
+  new Intl.DateTimeFormat("en-CA", { timeZone: zoneFor(tz, Date.parse(iso)), year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(iso));
 const localTime = (iso: string, tz: string) =>
-  new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit" }).format(new Date(iso));
+  new Intl.DateTimeFormat("en-US", { timeZone: zoneFor(tz, Date.parse(iso)), hour: "numeric", minute: "2-digit" }).format(new Date(iso));
 
 async function load(loc: Location): Promise<{ events: AdmitOneEvent[]; games: Game[]; cards: UfcCard[] }> {
   const [events, games, cards] = await Promise.all([

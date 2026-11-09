@@ -9,10 +9,13 @@ export interface TonightItem {
   time?: string;
 }
 
+// BC moved to permanent UTC-7 on 2026-11-01; older timezone data still says PST (same rule as lib/locations.ts zoneFor)
+const zoneFor = (tz: string, at: number) => (tz === "America/Vancouver" && at >= Date.UTC(2026, 10, 1, 9) ? "Etc/GMT+7" : tz);
+
 // The venue's local date (YYYY-MM-DD) and minutes since midnight
 export function venueNow(timezone: string, at: number = Date.now()): { date: string; minutes: number } {
   const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: timezone,
+    timeZone: zoneFor(timezone, at),
     year: "numeric",
     month: "2-digit",
     day: "2-digit",

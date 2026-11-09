@@ -440,9 +440,16 @@ export function getLocation(slug: string): Location | null {
 
 export default LOCATIONS;
 
+// British Columbia moved to permanent UTC-7 on 2026-11-01 (tzdata 2026). Servers and devices with
+// older timezone data still fall back to PST, so pin Vancouver to UTC-7 from then on.
+const BC_PERMANENT = Date.UTC(2026, 10, 1, 9);
+export function zoneFor(timezone: string, at: number = Date.now()): string {
+  return timezone === "America/Vancouver" && at >= BC_PERMANENT ? "Etc/GMT+7" : timezone;
+}
+
 // Today's date as YYYY-MM-DD in the given IANA timezone
 export function todayIn(timezone: string): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  return new Intl.DateTimeFormat("en-CA", { timeZone: zoneFor(timezone), year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
 }
 
 // Start of a listing time in minutes after midnight, e.g. "4:00 to 6:00 PM" -> 960 (no time -> last)
