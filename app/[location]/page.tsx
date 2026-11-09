@@ -53,7 +53,7 @@ export default async function LocationHome({
           priority
         />
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-[#101010]/60" />
+        <div className="absolute inset-0 bg-[#082a1c]/60" />
 
 
         {/* Centre content — pushed down to clear logo overflow */}
@@ -96,7 +96,7 @@ export default async function LocationHome({
           <div className="w-full sm:w-auto flex flex-wrap justify-center gap-3">
             <Link
               href={`${base}/events`}
-              className="btn bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
+              className="btn bg-[#F2B035] text-[#082a1c] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
               style={{ fontFamily: "var(--font-label)", fontSize: "clamp(11px, 0.85vw, 13px)", padding: "clamp(0.65rem, 1.2vh, 0.85rem) clamp(1.5rem, 2.5vw, 3rem)" }}
             >
               See Events
@@ -141,18 +141,18 @@ export default async function LocationHome({
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
               <h2
-                className="text-[#101010] leading-tight"
+                className="text-[#082a1c] leading-tight"
                 style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "0.02em" }}
               >
                 Book Your Group&apos;s Night Out
               </h2>
-              <p className="mt-3 text-[#101010]/85 text-sm max-w-sm leading-relaxed">
+              <p className="mt-3 text-[#082a1c]/85 text-sm max-w-sm leading-relaxed">
                 Birthdays, corporate outings, post-game parties. Get in touch and we&apos;ll take care of everything.
               </p>
             </div>
             <Link
               href={`${base}/group-bookings`}
-              className="btn shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#101010] text-[#F2B035] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#0F5132] hover:text-[#F4EFE6] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#101010]"
+              className="btn shrink-0 block w-full sm:w-auto text-center px-10 py-4 bg-[#082a1c] text-[#F2B035] font-semibold text-xs tracking-[0.1em] uppercase hover:bg-[#0F5132] hover:text-[#F4EFE6] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#082a1c]"
             >
               Learn More
             </Link>

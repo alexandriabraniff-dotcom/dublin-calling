@@ -86,7 +86,7 @@ export default async function MenuPage({
       {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />}
       <PageHeader location={loc.name} label="Menus" title="Menus" page="menu" subtitle={`Food, drinks and happy hour menus at Dublin Calling ${loc.name}. Pub classics done properly. Built for big nights and even better company.`} />
 
-      <section className="bg-[#101010] pb-16">
+      <section className="bg-[#082a1c] pb-16">
         <MenuTabs
           panels={panels.map((p) => ({
             ...p,

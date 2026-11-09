@@ -86,7 +86,7 @@ export default function DatePicker({ today, selected, onPick }: { today: string;
         onClick={toggle}
         aria-expanded={open}
         aria-haspopup="dialog"
-        className="btn min-h-11 px-5 flex items-center gap-2 bg-[#F2B035] text-[#101010] text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="btn min-h-11 px-5 flex items-center gap-2 bg-[#F2B035] text-[#082a1c] text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
@@ -101,7 +101,7 @@ export default function DatePicker({ today, selected, onPick }: { today: string;
           onKeyDown={onKeyDown}
           className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-40 w-[min(20rem,calc(100vw-2rem))] border-4 border-[#F2B035] bg-[#0F5132] p-[3px] text-left"
         >
-          <div className="border-2 border-[#F2B035] bg-[#101010] p-4">
+          <div className="border-2 border-[#F2B035] bg-[#082a1c] p-4">
             <div className="flex items-center justify-between mb-3">
               <button
                 type="button"
@@ -146,7 +146,7 @@ export default function DatePicker({ today, selected, onPick }: { today: string;
                     aria-pressed={iso >= selected && iso <= weekEnd}
                     className={`h-10 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F2B035] disabled:text-white/30 disabled:cursor-not-allowed ${
                       iso >= selected && iso <= weekEnd
-                        ? "bg-[#F2B035] text-[#101010] font-semibold"
+                        ? "bg-[#F2B035] text-[#082a1c] font-semibold"
                         : iso === today
                         ? "border border-[#F2B035] text-white"
                         : "text-white hover:bg-white/10"

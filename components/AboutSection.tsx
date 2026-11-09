@@ -9,7 +9,7 @@ import type { Location } from "@/lib/locations";
 /* Homepage About section (replaces the old About page): Our Story, then the venue rows */
 export default function AboutSection({ location }: { location: Location }) {
   return (
-    <section id="about" className="relative isolate overflow-x-clip bg-[#101010] border-t border-white/10 py-16 md:py-20 scroll-mt-[72px]">
+    <section id="about" className="relative isolate overflow-x-clip bg-[#082a1c] border-t border-white/10 py-16 md:py-20 scroll-mt-[72px]">
       <DecorLayer mobileSpots={[{ name: "basketball", x: 88, y: "34px", rotate: -10 }]} />
       <div className="max-w-7xl mx-auto px-6">
         <FadeIn className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12 mb-16 md:mb-20">

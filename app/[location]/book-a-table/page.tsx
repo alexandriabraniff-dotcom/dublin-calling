@@ -31,7 +31,7 @@ export default async function BookATablePage({
         subtitle={`Book a table at Dublin Calling ${loc.name}, ${loc.address}, with OpenTable.`}
       />
 
-      <section className="bg-[#101010] py-16 px-6 min-h-[50vh]">
+      <section className="bg-[#082a1c] py-16 px-6 min-h-[50vh]">
         <div className="max-w-4xl mx-auto">
           <FadeIn>
             {widget && !link ? (
@@ -52,11 +52,11 @@ export default async function BookATablePage({
                 </p>
                 <div className="flex flex-wrap justify-center gap-3">
                   {link && (
-                    <a href={link} target="_blank" rel="noopener noreferrer" className={`${btn} bg-[#F2B035] text-[#101010] hover:bg-[#e0a020]`}>
+                    <a href={link} target="_blank" rel="noopener noreferrer" className={`${btn} bg-[#F2B035] text-[#082a1c] hover:bg-[#e0a020]`}>
                       Book on OpenTable<span className="sr-only"> (opens in a new tab)</span>
                     </a>
                   )}
-                  <a href={`tel:${loc.phone}`} className={`${btn} border-2 border-[#F2B035] text-[#F4EFE6] hover:bg-[#F2B035] hover:text-[#101010]`}>
+                  <a href={`tel:${loc.phone}`} className={`${btn} border-2 border-[#F2B035] text-[#F4EFE6] hover:bg-[#F2B035] hover:text-[#082a1c]`}>
                     Call {loc.phone}
                   </a>
                 </div>

@@ -43,7 +43,7 @@ export default function ExperienceList({
             {item.image ? (
               <Image src={item.image} alt={item.title} fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" />
             ) : (
-              <div className="w-full h-full bg-[#101010] flex flex-col items-center justify-center gap-3">
+              <div className="w-full h-full bg-[#082a1c] flex flex-col items-center justify-center gap-3">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" className="text-[#F4EFE6]/70">
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                   <circle cx="12" cy="13" r="4" />

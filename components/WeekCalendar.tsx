@@ -37,7 +37,7 @@ export default function WeekCalendar({
     <div className="max-w-7xl mx-auto px-6">
       <div className="mb-8 flex flex-col items-center gap-5 text-center">
         <h2
-          className="text-white"
+          className="text-[#F2B035]"
           style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}
         >
           {heading}{" "}
@@ -60,7 +60,7 @@ export default function WeekCalendar({
               aria-pressed={on}
               aria-label={`${fmt(day.date, { weekday: "long", month: "long", day: "numeric" })}${day.isToday ? ", today" : ""}, ${events}`}
               className={`flex flex-col items-center justify-center gap-0.5 sm:gap-1 py-3 sm:py-5 border-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F2B035] ${
-                on ? "bg-[#F2B035] border-[#F2B035] text-[#101010]" : "border-white/25 text-white hover:border-[#F2B035]"
+                on ? "bg-[#F2B035] border-[#F2B035] text-[#082a1c]" : "border-white/25 text-white hover:border-[#F2B035]"
               }`}
             >
               <span className="text-[10px] sm:text-xs uppercase tracking-[0.12em]">
@@ -72,7 +72,7 @@ export default function WeekCalendar({
               >
                 {fmt(day.date, { day: "2-digit" })}
               </span>
-              <span aria-hidden="true" className={`w-1.5 h-1.5 rounded-full ${day.count ? (on ? "bg-[#101010]" : "bg-[#F2B035]") : "bg-transparent"}`} />
+              <span aria-hidden="true" className={`w-1.5 h-1.5 rounded-full ${day.count ? (on ? "bg-[#082a1c]" : "bg-[#F2B035]") : "bg-transparent"}`} />
             </button>
           );
         })}

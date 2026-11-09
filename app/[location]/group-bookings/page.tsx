@@ -24,7 +24,7 @@ export default async function GroupBookingsPage({
       <PageHeader location={loc.name} label="Group Bookings" title="Group Bookings" page="group-bookings" subtitle={`Book a social event, team outing or private event for your group at Dublin Calling ${loc.name}, ${loc.address}.`} />
 
       {/* Booking types: photo + write-up + its own enquiry pop-up */}
-      <section className="bg-[#101010] py-16">
+      <section className="bg-[#082a1c] py-16">
         <div className="max-w-6xl mx-auto px-6 flex flex-col gap-14">
           {types.map((t, i) => (
             <FadeIn

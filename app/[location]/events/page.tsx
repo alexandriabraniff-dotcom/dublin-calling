@@ -184,7 +184,7 @@ const EVENT_DATA: Record<
 
 function tagStyle(color: TagColor) {
   if (color === "red")   return "bg-[#C8102E] text-white";
-  if (color === "gold")  return "bg-[#F2B035] text-[#101010]";
+  if (color === "gold")  return "bg-[#F2B035] text-[#082a1c]";
   if (color === "green") return "border border-[#169B62] text-[#169B62]";
   return "border border-white/20 text-[#F4EFE6]/75";
 }
@@ -215,11 +215,11 @@ export default async function EventsPage({
 
       {/* ── EVENTS ── */}
       {series.length > 0 ? (
-        <section className="bg-[#101010] py-16 px-6">
+        <section className="bg-[#082a1c] py-16 px-6">
           <SeriesList series={series} categories={SERIES_CATEGORIES} />
         </section>
       ) : (
-      <section className="bg-[#101010] py-16 px-6">
+      <section className="bg-[#082a1c] py-16 px-6">
         <div className="max-w-5xl mx-auto flex flex-col gap-10">
           {events.map((event, i) => (
             <FadeIn key={event.name} direction="none" delay={i * 80}>
@@ -237,7 +237,7 @@ export default async function EventsPage({
                     />
                   </div>
                 ) : (
-                  <div className="hidden md:flex items-center justify-center bg-[#0d0d0d] border-r border-white/10 min-h-[340px]">
+                  <div className="hidden md:flex items-center justify-center bg-[#0a2218] border-r border-white/10 min-h-[340px]">
                     {/* Decorative watermark drawn via CSS content so it isn't read or contrast-checked as text */}
                     <span
                       data-tag={event.tag}
@@ -249,7 +249,7 @@ export default async function EventsPage({
                 )}
 
                 {/* Content */}
-                <div className="flex flex-col justify-between p-8 md:p-10 bg-[#0a0a0a]">
+                <div className="flex flex-col justify-between p-8 md:p-10 bg-[#0a2218]">
                   <div>
                     {/* Tag + day */}
                     <div className="flex flex-wrap items-center gap-3 mb-5">
@@ -312,7 +312,7 @@ export default async function EventsPage({
                         href={event.ticketUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn inline-block bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
+                        className="btn inline-block bg-[#F2B035] text-[#082a1c] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
                         style={{
                           fontFamily: "var(--font-label)",
                           fontSize: "clamp(11px, 1vw, 13px)",
@@ -324,7 +324,7 @@ export default async function EventsPage({
                     ) : (
                       <Link
                         href={tableHref(loc.slug)}
-                        className="btn inline-block bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
+                        className="btn inline-block bg-[#F2B035] text-[#082a1c] font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
                         style={{
                           fontFamily: "var(--font-label)",
                           fontSize: "clamp(11px, 1vw, 13px)",

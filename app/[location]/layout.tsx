@@ -39,7 +39,7 @@ export default async function LocationLayout({
     <div className="flex flex-col min-h-dvh">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-[#F2B035] focus:text-[#101010] focus:px-4 focus:py-2 focus:font-semibold focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-[#F2B035] focus:text-[#082a1c] focus:px-4 focus:py-2 focus:font-semibold focus:text-sm"
       >
         Skip to main content
       </a>

@@ -6,7 +6,7 @@ import type { BookingType, FormField } from "@/lib/group-bookings";
 type Status = "idle" | "sending" | "sent" | "mailto" | "error";
 
 const inputClass =
-  "w-full bg-[#0a0a0a] border border-white/50 text-[#F4EFE6] text-base px-3 py-2.5 focus:outline-none focus:border-[#F2B035] focus:ring-2 focus:ring-[#F2B035]/60 aria-[invalid=true]:border-[#ff8a80]";
+  "w-full bg-[#0a2218] border border-white/50 text-[#F4EFE6] text-base px-3 py-2.5 focus:outline-none focus:border-[#F2B035] focus:ring-2 focus:ring-[#F2B035]/60 aria-[invalid=true]:border-[#ff8a80]";
 
 /* "Get in Touch" button + its own pop-up enquiry form for one booking type */
 export default function EnquiryDialog({
@@ -129,7 +129,7 @@ export default function EnquiryDialog({
         type="button"
         onClick={open}
         aria-haspopup="dialog"
-        className="btn block w-full sm:w-auto text-center px-10 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F4EFE6]"
+        className="btn block w-full sm:w-auto text-center px-10 py-3.5 bg-[#F2B035] text-[#082a1c] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F4EFE6]"
         style={{ fontFamily: "var(--font-label)", fontWeight: 700 }}
       >
         Get in Touch<span className="sr-only"> about a {type.title.toLowerCase()}</span>
@@ -142,8 +142,8 @@ export default function EnquiryDialog({
         className="m-auto w-[calc(100%-2rem)] max-w-2xl max-h-[92dvh] p-0 bg-transparent backdrop:bg-black/75"
       >
         <div className="border-4 border-[#F2B035] bg-[#0F5132] p-[3px]">
-          <div className="border-2 border-[#F2B035] bg-[#101010] max-h-[calc(92dvh-18px)] overflow-y-auto">
-            <div className="sticky top-0 z-10 bg-[#101010] border-b border-white/15 px-5 sm:px-8 py-4 flex items-start justify-between gap-4">
+          <div className="border-2 border-[#F2B035] bg-[#082a1c] max-h-[calc(92dvh-18px)] overflow-y-auto">
+            <div className="sticky top-0 z-10 bg-[#082a1c] border-b border-white/15 px-5 sm:px-8 py-4 flex items-start justify-between gap-4">
               <div>
                 <h2
                   id={titleId}
@@ -179,7 +179,7 @@ export default function EnquiryDialog({
                 <button
                   type="button"
                   onClick={close}
-                  className="btn self-start px-8 py-3 border-2 border-[#F2B035] text-[#F2B035] font-semibold text-sm uppercase tracking-[0.1em] hover:bg-[#F2B035] hover:text-[#101010] transition-colors"
+                  className="btn self-start px-8 py-3 border-2 border-[#F2B035] text-[#F2B035] font-semibold text-sm uppercase tracking-[0.1em] hover:bg-[#F2B035] hover:text-[#082a1c] transition-colors"
                 >
                   Close
                 </button>
@@ -213,7 +213,7 @@ export default function EnquiryDialog({
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="btn px-10 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] disabled:opacity-60 transition-colors"
+                    className="btn px-10 py-3.5 bg-[#F2B035] text-[#082a1c] font-semibold text-sm tracking-[0.1em] uppercase hover:bg-[#e0a020] disabled:opacity-60 transition-colors"
                     style={{ fontFamily: "var(--font-label)", fontWeight: 700 }}
                   >
                     {status === "sending" ? "Sending..." : "Send Enquiry"}

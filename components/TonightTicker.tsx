@@ -70,7 +70,7 @@ export default function TonightTicker({
           style={{ animationPlayState: still ? "paused" : "running" }}
         >
           <span className="truncate">{item.title}</span>
-          {item.time && <span className="font-text text-[#101010]/75 shrink-0">{item.time}</span>}
+          {item.time && <span className="font-text text-[#082a1c]/75 shrink-0">{item.time}</span>}
         </p>
       </div>
       {items.length > 1 && (
@@ -78,7 +78,7 @@ export default function TonightTicker({
           type="button"
           onClick={() => setPaused(!paused)}
           aria-label={paused ? "Play tonight's listings" : "Pause tonight's listings"}
-          className="shrink-0 w-7 h-7 -my-1 flex items-center justify-center rounded-full hover:bg-[#101010]/10"
+          className="shrink-0 w-7 h-7 -my-1 flex items-center justify-center rounded-full hover:bg-[#082a1c]/10"
         >
           {paused ? (
             <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4v16l14-8z" /></svg>

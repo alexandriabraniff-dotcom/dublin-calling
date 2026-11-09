@@ -49,7 +49,7 @@ export default function SeriesList({ series, categories }: { series: Series[]; c
               className="group flex flex-col items-center gap-2 w-[76px] focus-visible:outline-none"
             >
               <span
-                className={`w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden ring-offset-2 ring-offset-[#101010] transition-shadow group-focus-visible:ring-4 group-focus-visible:ring-[#F2B035] ${
+                className={`w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden ring-offset-2 ring-offset-[#082a1c] transition-shadow group-focus-visible:ring-4 group-focus-visible:ring-[#F2B035] ${
                   on ? "ring-4 ring-[#F2B035]" : "ring-2 ring-white/30 group-hover:ring-[#F2B035]/70"
                 }`}
               >
@@ -88,9 +88,9 @@ function SeriesCard({ series: s }: { series: Series }) {
   }
 
   return (
-    <article className="border border-white/10 bg-[#0a0a0a] grid grid-cols-1 md:grid-cols-[320px_minmax(0,1fr)]">
+    <article className="border border-white/10 bg-[#0a2218] grid grid-cols-1 md:grid-cols-[320px_minmax(0,1fr)]">
       {/* Whole artwork, never cropped: letterboxed on the dark panel */}
-      <div className="relative aspect-video md:self-start bg-[#101010]">
+      <div className="relative aspect-video md:self-start bg-[#082a1c]">
         {s.image ? (
           <Image src={s.image} alt="" fill sizes="(min-width: 768px) 320px, 100vw" className="object-contain" />
         ) : s.logo ? (
@@ -124,7 +124,7 @@ function SeriesCard({ series: s }: { series: Series }) {
             <a
               href={next.url}
               {...external(next.url)}
-              className="btn min-h-11 inline-flex items-center justify-center px-6 bg-[#F2B035] text-[#101010] text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
+              className="btn min-h-11 inline-flex items-center justify-center px-6 bg-[#F2B035] text-[#082a1c] text-xs font-semibold uppercase tracking-[0.15em] hover:bg-[#e0a020] transition-colors"
             >
               Book Your Spot<span className="sr-only">: {s.title}, {fmtDay(next.date, { month: "long", day: "numeric" })}{newTab(next.url)}</span>
             </a>

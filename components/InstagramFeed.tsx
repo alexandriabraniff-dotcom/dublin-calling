@@ -31,7 +31,7 @@ export default async function InstagramFeed({ profileUrl, locationName }: { prof
   const posts = profile?.posts.slice(0, POST_COUNT) ?? [];
 
   return (
-    <section className="bg-[#101010] border-t border-white/10 py-14 md:py-16" aria-labelledby="instagram-heading">
+    <section className="bg-[#082a1c] border-t border-white/10 py-14 md:py-16" aria-labelledby="instagram-heading">
       {/* Profile info */}
       <div className="max-w-7xl mx-auto px-6 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <a href={profileUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
@@ -54,7 +54,7 @@ export default async function InstagramFeed({ profileUrl, locationName }: { prof
             <p className="text-[11px] uppercase tracking-[0.25em] text-[#F4EFE6]/75 mb-1">Follow Dublin Calling {locationName} on Instagram</p>
             <h2
               id="instagram-heading"
-              className="leading-none text-[#F4EFE6] group-hover:text-[#F2B035] transition-colors"
+              className="leading-none text-[#F2B035] group-hover:text-[#F4EFE6] transition-colors"
               style={{ fontFamily: "var(--font-label)", fontWeight: 700, fontSize: "clamp(1.75rem, 3vw, 2.75rem)", letterSpacing: "0.02em" }}
             >
               @{handle}
@@ -71,7 +71,7 @@ export default async function InstagramFeed({ profileUrl, locationName }: { prof
           href={profileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn self-start sm:self-auto inline-flex items-center gap-2 px-8 py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs tracking-[0.12em] uppercase hover:bg-[#e0a020] transition-colors"
+          className="btn self-start sm:self-auto inline-flex items-center gap-2 px-8 py-3.5 bg-[#F2B035] text-[#082a1c] font-semibold text-xs tracking-[0.12em] uppercase hover:bg-[#e0a020] transition-colors"
           style={{ fontFamily: "var(--font-label)", fontWeight: 700 }}
         >
           <InstagramIcon size={16} />
@@ -104,7 +104,7 @@ export default async function InstagramFeed({ profileUrl, locationName }: { prof
                       <span className="absolute top-2 right-2"><PlayIcon /></span>
                     )}
                     {/* Hover overlay */}
-                    <span className="absolute inset-0 bg-[#101010]/80 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 text-center">
+                    <span className="absolute inset-0 bg-[#082a1c]/80 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 text-center">
                       <InstagramIcon className="text-[#F2B035]" size={26} />
                       {post.caption && (
                         <span className="hidden lg:block text-xs text-[#F4EFE6]/90 leading-relaxed line-clamp-4" aria-hidden="true">

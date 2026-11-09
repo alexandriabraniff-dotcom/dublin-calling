@@ -52,7 +52,7 @@ export default function EventsCalendar({
     <div className="max-w-7xl mx-auto px-4 sm:px-6">
       {/* Header + week controls */}
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-8">
-        <h2 className="text-white" aria-live="polite" style={{ ...condensed, fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}>
+        <h2 className="text-[#F2B035]" aria-live="polite" style={{ ...condensed, fontWeight: 700, fontSize: "clamp(1.8rem, 3vw, 2.5rem)", letterSpacing: "0.02em" }}>
           {heading}{" "}
           <span className="font-title text-[#F2B035]" style={{ fontSize: "1.1em" }}>
             at Dublin Calling
@@ -132,7 +132,7 @@ function DayHeader({ date, isToday }: { date: string; isToday: boolean }) {
     <div className="border-b-2 border-white/20 pb-3">
       <p className="flex items-center justify-between text-white text-sm">
         {fmt(date, { weekday: "short" })}
-        {isToday && <span className="bg-[#F2B035] text-[#101010] text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 rounded-full">Today</span>}
+        {isToday && <span className="bg-[#F2B035] text-[#082a1c] text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-0.5 rounded-full">Today</span>}
       </p>
       <p className="text-white leading-none mt-1" style={{ ...condensed, fontWeight: 700, fontSize: "2.6rem" }}>
         {fmt(date, { day: "2-digit" })}

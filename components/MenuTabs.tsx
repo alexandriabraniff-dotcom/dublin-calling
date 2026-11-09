@@ -44,7 +44,7 @@ export default function MenuTabs({ panels }: { panels: MenuPanel[] }) {
 
   return (
     <>
-      <div className="sticky top-[60px] lg:top-[72px] z-40 bg-[#101010]/95 backdrop-blur border-b border-white/10">
+      <div className="sticky top-[60px] lg:top-[72px] z-40 bg-[#082a1c]/95 backdrop-blur border-b border-white/10">
         <div role="tablist" aria-label="Menus" className="max-w-5xl mx-auto px-4 flex justify-center gap-1 sm:gap-3">
           {panels.map((p, i) => {
             const on = p.id === active;

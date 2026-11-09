@@ -30,7 +30,7 @@ export default function FAQPage() {
       {/* Header */}
       <PageHeader location={loc.name} label="FAQ" title="FAQ" page="faq" subtitle={`Frequently asked questions about Dublin Calling ${loc.name}: hours, bookings, age policy and more. Got a question? We've probably answered it below. If not, reach out directly.`} />
 
-      <section className="py-16 bg-[#101010]">
+      <section className="py-16 bg-[#082a1c]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <div className="divide-y divide-white/8">
             {allFaqs.map((faq, i) => (
@@ -75,14 +75,14 @@ export default function FAQPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href={`tel:${loc.phone}`}
-              className="btn inline-flex items-center px-7 py-3 bg-[#101010] border border-white/15 text-[#F4EFE6] hover:border-[#F2B035] transition-colors"
+              className="btn inline-flex items-center px-7 py-3 bg-[#082a1c] border border-white/15 text-[#F4EFE6] hover:border-[#F2B035] transition-colors"
               style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.2em" }}
             >
               {loc.phone}
             </a>
             <a
               href={`mailto:${loc.email}`}
-              className="btn inline-flex items-center px-7 py-3 bg-[#F2B035] text-[#101010] hover:bg-[#e0a020] transition-colors"
+              className="btn inline-flex items-center px-7 py-3 bg-[#F2B035] text-[#082a1c] hover:bg-[#e0a020] transition-colors"
               style={{ fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}
             >
               {loc.email}

@@ -23,7 +23,7 @@ function Item({ item }: { item: MenuItem }) {
           </>
         )}
       </div>
-      {item.desc && <p className="text-[#101010]/80 text-sm leading-relaxed mt-1">{item.desc}</p>}
+      {item.desc && <p className="text-[#082a1c]/80 text-sm leading-relaxed mt-1">{item.desc}</p>}
       {item.extra && <p className="text-[#0F5132] text-[11px] font-bold uppercase tracking-[0.08em] mt-1">{item.extra}</p>}
     </li>
   );

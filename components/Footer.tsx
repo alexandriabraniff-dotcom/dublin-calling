@@ -74,7 +74,7 @@ function PinIcon() {
 }
 
 const contactBtn =
-  "btn flex items-center justify-center gap-2 min-h-[48px] w-full border-2 border-[#F2B035] text-[#F4EFE6] text-sm font-semibold uppercase tracking-[0.12em] hover:bg-[#F2B035] hover:text-[#101010] transition-colors";
+  "btn flex items-center justify-center gap-2 min-h-[48px] w-full border-2 border-[#F2B035] text-[#F4EFE6] text-sm font-semibold uppercase tracking-[0.12em] hover:bg-[#F2B035] hover:text-[#082a1c] transition-colors";
 
 const socialBtn =
   "w-12 h-12 flex items-center justify-center rounded-full border-2 border-[#F4EFE6]/60 text-[#F4EFE6] hover:border-[#F2B035] hover:text-[#F2B035] transition-colors";

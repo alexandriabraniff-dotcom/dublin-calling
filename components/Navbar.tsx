@@ -114,7 +114,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
                 aria-expanded={locationOpen}
                 aria-controls="location-menu"
                 aria-label={`Location: ${LOCATION_LABELS[location]}. Change location`}
-                className="flex items-center gap-2 border-2 border-[#F2B035] px-3 py-1.5 text-left text-[#F4EFE6] hover:bg-[#F2B035] hover:text-[#101010] transition-colors"
+                className="flex items-center gap-2 border-2 border-[#F2B035] px-3 py-1.5 text-left text-[#F4EFE6] hover:bg-[#F2B035] hover:text-[#082a1c] transition-colors"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className="shrink-0">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
@@ -129,7 +129,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
                 </svg>
               </button>
               {locationOpen && (
-                <div id="location-menu" className="absolute left-0 top-full mt-2 w-52 bg-[#101010] border border-white/10 z-50">
+                <div id="location-menu" className="absolute left-0 top-full mt-2 w-52 bg-[#082a1c] border border-white/10 z-50">
                   {(["adelaide", "danforth", "vancouver"] as LocationSlug[]).map(s => (
                     <Link key={s} href={`/${s}`} onClick={() => setLocationOpen(false)}
                       aria-current={s === location ? "page" : undefined}
@@ -173,7 +173,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
             {/* Far right — Book a Table */}
             <Link
               href={tableHref(location)}
-              className="shrink-0 bg-[#F2B035] text-[#101010] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
+              className="shrink-0 bg-[#F2B035] text-[#082a1c] font-semibold uppercase tracking-[0.12em] hover:bg-[#e0a020] transition-colors"
               style={{ fontSize: "clamp(10px, 0.85vw, 12px)", padding: "0.45rem 1.2rem" }}
             >
               Book a Table
@@ -259,7 +259,7 @@ export default function Navbar({ location }: { location: LocationSlug }) {
               <Link
                 href={tableHref(location)}
                 onClick={() => setMenuOpen(false)}
-                className="btn block w-full text-center py-3.5 bg-[#F2B035] text-[#101010] font-semibold text-xs uppercase tracking-[0.15em]"
+                className="btn block w-full text-center py-3.5 bg-[#F2B035] text-[#082a1c] font-semibold text-xs uppercase tracking-[0.15em]"
               >
                 Book a Table
               </Link>
