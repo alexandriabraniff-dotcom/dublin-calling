@@ -38,13 +38,13 @@ function Section({ section }: { section: MenuSection }) {
         </h3>
       </div>
       {section.intro && <p className="text-[#0F5132] text-xs font-bold uppercase tracking-[0.08em] text-center mb-5">{section.intro}</p>}
-      {section.items.length > 0 && <ul>{section.items.map((it) => <Item key={it.name} item={it} />)}</ul>}
+      {section.items.length > 0 && <ul>{section.items.map((it, i) => <Item key={`${i}-${it.name}`} item={it} />)}</ul>}
       {section.groups?.map((g) => (
         <div key={g.label} className="break-inside-avoid">
           <p className="font-title text-center text-[#0F5132] text-2xl mt-2 mb-2">
             {g.label}
           </p>
-          <ul>{g.items.map((it) => <Item key={it.name} item={it} />)}</ul>
+          <ul>{g.items.map((it, i) => <Item key={`${i}-${it.name}`} item={it} />)}</ul>
         </div>
       ))}
     </section>

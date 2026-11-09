@@ -48,29 +48,31 @@ export default async function MenuPage({
   if (!loc) notFound();
 
   const menus = getMenus(loc.slug as LocationSlug);
+  // No typed happy hour menu for this location yet: show the hours and a note instead
+  const happyHourBox: MenuPanel = {
+    id: "happy-hour",
+    label: "Happy Hour",
+    content: (
+      <div className="border-2 border-[#F2B035] bg-[#0F5132] px-6 py-12 text-center">
+        <h2 className="text-[#F2B035] uppercase font-bold tracking-[0.2em] text-3xl" style={{ fontFamily: "var(--font-label)" }}>Happy Hour</h2>
+        <p className="mt-3 text-[#F4EFE6] text-lg">{loc.happyHour}</p>
+        <p className="mt-2 text-[#F4EFE6]/80 text-sm">Ask your server about this week&apos;s happy hour drinks and bites.</p>
+      </div>
+    ),
+  };
   const panels: MenuPanel[] = menus
     ? [
         { id: "food", label: "Food", content: <MenuBoard heading="Food" sections={menus.food} /> },
         { id: "drinks", label: "Drinks", content: <MenuBoard heading="Drinks" sections={menus.drinks} /> },
-        ...(menus.happyHour
-          ? [{ id: "happy-hour", label: "Happy Hour", content: <MenuBoard heading="Happy Hour" sub={menus.happyHour.when} sections={menus.happyHour.sections} /> }]
-          : []),
+        menus.happyHour
+          ? { id: "happy-hour", label: "Happy Hour", content: <MenuBoard heading="Happy Hour" sub={menus.happyHour.when} sections={menus.happyHour.sections} /> }
+          : happyHourBox,
       ]
     : [
         // Not typed out yet for this location: show the menu images
         { id: "food", label: "Food", content: <ImageMenu src="/menu-food.webp" alt={`Dublin Calling ${loc.name} food menu`} /> },
         { id: "drinks", label: "Drinks", content: <ImageMenu src="/menu-drinks.webp" alt={`Dublin Calling ${loc.name} drinks menu`} /> },
-        {
-          id: "happy-hour",
-          label: "Happy Hour",
-          content: (
-            <div className="border-2 border-[#F2B035] bg-[#0F5132] px-6 py-12 text-center">
-              <h2 className="text-[#F2B035] uppercase font-bold tracking-[0.2em] text-3xl" style={{ fontFamily: "var(--font-label)" }}>Happy Hour</h2>
-              <p className="mt-3 text-[#F4EFE6] text-lg">{loc.happyHour}</p>
-              <p className="mt-2 text-[#F4EFE6]/80 text-sm">Ask your server about this week&apos;s happy hour drinks and bites.</p>
-            </div>
-          ),
-        },
+        happyHourBox,
       ];
 
   const jsonLd = menus
